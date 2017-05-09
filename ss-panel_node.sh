@@ -192,7 +192,7 @@ echo
 stty erase '^H' && read -p " 请输入数字 [1-3]:" num
 case "$num" in
 	1)
-	Install_ServerStatus_client
+	one_click_all
 	;;
 	2)
 	install_ss_panel
