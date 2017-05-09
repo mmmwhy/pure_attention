@@ -13,10 +13,9 @@ install_ss_panel(){
 	echo "# Blog: https://feiyang.li/                                 #"
 	echo "#############################################################"
 	echo
-	rm -rf /home/wwwroot/default/index.html	
-	wget http://home.ustc.edu.cn/~mmmwhy/ss-panel-master.zip
-	unzip ss-panel-master.zip
-	mv ss-panel-master/* /home/wwwroot/default
+	chattr -i /home/wwwroot/default/.user.ini
+	rm -rf /home/wwwroot/default
+	git clone https://github.com/mmmwhy/ss-panel.git "/home/wwwroot/default"
 	cd /home/wwwroot/default
 	curl -sS https://install.phpcomposer.com/installer | php
 	chmod +x composer.phar
@@ -173,7 +172,7 @@ one_click_all(){
 	iptables-save
 	sleep 4
 	cat shadowsocks.log
-	echo "°²×°³É¹¦£¬µÇÂ¼http://${IPAddress}¿´¿´°É~"
+	echo "å®‰è£…æˆåŠŸï¼Œç™»å½•http://${IPAddress}çœ‹çœ‹å§~"
 }
 
 
@@ -184,13 +183,13 @@ echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
 echo "# Author: Feiyang.li                                        #"
 echo "# Blog: https://feiyang.li/                                 #"
 echo "# Please choose the server you want                         #"
-echo "# 1¡¢SS-panel + SS-node One click Install                   #"
-echo "# 2¡¢SS-panel One click Install                             #"
-echo "# 3¡¢SS-node One click Install                              #"
+echo "# 1  SS-panel + SS-node One click Install                   #"
+echo "# 2  SS-panel One click Install                             #"
+echo "# 3  SS-node One click Install                              #"
 echo "# Blog: https://feiyang.li/                                 #"
 echo "#############################################################"
 echo
-stty erase '^H' && read -p " ÇëÊäÈëÊı×Ö [1-3]:" num
+stty erase '^H' && read -p " è¯·è¾“å…¥æ•°å­— [1-3]:" num
 case "$num" in
 	1)
 	Install_ServerStatus_client
@@ -202,6 +201,6 @@ case "$num" in
 	install_ss_py_mu
 	;;
 	*)
-	echo "ÇëÊäÈëÕıÈ·Êı×Ö [1-3]"
+	echo "è¯·è¾“å…¥æ­£ç¡®æ•°å­— [1-3]"
 	;;
 esac
