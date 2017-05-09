@@ -11,6 +11,7 @@ echo
 read -p "Please input your domain(like:https://ss.feiyang.li or http://114.114.114.114): " Userdomain
 read -p "Please input your mukey(like:mupass): " Usermukey
 read -p "Please input your Node_ID(like:3): " UserNODE_ID
+
 #check OS version
 check_sys(){
 	if [[ -f /etc/redhat-release ]]; then
@@ -37,7 +38,7 @@ install_soft_for_each(){
 		yum install git -y
 		yum install python-setuptools -y 
 		yum -y groupinstall "Development Tools" -y
-		wget https://raw.githubusercontent.com/mmmwhy/ss-panel-ss-py-mu/master/libsodium-1.0.11.tar.gz #origin trace was baned in china
+		wget https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/libsodium-1.0.11.tar.gz
 		tar xf libsodium-1.0.11.tar.gz && cd libsodium-1.0.11
 		./configure && make -j2 && make install
 		echo /usr/local/lib > /etc/ld.so.conf.d/usr_local_lib.conf
@@ -54,7 +55,6 @@ install_soft_for_each(){
 	./configure && make -j2 && make install
 	ldconfig
 	fi
-	echo -e "依赖安装完成！"
 }
 install_soft_for_each
 echo "Let's setup your ssnode/root"
