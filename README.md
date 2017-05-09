@@ -29,20 +29,25 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/mmmwhy/ss-panel
 
 ![](http://cdn.mmmxcc.cn/blog/20170509/214909086.png)
 
+## ss-panel + ss-node 一键脚本
 直接输入1，之后提示时候再点一下回车，一键到底~
 
 安装结束后，登陆IP即可查看网站
 **默认账户：ss@feiyang.li**
 **默认密码：feiyang**
 
-
+## 增加节点
+先在网页增加节点信息，特别要记住这里的node_id，长这个样子的
+![mark](http://cdn.mmmxcc.cn/blog/20170509/221038086.png)
+直接输入2，输入相关信息，注意ip地址和域名都是支持的，但是需要加上**http://或者https://**，注意区分自己域名有没有ssl。否则可能出现用户使用记录无法推送的问题。
+![](http://cdn.mmmxcc.cn/blog/20170509/221216262.png)
 
 # 其他补充内容
 - mailgun账号需要自己申请，我那个只是举个例子
 - 基于[lnmp1.3稳定版](https://lnmp.org/)制作，网络上相关资料很多。
 - [常见错误](http://feiyang.li/2017/05/03/ss-panel/index.html#常见错误)在这里查看
 - 如果想设置更多的信息，请查看[安装教程全文](http://feiyang.li/2017/05/05/ss-panel-full/index.html)，本脚本和该教程内容完全一致。
-- 关于[Google的bbr加速](http://feiyang.li/2017/05/05/ss-panel-full/index.html#谷歌BBR加速)，与本脚本可以通用，但是因为效果不明显，所以我没有加入。
+- 关于[Google的bbr加速](http://feiyang.li/2017/05/05/ss-panel-full/index.html#谷歌BBR加速)，与本脚本可以通用，但是因为效果不明显(可能因为我们实验室网太烂了吧)，所以我没有加入。
 
 ---
 
