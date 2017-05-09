@@ -57,6 +57,7 @@ install_soft_for_each(){
 	ldconfig
 	fi
 }
+
 install_soft_for_each
 echo "Let's setup your ssnode/root"
 git clone https://github.com/mmmwhy/shadowsocks-py-mu.git "/root/shadowsocks-py-mu"
