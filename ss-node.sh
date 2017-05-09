@@ -49,7 +49,7 @@ install_soft_for_each(){
 	apt-get install supervisor -y
 	apt-get install git -y
 	apt-get install build-essential -y
-	wget https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/libsodium-1.0.11.tar.gz #origin trace was baned in china
+	wget https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/libsodium-1.0.11.tar.gz
 	tar xf libsodium-1.0.11.tar.gz && cd libsodium-1.0.11
 	./configure && make -j2 && make install
 	ldconfig
