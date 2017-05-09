@@ -1,7 +1,3 @@
-> 上周接触了ss-panel，发现搭建起来异常的麻烦，对新手来说，到处都是坑，因此搭建了本ss-panel一键安装脚本
-
----
-
 # 效果
 ![](http://cdn.mmmxcc.cn/blog/20170509/191015542.png)
 ![](http://cdn.mmmxcc.cn/blog/20170509/191042466.png)
@@ -24,23 +20,16 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/mmmwhy/ss-panel
 ```
 运行脚本后会出现脚本操作菜单，
 - 选择并输入 1 就会安装ss-panel和ss-node在此vps上。
-- 选择并输入 2 就会单独安装ss-panel
-- 选择并输入 2 就会单独安装ss-node
-
 ![](http://cdn.mmmxcc.cn/blog/20170509/214909086.png)
-
-## ss-panel + ss-node 一键脚本
-直接输入1，之后提示时候再点一下回车，一键到底~
-
 安装结束后，登陆IP即可查看网站
 **默认账户：ss@feiyang.li**
 **默认密码：feiyang**
-
-## 增加节点
+- 选择并输入 2 就会单独安装ss-panel
 先在网页增加节点信息，特别要记住这里的node_id，长这个样子的
 ![mark](http://cdn.mmmxcc.cn/blog/20170509/221038086.png)
 直接输入2，输入相关信息，注意ip地址和域名都是支持的，但是需要加上**http://或者https://**，注意区分自己域名有没有ssl。否则可能出现用户使用记录无法推送的问题。
 ![](http://cdn.mmmxcc.cn/blog/20170509/221216262.png)
+- 选择并输入 2 就会单独安装ss-node
 
 # 其他补充内容
 - mailgun账号需要自己申请，我那个只是举个例子
