@@ -11,7 +11,6 @@ echo
 read -p "Please input your domain(like:https://ss.feiyang.li or http://114.114.114.114): " Userdomain
 read -p "Please input your mukey(like:mupass): " Usermukey
 read -p "Please input your Node_ID(like:3): " UserNODE_ID
-#¼ì²éÏµÍ³
 #check OS version
 check_sys(){
 	if [[ -f /etc/redhat-release ]]; then
@@ -46,10 +45,10 @@ install_soft_for_each(){
 		yum install python-setuptools
 		easy_install supervisor
 	else
-	apt-get update
-	apt-get install supervisor
+	apt-get update -y
+	apt-get install supervisor -y
 	apt-get install git -y
-	apt-get install build-essential
+	apt-get install build-essential -y
 	wget https://raw.githubusercontent.com/mmmwhy/ss-panel-ss-py-mu/master/libsodium-1.0.11.tar.gz #origin trace was baned in china
 	tar xf libsodium-1.0.11.tar.gz && cd libsodium-1.0.11
 	./configure && make -j2 && make install
