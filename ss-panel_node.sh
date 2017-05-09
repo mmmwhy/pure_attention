@@ -2,7 +2,6 @@
 #Check Root
 [ $(id -u) != "0" ] && { echo "Error: You must be root to run this script"; exit 1; }
 #check OS version
-#wget -c http://home.ustc.edu.cn/~mmmwhy/lnmp1.3.zip && unzip lnmp1.3.zip && cd lnmp1.3 && chmod +x install.sh && ./install.sh lnmp
 install_ss_panel(){
 	clear
 	echo
@@ -13,6 +12,7 @@ install_ss_panel(){
 	echo "# Blog: https://feiyang.li/                                 #"
 	echo "#############################################################"
 	echo
+	wget -c http://home.ustc.edu.cn/~mmmwhy/lnmp1.3.zip && unzip lnmp1.3.zip && cd lnmp1.3 && chmod +x install.sh && ./install.sh lnmp
 	chattr -i /home/wwwroot/default/.user.ini
 	rm -rf /home/wwwroot/default
 	git clone https://github.com/mmmwhy/ss-panel.git "/home/wwwroot/default"
@@ -172,7 +172,18 @@ one_click_all(){
 	iptables-save
 	sleep 4
 	cat shadowsocks.log
-	echo "安装成功，登录http://${IPAddress}看看吧~"
+	echo ""
+	echo "#############################################################"
+	echo "# 安装成功，登录http://${IPAddress}看看吧~                  #"
+	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
+	echo "# Author: Feiyang.li                                        #"
+	echo "# Blog: https://feiyang.li/                                 #"
+	echo "# Please choose the server you want                         #"
+	echo "# 1  SS-panel + SS-node One click Install                   #"
+	echo "# 2  SS-panel One click Install                             #"
+	echo "# 3  SS-node One click Install                              #"
+	echo "# Blog: https://feiyang.li/                                 #"
+	echo "#############################################################"
 }
 
 
