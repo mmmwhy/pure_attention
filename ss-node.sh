@@ -10,7 +10,7 @@ echo "#############################################################"
 echo
 read -p "Please input your domain(like:https://ss.feiyang.li or http://114.114.114.114): " Userdomain
 read -p "Please input your mukey(like:mupass): " Usermukey
-read -p "Please input your Node_ID(like:3): " UserNODE_ID
+read -p "Please input your Node_ID(like:1): " UserNODE_ID
 #check OS version
 check_sys(){
 	if [[ -f /etc/redhat-release ]]; then
@@ -64,7 +64,7 @@ Userdomain=${Userdomain:-"https://ss.feiyang.li"}
 sed -i "s#http://domain#${Userdomain}#" /root/shadowsocks-py-mu/shadowsocks/config.py
 Usermukey=${Usermukey:-"mupass"}
 sed -i "s#mupass#${Usermukey}#" /root/shadowsocks-py-mu/shadowsocks/config.py
-UserNODE_ID=${UserNODE_ID:-"3"}
+UserNODE_ID=${UserNODE_ID:-"1"}
 sed -i "s#'1'#'${UserNODE_ID}'#" /root/shadowsocks-py-mu/shadowsocks/config.py
 echo_supervisord_conf > /etc/supervisord.conf
 sed -i '$a [program:ss-manyuser]\ncommand = python /root/shadowsocks-py-mu/shadowsocks/servers.py\nuser = root\nautostart = true\nautorestart = true' /etc/supervisord.conf
