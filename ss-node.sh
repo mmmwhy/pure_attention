@@ -11,7 +11,6 @@ echo
 read -p "Please input your domain(like:https://ss.feiyang.li or http://114.114.114.114): " Userdomain
 read -p "Please input your mukey(like:mupass): " Usermukey
 read -p "Please input your Node_ID(like:3): " UserNODE_ID
-
 #check OS version
 check_sys(){
 	if [[ -f /etc/redhat-release ]]; then
@@ -59,7 +58,6 @@ install_soft_for_each(){
 install_soft_for_each
 echo "Let's setup your ssnode/root"
 git clone https://github.com/mmmwhy/shadowsocks-py-mu.git "/root/shadowsocks-py-mu"
-cp /root/shadowsocks-py-mu/shadowsocks/config_example.py /root/shadowsocks-py-mu/shadowsocks/config.py
 #modify Config.py
 echo -e "modify Config.py...\n"
 Userdomain=${Userdomain:-"https://ss.feiyang.li"}
