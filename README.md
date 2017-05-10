@@ -20,8 +20,10 @@
 - 被墙掉的资源都换成了墙内资源，不会出现被卡死的情况了。
 
 # 系统要求
-理论上：CentOS 6+ / Debian 7+ / Ubuntu 14.04 +  都可以，建议CentOS7 X64，我用的是这个版本，通过测试。
+建议CentOS7 X64，我用的是这个版本，目前在腾讯云，digitalocean，interserver上通过测试。
+理论上：CentOS 6+ / Debian 7+ / Ubuntu 14.04 +  都可以，
 
+![](http://cdn.mmmxcc.cn/blog/20170510/094150095.png)
 # 一键安装脚本
 - 登陆后运行：
 ```
@@ -39,11 +41,22 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/mmmwhy/ss-panel
 
 ![](http://cdn.mmmxcc.cn/blog/20170509/214909086.png)
 
-安装结束后，登陆IP即可查看网站
+
+
+因为ss-panel依赖于mysql,php,nginx，使用lnmp一键安装包，点击任意键开始安装。
+![](http://cdn.mmmxcc.cn/blog/20170510/102436162.png)
+
+LNMP包编译时间较长，可以喝杯茶吃个饭。大约30分钟左右，安装结束，提示登陆IP即可查看网站
+
+![](http://cdn.mmmxcc.cn/blog/20170510/102100972.png)
+
+![](http://cdn.mmmxcc.cn/blog/20170510/101919599.png)
 
 **默认账户：ss@feiyang.li**
 
 **默认密码：feiyang**
+
+
 
 进入ss-panel页面后，记得在**管理面包->节点管理->添加节点->输入节点信息**
 
@@ -59,11 +72,16 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/mmmwhy/ss-panel
 先在网页增加节点信息，特别要记住这里的node_id，长这个样子的
 ![mark](http://cdn.mmmxcc.cn/blog/20170509/221038086.png)
 
-输入相关信息，ip地址和域名都是支持的，但是需要加上**http:// 或者 https://** ，注意区分自己域名有没有ssl。否则可能出现用户使用记录无法推送的问题。
+输入相关信息，ip地址和域名（ss-panel的）都可以，但是需要加上**http:// 或者 https://** ，注意区分自己域名有没有ssl。否则可能出现用户使用记录无法推送的问题。
 
 ![](http://cdn.mmmxcc.cn/blog/20170509/221216262.png)
 
 # 其他补充内容
+- LNMP环境编译时间较长
+- php依赖安装会花费较长时间，特别是在国内
+
+![本页面停留时间较长](http://cdn.mmmxcc.cn/blog/20170510/101054745.png)
+
 - mailgun账号需要自己申请，我那个只是举个例子。
 - 基于[lnmp1.3稳定版](https://lnmp.org/)制作，兼容性非常好。
 - [常见错误](http://feiyang.li/2017/05/03/ss-panel/index.html#常见错误)在这里查看
