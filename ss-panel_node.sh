@@ -1,8 +1,34 @@
 #!/bin/bash
 #Check Root
 [ $(id -u) != "0" ] && { echo "Error: You must be root to run this script"; exit 1; }
-#check OS version
 install_ss_panel(){
+	#check OS version
+	check_sys(){
+		if [[ -f /etc/redhat-release ]]; then
+			release="centos"
+		elif cat /etc/issue | grep -q -E -i "debian"; then
+			release="debian"
+		elif cat /etc/issue | grep -q -E -i "ubuntu"; then
+			release="ubuntu"
+		elif cat /etc/issue | grep -q -E -i "centos|red hat|redhat"; then
+			release="centos"
+		elif cat /proc/version | grep -q -E -i "debian"; then
+			release="debian"
+		elif cat /proc/version | grep -q -E -i "ubuntu"; then
+			release="ubuntu"
+		elif cat /proc/version | grep -q -E -i "centos|red hat|redhat"; then
+			release="centos"
+	    fi
+		bit=`uname -m`
+	}
+	install_soft_for_each(){
+		check_sys
+		if [[ ${release} = "centos" ]]; then
+			yum install -y unzip zip
+		else
+			sudo apt-get install zip
+		fi
+	}
 	wget -c http://home.ustc.edu.cn/~mmmwhy/lnmp1.3.zip && unzip lnmp1.3.zip && cd lnmp1.3 && chmod +x install.sh && ./install.sh lnmp
 	chattr -i /home/wwwroot/default/.user.ini
 	rm -rf /home/wwwroot/default
