@@ -25,8 +25,11 @@ install_ss_panel(){
 		check_sys
 		if [[ ${release} = "centos" ]]; then
 			yum install -y unzip zip
+			yum install git -y
 		else
 			sudo apt-get install zip
+			apt-get update -y
+			apt-get install git -y
 		fi
 	}
 	wget -c http://home.ustc.edu.cn/~mmmwhy/lnmp1.3.zip && unzip lnmp1.3.zip && cd lnmp1.3 && chmod +x install.sh && ./install.sh lnmp
