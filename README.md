@@ -60,6 +60,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/mmmwhy/ss-panel
 ![mark](http://cdn.mmmxcc.cn/blog/20170509/221038086.png)
 
 输入相关信息，ip地址和域名都是支持的，但是需要加上**http:// 或者 https://** ，注意区分自己域名有没有ssl。否则可能出现用户使用记录无法推送的问题。
+
 ![](http://cdn.mmmxcc.cn/blog/20170509/221216262.png)
 
 # 其他补充内容
