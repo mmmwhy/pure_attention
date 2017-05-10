@@ -11,7 +11,7 @@
 ![](http://cdn.mmmxcc.cn/blog/20170509/215724204.png)
 # 特点
 - 前端使用最新[ss-panel v3](https://github.com/orvice/ss-panel)，稳定性和可管理行都有明显提高。
-- 后端使用[**[shadowsocks-py-mu](https://github.com/fsgmhoward/shadowsocks-py-mu)**](https://github.com/fsgmhoward/shadowsocks-py-mu)，多用户，与前端完美对接。
+- 后端使用[shadowsocks-py-mu](https://github.com/fsgmhoward/shadowsocks-py-mu)，多用户版本，与前端完美对接。
 - 过程全自动，所以可能碰到的坑都提前做好处理。
 - 被墙掉的资源都换成了墙内资源，不会出现被卡死的情况了。
 
@@ -19,8 +19,11 @@
 理论上：CentOS 6+ / Debian 7+ / Ubuntu 14.04 +  都可以，建议CentOS7 X64，我用的是这个版本，通过测试。
 
 # 一键安装脚本
-- 登陆后运行：screen -S ss
-如果提示screen: command not found 命令不存在可以执行：yum install screen 或 apt-get install screen安装（如果网络掉线，可以重新连接，再执行 screen -r ss 就会看到你的ss-panel安装进程。）
+- 登陆后运行：
+```
+screen -S ss
+```
+如果提示screen: command not found 命令不存在可以执行：`yum install screen` 或 `apt-get install screen`安装（如果网络掉线，可以重新连接，再执行 screen -r ss 就会看到你的ss-panel安装进程。）
 - 安装脚本
 ```
 wget -N --no-check-certificate https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/ss-panel_node.sh && chmod +x ss-panel_node.sh && bash ss-panel_node.sh
