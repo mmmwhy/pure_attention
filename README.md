@@ -23,7 +23,7 @@
 ```
 screen -S ss
 ```
-如果提示screen: command not found 命令不存在可以执行：`yum install screen` 或 `apt-get install screen`安装（如果网络掉线，可以重新连接，再执行 screen -r ss 就会看到你的ss-panel安装进程。）
+如果提示screen: command not found 命令不存在可以执行：`yum install screen` 或 `apt-get install screen`安装（如果网络掉线，可以重新连接，再执行 `screen -r ss` 就会看到你的ss-panel安装进程。）
 - 安装脚本
 ```
 wget -N --no-check-certificate https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/ss-panel_node.sh && chmod +x ss-panel_node.sh && bash ss-panel_node.sh
