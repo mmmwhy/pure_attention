@@ -3,15 +3,6 @@
 [ $(id -u) != "0" ] && { echo "Error: You must be root to run this script"; exit 1; }
 #check OS version
 install_ss_panel(){
-	clear
-	echo
-	echo "#############################################################"
-	echo "# One click Install SS-panel                                #"
-	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
-	echo "# Author: Feiyang.li                                        #"
-	echo "# Blog: https://feiyang.li/                                 #"
-	echo "#############################################################"
-	echo
 	wget -c http://home.ustc.edu.cn/~mmmwhy/lnmp1.3.zip && unzip lnmp1.3.zip && cd lnmp1.3 && chmod +x install.sh && ./install.sh lnmp
 	chattr -i /home/wwwroot/default/.user.ini
 	rm -rf /home/wwwroot/default
@@ -36,7 +27,7 @@ install_ss_py_mu(){
 	echo "# One click Install Shadowsocks-Python-Manyuser             #"
 	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
 	echo "# Author: Feiyang.li                                        #"
-	echo "# Blog: https://feiyang.li/                                 #"
+	echo "# http://feiyang.li/2017/05/09/ss-shell/index.html          #"
 	echo "#############################################################"
 	echo
 	#Check Root
@@ -177,12 +168,7 @@ one_click_all(){
 	echo "# 安装成功，登录http://${IPAddress}看看吧~                  #"
 	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
 	echo "# Author: Feiyang.li                                        #"
-	echo "# Blog: https://feiyang.li/                                 #"
-	echo "# Please choose the server you want                         #"
-	echo "# 1  SS-panel + SS-node One click Install                   #"
-	echo "# 2  SS-panel One click Install                             #"
-	echo "# 3  SS-node One click Install                              #"
-	echo "# Blog: https://feiyang.li/                                 #"
+	echo "# Blog: http://feiyang.li/2017/05/09/ss-shell/index.html    #"
 	echo "#############################################################"
 }
 
@@ -192,12 +178,11 @@ echo "#############################################################"
 echo "# One click Install SS-panel and Shadowsocks-Py-Mu          #"
 echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
 echo "# Author: Feiyang.li                                        #"
-echo "# Blog: https://feiyang.li/                                 #"
+echo "# http://feiyang.li/2017/05/09/ss-shell/index.html          #"
 echo "# Please choose the server you want                         #"
 echo "# 1  SS-panel + SS-node One click Install                   #"
 echo "# 2  SS-panel One click Install                             #"
 echo "# 3  SS-node One click Install                              #"
-echo "# Blog: https://feiyang.li/                                 #"
 echo "#############################################################"
 echo
 stty erase '^H' && read -p " 请输入数字 [1-3]:" num
