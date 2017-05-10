@@ -29,12 +29,16 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/mmmwhy/ss-panel
 运行脚本后会出现脚本操作菜单，
 ## ss-panel和ss-node同时安装
 选择并输入 1 
+
 ![](http://cdn.mmmxcc.cn/blog/20170509/214909086.png)
+
 安装结束后，登陆IP即可查看网站
 **默认账户：ss@feiyang.li**
 **默认密码：feiyang**
 进入ss-panel页面后，记得在**管理面包->节点管理->添加节点->输入节点信息**
+
 ![](http://cdn.mmmxcc.cn/blog/20170510/085511290.png)
+
 之后回到用户面板，就可以使用了。
 
 ## 仅安装ss-panel
