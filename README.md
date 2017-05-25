@@ -1,6 +1,14 @@
-> 上周接触了ss-panel，发现搭建起来异常的麻烦，对新手来说，到处都是坑，因此写了本ss-panel一键安装脚本 。示例站点：https://ss.feiyang.li/
+> 上周接触了ss-panel，发现搭建起来异常的麻烦，对新手来说，到处都是坑，因此写了本ss-panel一键安装脚本 。
+# 特点
 
-图片加载不出来，可以再刷新一下。
+- 以使用BBR加速：[一键代码](http://feiyang.li/2017/05/05/ss-panel-full/index.html#OpenVZ-以外的（-KVM-、-Xen-、-VMware-等）)
+- 使用`supervisord`，守护运行。（重启后输入`supervisord`，即可启动守护程序）
+- [常见错误](http://feiyang.li/2017/05/03/ss-panel/index.html#常见错误)在这里查看
+- 前端使用最新[ss-panel v3](https://github.com/orvice/ss-panel)，稳定性和可管理行都有明显提高。
+- 后端使用[shadowsocks-py-mu](https://github.com/fsgmhoward/shadowsocks-py-mu)，多用户版本，与前端完美对接。
+- 过程全自动，所以可能碰到的坑都提前做好处理。
+- 被墙掉的资源都换成了墙内资源，不会出现被卡死的情况了。
+
 ---
 # 效果
 ![](http://cdn.mmmxcc.cn/blog/20170509/191015542.png)
@@ -13,11 +21,7 @@
 
 ![](http://cdn.mmmxcc.cn/blog/20170509/215724204.png)
 
-# 特点
-- 前端使用最新[ss-panel v3](https://github.com/orvice/ss-panel)，稳定性和可管理行都有明显提高。
-- 后端使用[shadowsocks-py-mu](https://github.com/fsgmhoward/shadowsocks-py-mu)，多用户版本，与前端完美对接。
-- 过程全自动，所以可能碰到的坑都提前做好处理。
-- 被墙掉的资源都换成了墙内资源，不会出现被卡死的情况了。
+
 
 # 系统要求
 建议CentOS7 X64，我用的是这个版本，目前在腾讯云，digitalocean，interserver上通过测试。
@@ -94,10 +98,5 @@ root 952 739 0 15:40 ? 00:00:00 python /root/shadowsocks-rm/shadowsocks/servers.
 
 - mailgun账号需要自己申请，我那个只是举个例子。
 - 基于[lnmp1.3稳定版](https://lnmp.org/)制作，兼容性非常好。
-- 关于[Google的bbr加速](http://feiyang.li/2017/05/05/ss-panel-full/index.html#谷歌BBR加速)，与本脚本可以通用，但是因为效果不明显(可能因为我们实验室网太烂了吧)，所以我没有加入。
-- 有人问到，vps重启后，节点就不能连接了。有两个方法：
- - 使用crontab
- - 开机之后，输入`supervisord`，打开守护进程就好了。
-- [常见错误](http://feiyang.li/2017/05/03/ss-panel/index.html#常见错误)在这里查看
 - 如果想设置更多的信息，请查看[安装教程全文](http://feiyang.li/2017/05/05/ss-panel-full/index.html)，本脚本和该教程内容完全一致。
 - 不停的有人问“node不能添加”“启动不起来”“怎么添加域名”“怎么修改签到流量”“怎么修改初始流量”.......如果真的有什么问题，建议先看上边两个页面，其实写的很清楚了。
