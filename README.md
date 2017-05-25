@@ -1,7 +1,7 @@
 > 上周接触了ss-panel，发现搭建起来异常的麻烦，对新手来说，到处都是坑，因此写了本ss-panel一键安装脚本 。
 # 特点
 
-- 以使用BBR加速：[一键代码](http://feiyang.li/2017/05/05/ss-panel-full/index.html#OpenVZ-以外的（-KVM-、-Xen-、-VMware-等）)
+- 可以使用BBR加速：选择对应[一键代码](http://feiyang.li/2017/05/05/ss-panel-full/index.html#OpenVZ-以外的（-KVM-、-Xen-、-VMware-等）)即可
 - 使用`supervisord`，守护运行。（重启后输入`supervisord`，即可启动守护程序）
 - [常见错误](http://feiyang.li/2017/05/03/ss-panel/index.html#常见错误)在这里查看
 - 前端使用最新[ss-panel v3](https://github.com/orvice/ss-panel)，稳定性和可管理行都有明显提高。
