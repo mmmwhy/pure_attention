@@ -3,11 +3,11 @@
 [ $(id -u) != "0" ] && { echo "Error: You must be root to run this script"; exit 1; }
 install_ss_panel_mod_v3(){
 	yum install -y unzip zip
-	#wget -c https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/lnmp1.3.zip && unzip lnmp1.3.zip && cd lnmp1.3 && chmod +x install.sh && ./install.sh lnmp
+	wget -c https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/lnmp1.3.zip && unzip lnmp1.3.zip && cd lnmp1.3 && chmod +x install.sh && ./install.sh lnmp
 	cd /home/wwwroot/default/
 	yum install git -y
 	rm -rf index.html
-	wget http://home.ustc.edu.cn/~mmmwhy/ss.panel_mod.zip && unzip ss.panel_mod.zip
+	wget https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/ss.panel_mod.zip && unzip ss.panel_mod.zip
 	chattr -i .user.ini
 	mv .user.ini public
 	chown -R root:root *
@@ -107,8 +107,8 @@ install_ssr(){
 	install_soft_for_each(){
 		    check_sys
 		    if [[ ${release} = "centos" ]]; then
-			        yum install git -y
-			        yum install python-setuptools && easy_install pip -y
+			        yum -y install git -y
+			        yum -y install python-setuptools && easy_install pip -y
 			        yum -y groupinstall "Development Tools" -y
 			        wget https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/libsodium-1.0.11.tar.gz
 			        tar xf libsodium-1.0.11.tar.gz && cd libsodium-1.0.10
