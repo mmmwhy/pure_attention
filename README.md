@@ -1,3 +1,6 @@
+示例站点：http://gz.feiyang.li/ 
+
+马上过期了，凑活看看吧，除去lnmp的安装时间，仅需3分钟即可完成。
 # [ss-panel 一键脚本](https://91vps.club/2017/05/26/ss-panel/)
 ```
 wget -N --no-check-certificate https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/ss-panel_node.sh && chmod +x ss-panel_node.sh && bash ss-panel_node.sh
@@ -15,6 +18,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/mmmwhy/ss-panel
 
 
 **默认账户：ss@feiyang.li**
+
 **默认密码：feiyang**
 
 详情请[点击查看](https://91vps.club/category/shadowsocks/ss-build/)，还有一个shadowsocks-manager一键安装脚本，自己看吧。
