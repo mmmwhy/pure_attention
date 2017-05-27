@@ -114,6 +114,8 @@ one_click_all(){
 	IPAddress=`wget http://members.3322.org/dyndns/getip -O - -q ; echo`;
 	cd /root/shadowsocks
 	echo -e "modify Config.py...\n"
+	sed -i '2d' /root/shadowsocks/userapiconfig.py
+	sed -i "2a\NODE_ID = 3" /root/shadowsocks/userapiconfig.py
 	sed -i "s#https://zhaoj.in#${IPAddress}#" /root/shadowsocks/userapiconfig.py
 	sed -i "s#glzjin#$mupass#" /root/shadowsocks/userapiconfig.py
 	./logrun.sh
