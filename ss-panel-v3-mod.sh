@@ -96,38 +96,18 @@ install_node(){
 	read -p "Please input your muKey(like:mupass): " Usermukey
 	read -p "Please input your Node_ID(like:1): " UserNODE_ID
 	install_ssr
+	IPAddress=`wget http://members.3322.org/dyndns/getip -O - -q ; echo`;
 	cd /root/shadowsocks
 	echo -e "modify Config.py...\n"
-	Userdomain=${Userdomain:-"http://gz.feiyang.li"}
+	Userdomain=${Userdomain:-"http://${IPAddress}"}
 	sed -i "s#https://zhaoj.in#${Userdomain}#" /root/shadowsocks/userapiconfig.py
 	Usermukey=${Usermukey:-"mupass"}
 	sed -i "s#glzjin#${Usermukey}#" /root/shadowsocks/userapiconfig.py
-	UserNODE_ID=${UserNODE_ID:-"1"}
+	UserNODE_ID=${UserNODE_ID:-"3"}
 	sed -i '2d' /root/shadowsocks/userapiconfig.py
 	sed -i "2a\NODE_ID = ${UserNODE_ID}" /root/shadowsocks/userapiconfig.py
 	cd /root/shadowsocks
 	./logrun.sh
-}
-one_click_all(){
-	install_ss_panel_mod_v3
-	install_ssr
-	IPAddress=`wget http://members.3322.org/dyndns/getip -O - -q ; echo`;
-	cd /root/shadowsocks
-	echo -e "modify Config.py...\n"
-	sed -i '2d' /root/shadowsocks/userapiconfig.py
-	sed -i "2a\NODE_ID = 3" /root/shadowsocks/userapiconfig.py
-	sed -i "s#https://zhaoj.in#http://${IPAddress}#" /root/shadowsocks/userapiconfig.py
-	sed -i "s#glzjin#mupass#" /root/shadowsocks/userapiconfig.py
-	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
-	iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
-	iptables-save
-	./logrun.sh
-	echo "#############################################################"
-	echo "# 安装成功，登录http://${IPAddress}看看吧~                  #"
-	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
-	echo "# Author: Feiyang.li                                        #"
-	echo "# Blog: https://91vps.club/2017/05/27/ss-panel-v3-mod/      #"
-	echo "#############################################################"
 }
 echo
 echo "#############################################################"
@@ -136,20 +116,16 @@ echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
 echo "# Author: 91VPS.club                                        #"
 echo "# Blog: https://91vps.club/2017/05/27/ss-panel-v3-mod/      #"
 echo "# Please choose the server you want                         #"
-echo "# 1  SS-V3_mod_panel + SS-node One click Install            #"
-echo "# 2  SS-V3_mod_panel One click Install                      #"
-echo "# 3  SS-node One click Install                              #"
+echo "# 1  SS-V3_mod_panel One click Install                      #"
+echo "# 2  SS-node One click Install                              #"
 echo "#############################################################"
 echo
 stty erase '^H' && read -p " 请输入数字 [1-3]:" num
 case "$num" in
 	1)
-	one_click_all
-	;;
-	2)
 	install_ss_panel_mod_v3
 	;;
-	3)
+	2)
 	install_node
 	;;
 	*)
