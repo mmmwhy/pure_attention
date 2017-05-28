@@ -121,7 +121,7 @@ echo "# 1  SS-V3_mod_panel One click Install                      #"
 echo "# 2  SS-node One click Install                              #"
 echo "#############################################################"
 echo
-stty erase '^H' && read -p " 请输入数字 [1-3]:" num
+stty erase '^H' && read -p " 请输入数字 [1-2]:" num
 case "$num" in
 	1)
 	install_ss_panel_mod_v3
@@ -130,6 +130,6 @@ case "$num" in
 	install_node
 	;;
 	*)
-	echo "请输入正确数字 [1-3]"
+	echo "请输入正确数字 [1-2]"
 	;;
 esac
