@@ -116,8 +116,8 @@ one_click_all(){
 	echo -e "modify Config.py...\n"
 	sed -i '2d' /root/shadowsocks/userapiconfig.py
 	sed -i "2a\NODE_ID = 3" /root/shadowsocks/userapiconfig.py
-	sed -i "s#https://zhaoj.in#${IPAddress}#" /root/shadowsocks/userapiconfig.py
-	sed -i "s#glzjin#$mupass#" /root/shadowsocks/userapiconfig.py
+	sed -i "s#https://zhaoj.in#http://${IPAddress}#" /root/shadowsocks/userapiconfig.py
+	sed -i "s#glzjin#mupass#" /root/shadowsocks/userapiconfig.py
 	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
 	iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
 	iptables-save
