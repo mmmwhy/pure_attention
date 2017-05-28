@@ -109,6 +109,12 @@ install_node(){
 	sed -i "2a\NODE_ID = ${UserNODE_ID}" /root/shadowsocks/userapiconfig.py
 	cd /root/shadowsocks
 	./logrun.sh
+	echo "#############################################################"
+	echo "# 安装成功，登录前端站点看看吧                              #"
+	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
+	echo "# Author: Feiyang.li                                        #"
+	echo "# Blog: https://91vps.club/2017/05/27/ss-panel-v3-mod/      #"
+	echo "#############################################################"
 }
 echo
 echo "#############################################################"
