@@ -46,6 +46,7 @@ install_ss_panel_mod_v3(){
 	crontab –e 0 0 * * * php -n /home/wwwroot/ss.panel/xcat dailyjob
 	crontab –e */1 * * * * php /home/wwwroot/ss.panel/xcat checkjob    
 	crontab –e */1 * * * * php -n /home/wwwroot/ss.panel/xcat syncnas
+	IPAddress=`wget http://members.3322.org/dyndns/getip -O - -q ; echo`;
 	echo "#############################################################"
 	echo "# 安装成功，登录http://${IPAddress}看看吧~                  #"
 	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
