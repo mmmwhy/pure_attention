@@ -1,0 +1,56 @@
+type: m
+empty: false
+
+manager:
+    address: 127.0.0.1:4001
+    password: '123456'
+
+plugins:
+    flowSaver:
+        use: true
+    user:
+        use: true
+    account:
+        use: true
+        pay:
+            hour:
+                price: 0.05
+                flow: 500000000
+            day:
+                price: 0.5
+                flow: 7000000000
+            week:
+                price: 3
+                flow: 50000000000
+            month:
+                price: 10
+                flow: 200000000000
+            season:
+                price: 30
+                flow: 200000000000
+            year:
+                price: 120
+                flow: 200000000000
+    email:
+        use: true
+        username: 'mmmwhy@qq.com'
+        password: 'eymtukzycpybbdij'
+        host: 'smtp.qq.com'
+        port: 587
+        
+    webgui:
+        use: true
+        host: '0.0.0.0'
+        port: '80'
+        site: 'http://127.0.0.1'
+        gcmSenderId: '456102641793'
+        gcmAPIKey: 'AAAAGzzdqrE:XXXXXXXXXXXXXX'
+    alipay:
+        use: true
+        appid: 2017051207221985
+        notifyUrl: ''
+        merchantPrivateKey: 'MIIEogIBAAKCAQEAuGcQZUeERDN5a18S339HoifX/pEFIJ86/SyIPhi84hcZ/ER4JnkWRvOOIS1hVP3PJbS8WrAD55fb90sKNHEkuFoIYhJanANU5bjd3Tc5vFNill8zQjuwQhMuuxNGCmns67lDzC3MUSnOvJNZe6CmC1sdkDoEAe4Ltf23S0Ct9huaXwY4NU9OeDYZYE9rMD3E547PjSV2/TuW7OxDt9b03GGwZ6+aOPlATDGf7qOQ03/NedADbrf8M7ddAzyW1+vddF8jGR5S7GTk1xs8rDfiAuW2SESqirSrKr5qHVBHt8qU8ius0/U3tX49K0GJ2tv+YQzdeCSNHHXU8G/CpfNx6wIDAQABAoIBAGid6DpdaZe70E3vIWj07/H6Qttk8RDB5ZiO9DiuljJ6wr5RJg1FszLLqL3/3fF3EVemAxo8M+rnR98zjnWUHy4LvifNm+RZK4gs6oo/c5z5fbwsBIu2C1hhQ6jU1W7BC63sbJ9g+EKvwl9QBXtS+AEHT21szKs/nxs/9wZVipxNs+wbipNdl1FlPXy2VMLZ8r2zB6I97Hzd4otPSd5fvpfDzaiWN7mrw8nt+CSh64opq53b+eOAHrSvrPdrxmh0pkONRieJ0zwwC8pify5cJqwDzYWH9xihXUiTItgVNuOF3FZMLCVmEh2GW1jzfX4kjmXHR7ZohDwQHOI83718LWECgYEA42RDRer9nVZG8S08lxx2hmMPag9a4E3U9lws0LsiBWZ2fwK7pmCoPV9woVolxKkDD1hTMVBkb1m430ObTo7gVhwyWZu2cdhdrJGfkiwGVBWQj5rMfTjGaC9t/hjH6Xn5y5oTZXGyWHbbgKurXHwKkKa4HjRsZ1feqzbr3hv2CDECgYEAz5o6L+nwO8tgRL04XtBDf301L2DgXJF9JV+YZRaSBUUA1lPYDusjJw+Gp8RPFj5glWanED2c4ik0xRl/dpgGcwZTkRZZAjd/vvwpAwEsJHN0KlaYVWpiR0rSbRVaWO9MTT5XLeeO05HxnU5fQCmoJd1E2kVEVVrNpW+qc0D1cNsCgYABm0C6armV9fkUVRx7eNEBjAuc1TTwJrydbPNIGjpYTWwC47MNrtsha94w1aE0rXj/D8GutIGxI7IhqamcOXguQ467gVUdosiuomy9LKBy0aAu04okTFVigQtG40fuR1VTceg3LEF1TImqdAwG4D123iao1/f4Fu/Ux9OMwyfO0QKBgB48XyclUkjTKRU53eDpQjtqN/nLiUHSKsDruF1YuTGtSB7vHTOnCXqh50G99KrPsO9xgPl7j8Lcr4PZX9gc8iuEi11BPPt2q9NcFHkMjapNamjULeGa2e96NUWP65WyXJGPd9EGvaWQxvjbNkI5DvVc0a9ckURBMlxa9B9PIbArAoGAQccrgw1NV29+3A7bilAYLfTuZnk9CJrXYhmEjQrwLM4eQawftvIzbE2lDYOgI8zNaYzvJam49NiH2YvN0gtMIWnpm6UDDjNX+gkWrUJz2/UwJxTddys6OWuKVgDbUj98fEVdgCHEn0tlc/cXvb8M1X5Wj678c+k9YdS2dIqYwtU='
+        alipayPublicKey: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmeB6yomjdReHlKW3Z3cJqteqdzvNtp+mBecZYcM0/SYpJDgZwEojpE9944u+T2jxo7yJH1ndV0LmV004bocFakE9ZIlajYqsO4FpSWWRoBmtD95D36olGQWLpiOA/RYa7kpGWPfl8cl3Qis/Efl3Dkm++ns8GdYZvQkNbLl5RfLAUfBDp6DCxuWaHlQWMQi6rRwWmyuNDrTtSQd77LZrY8FgRwdsy3VoKRrjhac6JEdgWopxO3Ngg3qvuQuvRoXwTSYSJPt4ipmNTm75jQgzPKbVjgLRLgJYld5FVaeTgMW4LbgNYRt0LZCkp874Z331SXTaL6CPZQQgW4RHb+Ho0wIDAQAB'
+        gatewayUrl: 'https://openapi.alipay.com/gateway.do'
+
+db: 'webgui.sqlite'
