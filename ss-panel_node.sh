@@ -123,13 +123,10 @@ install_ss_py_mu(){
 	echo_supervisord_conf > /etc/supervisord.conf
 	sed -i '$a [program:ss-manyuser]\ncommand = python /root/shadowsocks-py-mu/shadowsocks/servers.py\nuser = root\nautostart = true\nautorestart = true' /etc/supervisord.conf
 	supervisord
-	systemctl stop firewalld 
-	yum install iptables-services -y
-	systemctl enable iptables 
-	systemctl start iptables
 	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
 	iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
-	service iptables save
+	iptables-save >/etc/sysconfig/iptables
+	echo '/sbin/iptables-restore /etc/sysconfig/iptables' >> /etc/rc.local
 	echo "/usr/bin/supervisord -c /etc/supervisord.conf" >> /etc/rc.local
 	chmod +x /etc/rc.d/rc.local
 	sleep 4
@@ -194,13 +191,10 @@ one_click_all(){
 	echo_supervisord_conf > /etc/supervisord.conf
 	sed -i '$a [program:ss-manyuser]\ncommand = python /root/shadowsocks-py-mu/shadowsocks/servers.py\nuser = root\nautostart = true\nautorestart = true' /etc/supervisord.conf
 	supervisord
-	systemctl stop firewalld 
-	yum install iptables-services -y
-	systemctl enable iptables 
-	systemctl start iptables
 	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
 	iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
-	iptables-save
+	iptables-save >/etc/sysconfig/iptables
+	echo '/sbin/iptables-restore /etc/sysconfig/iptables' >> /etc/rc.local
 	echo "/usr/bin/supervisord -c /etc/supervisord.conf" >> /etc/rc.local
 	chmod +x /etc/rc.d/rc.local
 	sleep 4
