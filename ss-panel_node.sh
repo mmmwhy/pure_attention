@@ -125,7 +125,7 @@ install_ss_py_mu(){
 	supervisord
 	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
 	iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
-	iptables-save
+	service iptables save
 	sleep 4
 	cat shadowsocks.log
 }
