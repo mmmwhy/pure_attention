@@ -126,7 +126,7 @@ install_ss_py_mu(){
 	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
 	iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
 	service iptables save
-	echo "/usr/bin/supervisorctl start ss-manyuser" >> /etc/rc.d/rc.local
+	echo "supervisord" >> /etc/rc.d/rc.local
 	sleep 4
 	cat shadowsocks.log
 }
@@ -192,7 +192,7 @@ one_click_all(){
 	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
 	iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
 	iptables-save
-	echo "/usr/bin/supervisorctl start ss-manyuser" >> /etc/rc.d/rc.local
+	echo "supervisord" >> /etc/rc.d/rc.local
 	sleep 4
 	cat shadowsocks.log
 	echo ""
