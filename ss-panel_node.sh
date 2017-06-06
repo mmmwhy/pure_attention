@@ -126,6 +126,8 @@ install_ss_py_mu(){
 	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
 	iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
 	service iptables save
+	wget -N -P  /usr/lib/systemd/system/ https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/supervisord.service
+	systemctl enable supervisord
 	sleep 4
 	cat shadowsocks.log
 }
@@ -191,6 +193,8 @@ one_click_all(){
 	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
 	iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
 	iptables-save
+	wget -N -P  /usr/lib/systemd/system/ https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/supervisord.service
+	systemctl enable supervisord
 	sleep 4
 	cat shadowsocks.log
 	echo ""
