@@ -88,7 +88,7 @@ install_ss_py_mu(){
 		check_sys
 		if [[ ${release} = "centos" ]]; then
 			echo "Will install below software on your centos system:"
-			yum install git -y
+			yum install git lsof -y
 			yum install python-setuptools -y 
 			yum -y groupinstall "Development Tools" -y
 			wget https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/libsodium-1.0.11.tar.gz
@@ -164,7 +164,7 @@ one_click_all(){
 		check_sys
 		if [[ ${release} = "centos" ]]; then
 			echo "Will install below software on your centos system:"
-			yum install git -y
+			yum install git lsof -y
 			yum install python-setuptools -y 
 			yum -y groupinstall "Development Tools" -y
 			wget https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/libsodium-1.0.11.tar.gz
