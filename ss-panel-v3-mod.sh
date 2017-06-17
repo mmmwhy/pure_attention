@@ -60,6 +60,12 @@ install_ssr(){
 	yum -y install git -y
 	yum -y install python-setuptools && easy_install pip -y
 	yum -y groupinstall "Development Tools" -y
+	#512M的小鸡增加1G的Swap分区
+	dd if=/dev/zero of=/var/swap bs=1024 count=1048576
+	mkswap /var/swap
+	chmod 0644 /var/swap
+	swapon /var/swap
+	echo '/var/swap   swap   swap   default 0 0' >> /etc/fstab
 	wget https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/libsodium-1.0.11.tar.gz
 	tar xf libsodium-1.0.11.tar.gz && cd libsodium-1.0.10
 	./configure && make -j2 && make install
@@ -79,7 +85,9 @@ install_ssr(){
 	#iptables
 	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
 	iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
-	iptables-save
+	iptables-save >/etc/sysconfig/iptables
+	echo 'iptables-restore /etc/sysconfig/iptables' >> /etc/rc.local
+	chmod +x /etc/rc.d/rc.local
 }
 install_node(){
 	clear
