@@ -67,7 +67,7 @@ install_ssr(){
 	swapon /var/swap
 	echo '/var/swap   swap   swap   default 0 0' >> /etc/fstab
 	wget https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/libsodium-1.0.11.tar.gz
-	tar xf libsodium-1.0.11.tar.gz && cd libsodium-1.0.10
+	tar xf libsodium-1.0.11.tar.gz && cd libsodium-1.0.11
 	./configure && make -j2 && make install
 	echo /usr/local/lib > /etc/ld.so.conf.d/usr_local_lib.conf
 	ldconfig
