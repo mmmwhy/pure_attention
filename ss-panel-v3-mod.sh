@@ -50,7 +50,7 @@ install_ss_panel_mod_v3(){
 	echo "#############################################################"
 	echo "# 安装成功，登录http://${IPAddress}看看吧~                  #"
 	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
-	echo "# Author: Feiyang.li                                        #"
+	echo "# Author: 91vps.club                                        #"
 	echo "# Blog: https://91vps.club/2017/05/27/ss-panel-v3-mod/      #"
 	echo "#############################################################"
 }
@@ -118,9 +118,9 @@ install_node(){
 	cd /root/shadowsocks
 	./logrun.sh
 	echo "#############################################################"
-	echo "# 安装成功，登录前端站点看看吧                              #"
+	echo "# 安装完成，登录前端站点看看吧                                  #"
 	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
-	echo "# Author: Feiyang.li                                        #"
+	echo "# Author: 91VPS.CLUB                                        #"
 	echo "# Blog: https://91vps.club/2017/05/27/ss-panel-v3-mod/      #"
 	echo "#############################################################"
 }
