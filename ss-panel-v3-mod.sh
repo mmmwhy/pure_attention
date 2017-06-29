@@ -2,6 +2,7 @@
 #Check Root
 [ $(id -u) != "0" ] && { echo "Error: You must be root to run this script"; exit 1; }
 install_ss_panel_mod_v3(){
+	yum -y remove httpd
 	yum install -y unzip zip
 	wget -c https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/lnmp1.3.zip && unzip lnmp1.3.zip && cd lnmp1.3 && chmod +x install.sh && ./install.sh lnmp
 	cd /home/wwwroot/default/
@@ -99,6 +100,7 @@ install_node(){
 	echo "# https://91vps.club/2017/05/27/ss-panel-v3-mod/            #"
 	echo "#############################################################"
 	echo
+	yum -y remove httpd
 	#Check Root
 	[ $(id -u) != "0" ] && { echo "Error: You must be root to run this script"; exit 1; }
 	read -p "Please input your domain(like:https://ss.feiyang.li or http://114.114.114.114): " Userdomain
