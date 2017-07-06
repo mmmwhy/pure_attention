@@ -40,12 +40,14 @@ install_ss_panel_mod_v3(){
 	cd /home/wwwroot/default
 	php composer.phar install
 	yum -y install vixie-cron crontabs
-	crontab –e 30 22 * * * php /home/wwwroot/ss.panel/xcat sendDiaryMail
-	crontab –e */1 * * * * php /home/wwwroot/ss.panel/xcat synclogin
-	crontab –e */1 * * * * php /home/wwwroot/ss.panel/xcat syncvpn
-	crontab –e 0 0 * * * php -n /home/wwwroot/ss.panel/xcat dailyjob
-	crontab –e */1 * * * * php /home/wwwroot/ss.panel/xcat checkjob    
-	crontab –e */1 * * * * php -n /home/wwwroot/ss.panel/xcat syncnas
+	rm -rf /var/spool/cron/root
+	echo 'SHELL=/bin/bash' >> /var/spool/cron/root
+	echo 'PATH=/sbin:/bin:/usr/sbin:/usr/bin' >> /var/spool/cron/root
+	echo '*/20 * * * * /usr/sbin/ntpdate pool.ntp.org > /dev/null 2>&1' >> /var/spool/cron/root
+	echo '30 22 * * * php /www/wwwroot/ss.panel/xcat sendDiaryMail' >> /var/spool/cron/root
+	echo '0 0 * * * php /www/wwwroot/ss.panel/xcat dailyjob' >> /var/spool/cron/root
+	echo '*/1 * * * * php /www/wwwroot/ss.panel/xcat checkjob' >> /var/spool/cron/root
+	/sbin/service crond restart
 	IPAddress=`wget http://members.3322.org/dyndns/getip -O - -q ; echo`;
 	echo "#############################################################"
 	echo "# 安装成功，登录http://${IPAddress}看看吧~                  #"
