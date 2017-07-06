@@ -89,6 +89,7 @@ install_ssr(){
 	iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
 	iptables-save >/etc/sysconfig/iptables
 	echo 'iptables-restore /etc/sysconfig/iptables' >> /etc/rc.local
+	echo '/root/shadowsocks/./logrun.sh ' >> /etc/rc.local
 	chmod +x /etc/rc.d/rc.local
 }
 install_node(){
