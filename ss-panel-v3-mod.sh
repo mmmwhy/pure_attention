@@ -39,8 +39,7 @@ install_ss_panel_mod_v3(){
 	service radiusd start && chkconfig radiusd on
 	cd /home/wwwroot/default
 	php composer.phar install
-	yum -y install vixie-cron
-	yum -y install crontabs
+	yum -y install vixie-cron crontabs
 	crontab –e 30 22 * * * php /home/wwwroot/ss.panel/xcat sendDiaryMail
 	crontab –e */1 * * * * php /home/wwwroot/ss.panel/xcat synclogin
 	crontab –e */1 * * * * php /home/wwwroot/ss.panel/xcat syncvpn
