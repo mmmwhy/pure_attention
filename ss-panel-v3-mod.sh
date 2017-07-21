@@ -56,9 +56,9 @@ install_ss_panel_mod_v3(){
 	echo "# Blog: https://91vps.club/2017/05/27/ss-panel-v3-mod/      #"
 	echo "#############################################################"
 }
-install_ssr(){
+install_centos_ssr(){
+	yum -y remove httpd
 	yum -y update
-	yum -y install git -y
 	yum -y install git -y
 	yum -y install python-setuptools && easy_install pip -y
 	yum -y groupinstall "Development Tools" -y
@@ -86,11 +86,36 @@ install_ssr(){
 	cp config.json user-config.json
 	#iptables
 	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
+	iptables -I INPUT -p udp -m tcp --dport 104 -j ACCEPT
 	iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
+	iptables -I INPUT -p udp -m tcp --dport 1024: -j ACCEPT
 	iptables-save >/etc/sysconfig/iptables
 	echo 'iptables-restore /etc/sysconfig/iptables' >> /etc/rc.local
 	echo '/root/shadowsocks/./logrun.sh ' >> /etc/rc.local
 	chmod +x /etc/rc.d/rc.local
+}
+install_ubuntu_ssr(){
+	apt-get install build-essential wget -y
+	apt-get install iptables -y
+	wget https://github.com/jedisct1/libsodium/releases/download/1.0.10/libsodium-1.0.10.tar.gz
+	tar xf libsodium-1.0.10.tar.gz && cd libsodium-1.0.10
+	./configure && make -j2 && make install
+	ldconfig
+	apt-get install python-pip git -y
+	pip install cymysql
+	cd /root
+	git clone -b manyuser https://github.com/glzjin/shadowsocks.git
+	cd shadowsocks
+	pip install -r requirements.txt
+	chmod +x *.sh
+	# 配置程序
+	cp apiconfig.py userapiconfig.py
+	cp config.json user-config.json
+	#iptables
+	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
+	iptables -I INPUT -p udp -m tcp --dport 104 -j ACCEPT
+	iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
+	iptables -I INPUT -p udp -m tcp --dport 1024: -j ACCEPT
 }
 install_node(){
 	clear
@@ -102,13 +127,39 @@ install_node(){
 	echo "# https://91vps.club/2017/05/27/ss-panel-v3-mod/            #"
 	echo "#############################################################"
 	echo
-	yum -y remove httpd
 	#Check Root
 	[ $(id -u) != "0" ] && { echo "Error: You must be root to run this script"; exit 1; }
+	#check OS version
+	check_sys(){
+		if [[ -f /etc/redhat-release ]]; then
+			release="centos"
+		elif cat /etc/issue | grep -q -E -i "debian"; then
+			release="debian"
+		elif cat /etc/issue | grep -q -E -i "ubuntu"; then
+			release="ubuntu"
+		elif cat /etc/issue | grep -q -E -i "centos|red hat|redhat"; then
+			release="centos"
+		elif cat /proc/version | grep -q -E -i "debian"; then
+			release="debian"
+		elif cat /proc/version | grep -q -E -i "ubuntu"; then
+			release="ubuntu"
+		elif cat /proc/version | grep -q -E -i "centos|red hat|redhat"; then
+			release="centos"
+	    fi
+		bit=`uname -m`
+	}
+	install_ssr_for_each(){
+		check_sys
+		if [[ ${release} = "centos" ]]; then
+			install_centos_ssr
+		else
+			install_ubuntu_ssr
+		fi
+	}
 	read -p "Please input your domain(like:https://ss.feiyang.li or http://114.114.114.114): " Userdomain
 	read -p "Please input your muKey(like:mupass): " Usermukey
 	read -p "Please input your Node_ID(like:1): " UserNODE_ID
-	install_ssr
+	install_ssr_for_each
 	IPAddress=`wget http://members.3322.org/dyndns/getip -O - -q ; echo`;
 	cd /root/shadowsocks
 	echo -e "modify Config.py...\n"
