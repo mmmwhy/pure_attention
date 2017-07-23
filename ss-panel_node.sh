@@ -127,9 +127,9 @@ install_ss_py_mu(){
 	systemctl disable firewalld.service
 	yum install iptables-services -y
 	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
-	iptables -I INPUT -p udp -m tcp --dport 104 -j ACCEPT
+	iptables -I INPUT -p udp -m udp --dport 104 -j ACCEPT
 	iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
-	iptables -I INPUT -p udp -m tcp --dport 1024: -j ACCEPT
+	iptables -I INPUT -p udp -m udp --dport 1024: -j ACCEPT
 	iptables-save >/etc/sysconfig/iptables
 	echo 'iptables-restore /etc/sysconfig/iptables' >> /etc/rc.local
 	echo "/usr/bin/supervisord -c /etc/supervisord.conf" >> /etc/rc.local
@@ -200,9 +200,9 @@ one_click_all(){
 	systemctl disable firewalld.service
 	yum install iptables-services -y
 	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
-	iptables -I INPUT -p udp -m tcp --dport 104 -j ACCEPT
+	iptables -I INPUT -p udp -m udp --dport 104 -j ACCEPT
 	iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
-	iptables -I INPUT -p udp -m tcp --dport 1024: -j ACCEPT
+	iptables -I INPUT -p udp -m udp --dport 1024: -j ACCEPT
 	iptables-save >/etc/sysconfig/iptables
 	echo 'iptables-restore /etc/sysconfig/iptables' >> /etc/rc.local
 	echo "/usr/bin/supervisord -c /etc/supervisord.conf" >> /etc/rc.local
