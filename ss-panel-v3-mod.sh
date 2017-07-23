@@ -86,9 +86,9 @@ install_centos_ssr(){
 	cp config.json user-config.json
 	#iptables
 	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
-	iptables -I INPUT -p udp -m tcp --dport 104 -j ACCEPT
+	iptables -I INPUT -p udp -m udp --dport 104 -j ACCEPT
 	iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
-	iptables -I INPUT -p udp -m tcp --dport 1024: -j ACCEPT
+	iptables -I INPUT -p udp -m udp --dport 1024: -j ACCEPT
 	iptables-save >/etc/sysconfig/iptables
 	echo 'iptables-restore /etc/sysconfig/iptables' >> /etc/rc.local
 	echo '/root/shadowsocks/./logrun.sh ' >> /etc/rc.local
@@ -113,9 +113,9 @@ install_ubuntu_ssr(){
 	cp config.json user-config.json
 	#iptables
 	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
-	iptables -I INPUT -p udp -m tcp --dport 104 -j ACCEPT
+	iptables -I INPUT -p udp -m udp --dport 104 -j ACCEPT
 	iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
-	iptables -I INPUT -p udp -m tcp --dport 1024: -j ACCEPT
+	iptables -I INPUT -p udp -m udp --dport 1024: -j ACCEPT
 }
 install_node(){
 	clear
