@@ -75,7 +75,7 @@ install_centos_ssr(){
 	ldconfig
 	#clone shadowsocks
 	cd /root
-	git clone -b aead https://github.com/glzjin/shadowsocks.git "/root/shadowsocks"
+	git clone -b manyuser git clone -b manyuser https://github.com/glzjin/shadowsocks.git "/root/shadowsocks"
 	#install devel
 	cd /root/shadowsocks
 	yum -y install python-devel
@@ -105,7 +105,7 @@ install_ubuntu_ssr(){
 	apt-get install python-pip git -y
 	pip install cymysql
 	cd /root
-	git clone -b aead https://github.com/glzjin/shadowsocks.git
+	git clone -b manyuser git clone -b manyuser https://github.com/glzjin/shadowsocks.git "/root/shadowsocks"
 	cd shadowsocks
 	pip install -r requirements.txt
 	chmod +x *.sh
