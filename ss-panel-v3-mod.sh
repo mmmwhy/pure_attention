@@ -59,9 +59,9 @@ install_ss_panel_mod_v3(){
 install_centos_ssr(){
 	yum -y remove httpd
 	yum -y update
-	yum -y install git -y
-	yum -y install python-setuptools && easy_install pip -y
-	yum -y groupinstall "Development Tools" -y
+	yum -y install git 
+	yum -y install python-setuptools && easy_install pip 
+	yum -y groupinstall "Development Tools" 
 	#512M的小鸡增加1G的Swap分区
 	dd if=/dev/zero of=/var/swap bs=1024 count=1048576
 	mkswap /var/swap
