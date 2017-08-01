@@ -1,4 +1,4 @@
-示例站点：https://ss.91vps.club/ 
+示例站点：https://go.v2no.com/
 
 马上过期了，凑活看看吧，除去lnmp的安装时间，仅需3分钟即可完成。
 # [ss-panel 一键脚本](https://91vps.club/2017/05/26/ss-panel/)
