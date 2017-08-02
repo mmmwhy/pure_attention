@@ -79,6 +79,7 @@ install_centos_ssr(){
 	git clone -b manyuser https://github.com/glzjin/shadowsocks.git "/root/shadowsocks"
 	#install devel
 	cd /root/shadowsocks
+	yum -y install lsof
 	yum -y install python-devel
 	yum -y install libffi-devel
 	yum -y install openssl-devel
@@ -94,7 +95,7 @@ install_centos_ssr(){
 }
 install_ubuntu_ssr(){
 	apt-get update -y
-	apt-get install supervisor -y
+	apt-get install supervisor lsof -y
 	apt-get install build-essential wget -y
 	apt-get install iptables git -y
 	wget https://github.com/jedisct1/libsodium/releases/download/1.0.13/libsodium-1.0.13.tar.gz
@@ -182,11 +183,12 @@ install_node(){
 	echo "/usr/bin/supervisord -c /etc/supervisord.conf" >> /etc/rc.local
 	chmod +x /etc/rc.d/rc.local
 	echo "#############################################################"
-	echo "# 安装完成，登录前端站点看看吧                              #"
+	echo "# 安装完成，节点即将重启使配置生效                          #"
 	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
 	echo "# Author: v2no                                              #"
 	echo "# Blog: https://v2no.com/2017/05/27/ss-panel-v3-mod/        #"
 	echo "#############################################################"
+	reboot now
 }
 echo
 echo "#############################################################"

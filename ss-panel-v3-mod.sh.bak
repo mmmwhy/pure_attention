@@ -57,11 +57,10 @@ install_ss_panel_mod_v3(){
 	echo "#############################################################"
 }
 install_centos_ssr(){
-	yum -y remove httpd
 	yum -y update
-	yum -y install git -y
-	yum -y install python-setuptools && easy_install pip -y
-	yum -y groupinstall "Development Tools" -y
+	yum -y install git 
+	yum -y install python-setuptools && easy_install pip 
+	yum -y groupinstall "Development Tools" 
 	#512M的小鸡增加1G的Swap分区
 	dd if=/dev/zero of=/var/swap bs=1024 count=1048576
 	mkswap /var/swap
@@ -80,6 +79,7 @@ install_centos_ssr(){
 	git clone -b manyuser https://github.com/glzjin/shadowsocks.git "/root/shadowsocks"
 	#install devel
 	cd /root/shadowsocks
+	yum -y install lsof
 	yum -y install python-devel
 	yum -y install libffi-devel
 	yum -y install openssl-devel
@@ -95,11 +95,9 @@ install_centos_ssr(){
 }
 install_ubuntu_ssr(){
 	apt-get update -y
-	apt-get install supervisor -y
-	apt-get install git -y
-	apt-get install build-essential -y
-	apt-get install wget -y
-	apt-get install iptables -y
+	apt-get install supervisor lsof -y
+	apt-get install build-essential wget -y
+	apt-get install iptables git -y
 	wget https://github.com/jedisct1/libsodium/releases/download/1.0.13/libsodium-1.0.13.tar.gz
 	tar xf libsodium-1.0.13.tar.gz && cd libsodium-1.0.13
 	./configure && make -j2 && make install
@@ -108,7 +106,7 @@ install_ubuntu_ssr(){
 	apt-get install python-pip git -y
 	pip install cymysql
 	cd /root
-	git clone -b manyuser https://github.com/glzjin/shadowsocks.git
+	git clone -b manyuser https://github.com/glzjin/shadowsocks.git "/root/shadowsocks"
 	cd shadowsocks
 	pip install -r requirements.txt
 	chmod +x *.sh
@@ -162,7 +160,7 @@ install_node(){
 		fi
 	}
 	# 取消文件数量限制
-	sed -i '$a *      hard     nofile     512000\n*      soft     nofile     512000' /etc/security/limits.conf
+	sed -i '$a * hard nofile 512000\n* soft nofile 512000' /etc/security/limits.conf
 	read -p "Please input your domain(like:https://ss.feiyang.li or http://114.114.114.114): " Userdomain
 	read -p "Please input your muKey(like:mupass): " Usermukey
 	read -p "Please input your Node_ID(like:1): " UserNODE_ID
@@ -185,7 +183,7 @@ install_node(){
 	echo "/usr/bin/supervisord -c /etc/supervisord.conf" >> /etc/rc.local
 	chmod +x /etc/rc.d/rc.local
 	echo "#############################################################"
-	echo "# 安装完成，登录前端站点看看吧                              #"
+	echo "# 安装完成，节点即将重启使配置生效                          #"
 	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
 	echo "# Author: v2no                                              #"
 	echo "# Blog: https://v2no.com/2017/05/27/ss-panel-v3-mod/        #"
