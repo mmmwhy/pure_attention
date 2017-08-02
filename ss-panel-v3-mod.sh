@@ -9,6 +9,7 @@ install_ss_panel_mod_v3(){
 	yum install git -y
 	rm -rf index.html
 	git clone https://git.coding.net/mmmwhy/mod.git tmp && mv tmp/.git . && rm -rf tmp && git reset --hard
+	cp .config.php.example .config.php
 	chattr -i .user.ini
 	mv .user.ini public
 	chown -R root:root *
