@@ -57,11 +57,10 @@ install_ss_panel_mod_v3(){
 	echo "#############################################################"
 }
 install_centos_ssr(){
-	yum -y remove httpd
 	yum -y update
-	yum -y install git -y
-	yum -y install python-setuptools && easy_install pip -y
-	yum -y groupinstall "Development Tools" -y
+	yum -y install git 
+	yum -y install python-setuptools && easy_install pip 
+	yum -y groupinstall "Development Tools" 
 	#512M的小鸡增加1G的Swap分区
 	dd if=/dev/zero of=/var/swap bs=1024 count=1048576
 	mkswap /var/swap
@@ -96,10 +95,8 @@ install_centos_ssr(){
 install_ubuntu_ssr(){
 	apt-get update -y
 	apt-get install supervisor -y
-	apt-get install git -y
-	apt-get install build-essential -y
-	apt-get install wget -y
-	apt-get install iptables -y
+	apt-get install build-essential wget -y
+	apt-get install iptables git -y
 	wget https://github.com/jedisct1/libsodium/releases/download/1.0.13/libsodium-1.0.13.tar.gz
 	tar xf libsodium-1.0.13.tar.gz && cd libsodium-1.0.13
 	./configure && make -j2 && make install
@@ -108,7 +105,7 @@ install_ubuntu_ssr(){
 	apt-get install python-pip git -y
 	pip install cymysql
 	cd /root
-	git clone -b manyuser https://github.com/glzjin/shadowsocks.git
+	git clone -b manyuser https://github.com/glzjin/shadowsocks.git "/root/shadowsocks"
 	cd shadowsocks
 	pip install -r requirements.txt
 	chmod +x *.sh
