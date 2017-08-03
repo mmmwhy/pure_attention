@@ -3,13 +3,12 @@
 [ $(id -u) != "0" ] && { echo "Error: You must be root to run this script"; exit 1; }
 install_ss_panel_mod_v3(){
 	yum -y remove httpd
-	yum install -y unzip zip
+	yum install -y unzip zip git
 	wget -c https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/lnmp1.3.zip && unzip lnmp1.3.zip && cd lnmp1.3 && chmod +x install.sh && ./install.sh lnmp
 	cd /home/wwwroot/default/
-	yum install git -y
 	rm -rf index.html
 	git clone https://git.coding.net/mmmwhy/mod.git tmp && mv tmp/.git . && rm -rf tmp && git reset --hard
-	cp .config.php.example .config.php
+	cp config/.config.php.example config/.config.php
 	chattr -i .user.ini
 	mv .user.ini public
 	chown -R root:root *
@@ -18,26 +17,9 @@ install_ss_panel_mod_v3(){
 	chattr +i public/.user.ini
 	wget -N -P  /usr/local/nginx/conf/ http://home.ustc.edu.cn/~mmmwhy/nginx.conf 
 	service nginx restart
-	yum install perl-DBI freeradius freeradius-mysql freeradius-utils -y
-	mysql -uroot -proot -e"CREATE USER 'radius'@'%' IDENTIFIED BY 'root';" 
-	mysql -uroot -proot -e"GRANT ALL ON *.* TO 'radius'@'%';" 
-	mysql -uroot -proot -e"create database radius;" 
-	mysql -uroot -proot -e"use radius;" 
-	mysql -uroot -proot radius < /home/wwwroot/default/sql/all.sql
-	mysql -uroot -proot -e"CREATE USER 'ss-panel-radius'@'%' IDENTIFIED BY 'root';" 
-	mysql -uroot -proot -e"GRANT ALL ON *.* TO 'ss-panel-radius'@'%';" 
-	mysql -uroot -proot -e"CREATE USER 'sspanel'@'%' IDENTIFIED BY 'root';" 
-	mysql -uroot -proot -e"GRANT ALL ON *.* TO 'sspanel'@'%';" 
 	mysql -uroot -proot -e"create database sspanel;" 
 	mysql -uroot -proot -e"use sspanel;" 
 	mysql -uroot -proot sspanel < /home/wwwroot/default/sql/sspanel.sql
-	\cp /home/wwwroot/default/sql/sql.conf /etc/raddb/sql.conf
-	wget https://github.com/glzjin/Radius-install/raw/master/radiusd.conf -O /etc/raddb/radiusd.conf
-	wget https://github.com/glzjin/Radius-install/raw/master/default -O /etc/raddb/sites-enabled/default
-	wget https://github.com/glzjin/Radius-install/raw/master/dialup.conf -O /etc/raddb/sql/mysql/dialup.conf
-	wget https://github.com/glzjin/Radius-install/raw/master/dictionary -O /etc/raddb/dictionary
-	wget https://github.com/glzjin/Radius-install/raw/master/counter.conf -O /etc/raddb/sql/mysql/counter.conf
-	service radiusd start && chkconfig radiusd on
 	cd /home/wwwroot/default
 	php composer.phar install
 	yum -y install vixie-cron crontabs
