@@ -62,7 +62,7 @@ install_centos_ssr(){
 	git clone -b manyuser https://github.com/glzjin/shadowsocks.git "/root/shadowsocks"
 	#install devel
 	cd /root/shadowsocks
-	yum -y install lsof
+	yum -y install lsof lrzsz
 	yum -y install python-devel
 	yum -y install libffi-devel
 	yum -y install openssl-devel
