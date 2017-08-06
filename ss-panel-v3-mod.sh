@@ -70,12 +70,6 @@ install_centos_ssr(){
 	pip install -r requirements.txt
 	cp apiconfig.py userapiconfig.py
 	cp config.json user-config.json
-	#iptables
-	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
-	iptables -I INPUT -p udp -m udp --dport 104 -j ACCEPT
-	iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
-	iptables -I INPUT -p udp -m udp --dport 1024: -j ACCEPT
-	iptables-save >/etc/sysconfig/iptables
 }
 install_ubuntu_ssr(){
 	apt-get update -y
@@ -97,12 +91,6 @@ install_ubuntu_ssr(){
 	# 配置程序
 	cp apiconfig.py userapiconfig.py
 	cp config.json user-config.json
-	#iptables
-	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
-	iptables -I INPUT -p udp -m udp --dport 104 -j ACCEPT
-	iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
-	iptables -I INPUT -p udp -m udp --dport 1024: -j ACCEPT
-	iptables-save >/etc/sysconfig/iptables
 }
 install_node(){
 	clear
@@ -163,6 +151,12 @@ install_node(){
 	echo_supervisord_conf > /etc/supervisord.conf
   sed -i '$a [program:ssr]\ncommand = python /root/shadowsocks/server.py\nuser = root\nautostart = true\nautorestart = true' /etc/supervisord.conf
 	supervisord
+	#iptables
+	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
+	iptables -I INPUT -p udp -m udp --dport 104 -j ACCEPT
+	iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
+	iptables -I INPUT -p udp -m udp --dport 1024: -j ACCEPT
+	iptables-save >/etc/sysconfig/iptables
 	echo 'iptables-restore /etc/sysconfig/iptables' >> /etc/rc.local
 	echo "/usr/bin/supervisord -c /etc/supervisord.conf" >> /etc/rc.local
 	chmod +x /etc/rc.d/rc.local
