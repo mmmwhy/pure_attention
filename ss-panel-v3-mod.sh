@@ -1,14 +1,73 @@
 #!/bin/bash
+
 #Check Root
 [ $(id -u) != "0" ] && { echo "Error: You must be root to run this script"; exit 1; }
+
 install_ss_panel_mod_v3(){
 	yum -y remove httpd
 	yum install -y unzip zip git
-	wget -c https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/lnmp1.3.zip && unzip lnmp1.3.zip && cd lnmp1.3 && chmod +x install.sh && ./install.sh lnmp
+	clear
+	echo "################################################################################################################
+Lnmp1.3已知问题：通过lnmp vhost add命令添加域名对本机phpmyadmin文件夹访问会频繁500错误，后台加载用户列表慢(>10s)
+lnmp1.4无上述两个问题，lnmp1.4安装完成后，若一直卡在：Install lnmp V1.4 completed! enjoy it，Ctrl+C 一下即可
+Lnmp1.4安装选项：2,设置数据库密码,Y,5,1
+推荐选择安装lnmp1.4
+#######################################################################################################
+请选择选项：
+[1] lnmp1.3
+[2] lnmp1.4
+[3] 跳过
+
+请输入选项："
+	read lnmp_version
+	
+	if [ ${lnmp_version} = '1' ];then
+		wget -c https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/lnmp1.3.zip && unzip lnmp1.3.zip && cd lnmp1.3 && chmod +x install.sh && ./install.sh lnmp
+		mysql_passwd=root
+	elif [ ${lnmp_version} = '2' ];then
+		wget -c http://soft.vpser.net/lnmp/lnmp1.4.tar.gz && tar zxf lnmp1.4.tar.gz && cd lnmp1.4 && ./install.sh lnmp
+		clear
+		echo "我们需要你设置的root密码进行后续操作，您设置的root密码是："
+		read mysql_passwd
+		if [ ${mysql_passwd} = '' ];then
+			echo "您输入的内容为空，默认密码为：root"
+			mysql_passwd=root
+		else
+			echo "您输入的密码为：${mysql_passwd}"
+			echo "确认这个密码么？如果有误，请按Ctrl+C停止操作，然后重新执行脚本，在选择lnmp版本时选择跳过，无误回车即可"
+			read
+		fi
+	elif [ ${lnmp_version} = '3' ];then
+		echo "跳过lnmp安装，3秒后进行下一步..."
+		sleep 3
+	elif [ ${lnmp_version} = '' ];then
+		echo "回车默认安装lnmp1.3，3秒后开始安装..."
+		sleep 3
+		wget -c https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/lnmp1.3.zip && unzip lnmp1.3.zip && cd lnmp1.3 && chmod +x install.sh && ./install.sh lnmp
+		mysql_passwd=root
+	else
+		echo "不在范围的选项，请重新执行脚本."
+		exit
+	fi
+
+	#配置前端
 	cd /home/wwwroot/default/
 	rm -rf index.html
 	git clone https://git.coding.net/mmmwhy/mod.git tmp && mv tmp/.git . && rm -rf tmp && git reset --hard
-	cp config/.config.php.example config/.config.php
+	#cp config/.config.php.example config/.config.php
+	wget -P /home/wwwroot/default/config https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/.config.php
+	#修改站点名称，站点地址，数据库密码
+	server_ip=`curl -s https://app.52ll.win/ip/api.php`
+	sed -i 's/this_is_sspanel_name/ShadowSocks/g' /home/wwwroot/default/config/.config.php
+	sed -i "s/this_is_sspanel_address/http://${server_ip}/g" /home/wwwroot/default/config/.config.php
+	
+	if [ ${mysql_passwd} != 'root' ];then
+		sed -i "s/this_is_the_sspanel_database_password/${mysql_passwd}/g" /home/wwwroot/default/config/.config.php
+	else
+		sed -i 's/this_is_the_sspanel_database_password/root/g' /home/wwwroot/default/config/.config.php
+	fi
+	
+	#继续配置前端
 	chattr -i .user.ini
 	mv .user.ini public
 	chown -R root:root *
@@ -17,9 +76,9 @@ install_ss_panel_mod_v3(){
 	chattr +i public/.user.ini
 	wget -N -P  /usr/local/nginx/conf/ http://home.ustc.edu.cn/~mmmwhy/nginx.conf 
 	service nginx restart
-	mysql -uroot -proot -e"create database sspanel;" 
-	mysql -uroot -proot -e"use sspanel;" 
-	mysql -uroot -proot sspanel < /home/wwwroot/default/sql/sspanel.sql
+	mysql -uroot -p${mysql_passwd} -e"create database sspanel;" 
+	mysql -uroot -p${mysql_passwd} -e"use sspanel;" 
+	mysql -uroot -p${mysql_passwd} sspanel < /home/wwwroot/default/sql/sspanel.sql
 	cd /home/wwwroot/default
 	php composer.phar install
 	php -n xcat initdownload
@@ -32,14 +91,20 @@ install_ss_panel_mod_v3(){
 	echo '0 0 * * * php /home/wwwroot/default/xcat dailyjob' >> /var/spool/cron/root
 	echo '*/1 * * * * php /home/wwwroot/default/xcat checkjob' >> /var/spool/cron/root
 	/sbin/service crond restart
-	IPAddress=`wget http://members.3322.org/dyndns/getip -O - -q ; echo`;
+	#完成提示
+	clear
 	echo "#############################################################"
-	echo "# 安装完成，登录http://${IPAddress}看看吧~                  #"
 	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
-	echo "# Author: v2no                                              #"
-	echo "# Blog: https://v2no.com/2017/05/27/ss-panel-v3-mod/        #"
+	echo "# Blog: https://91vps.club/2017/05/27/ss-panel-v3-mod/      #"
+	echo "# Author: 91vps.club                                        #"
+	echo "#############################################################"
+	echo "# 安装完成，登录 http://${server_ip} 看看吧~                #"
+	echo "# 默认账户：ss@feiyang.li 默认密码：feiyang                 #"
+	echo "#############################################################"
+	echo "# 更多设置请修改/home/wwwroot/default/config/.config.php    #"
 	echo "#############################################################"
 }
+
 install_centos_ssr(){
 	yum -y update
 	yum -y install git 
@@ -51,6 +116,7 @@ install_centos_ssr(){
 	chmod 0644 /var/swap
 	swapon /var/swap
 	echo '/var/swap   swap   swap   default 0 0' >> /etc/fstab
+	#libsodium
 	wget https://github.com/jedisct1/libsodium/releases/download/1.0.13/libsodium-1.0.13.tar.gz
 	tar xf libsodium-1.0.13.tar.gz && cd libsodium-1.0.13
 	./configure && make -j2 && make install
@@ -71,6 +137,7 @@ install_centos_ssr(){
 	cp apiconfig.py userapiconfig.py
 	cp config.json user-config.json
 }
+
 install_ubuntu_ssr(){
 	apt-get update -y
 	apt-get install supervisor lsof -y
@@ -92,16 +159,8 @@ install_ubuntu_ssr(){
 	cp apiconfig.py userapiconfig.py
 	cp config.json user-config.json
 }
+
 install_node(){
-	clear
-	echo
-	echo "#############################################################"
-	echo "# One click Install Shadowsocks-Python-Manyuser             #"
-	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
-	echo "# Author: v2no                                              #"
-	echo "# https://v2no.com/2017/05/27/ss-panel-v3-mod/              #"
-	echo "#############################################################"
-	echo
 	#Check Root
 	[ $(id -u) != "0" ] && { echo "Error: You must be root to run this script"; exit 1; }
 	#check OS version
@@ -131,14 +190,18 @@ install_node(){
 			install_ubuntu_ssr
 		fi
 	}
-	# 取消文件数量限制
+	#取消文件数量限制
 	sed -i '$a * hard nofile 512000\n* soft nofile 512000' /etc/security/limits.conf
-	read -p "Please input your domain(like:https://ss.feiyang.li or http://114.114.114.114): " Userdomain
-	read -p "Please input your muKey(like:mupass): " Usermukey
-	read -p "Please input your Node_ID(like:1): " UserNODE_ID
+	#获取节点信息
+	read -p "Please input your domain：" Userdomain
+	read -p "Please input your muKey：" Usermukey
+	read -p "Please input your Node_ID：" UserNODE_ID
 	install_ssr_for_each
 	IPAddress=`wget http://members.3322.org/dyndns/getip -O - -q ; echo`;
 	cd /root/shadowsocks
+	#备份userapiconfig.py
+	cp /root/shadowsocks/userapiconfig.py /root/shadowsocks/userapiconfig.py.bak
+	#修改userapiconfig.py
 	echo -e "modify Config.py...\n"
 	Userdomain=${Userdomain:-"http://${IPAddress}"}
 	sed -i "s#https://zhaoj.in#${Userdomain}#" /root/shadowsocks/userapiconfig.py
@@ -147,7 +210,7 @@ install_node(){
 	UserNODE_ID=${UserNODE_ID:-"3"}
 	sed -i '2d' /root/shadowsocks/userapiconfig.py
 	sed -i "2a\NODE_ID = ${UserNODE_ID}" /root/shadowsocks/userapiconfig.py
-	# 启用supervisord
+	#启用supervisord
 	echo_supervisord_conf > /etc/supervisord.conf
   sed -i '$a [program:ssr]\ncommand = python /root/shadowsocks/server.py\nuser = root\nautostart = true\nautorestart = true' /etc/supervisord.conf
 	supervisord
@@ -160,34 +223,102 @@ install_node(){
 	echo 'iptables-restore /etc/sysconfig/iptables' >> /etc/rc.local
 	echo "/usr/bin/supervisord -c /etc/supervisord.conf" >> /etc/rc.local
 	chmod +x /etc/rc.d/rc.local
+	#创建快捷重启命令
+	echo "#!/bin/bash
+supervisorctl restart ssr" > /usr/bin/srs
+	chmod 777 /usr/bin/srs
+	#安装完成提示
 	echo "#############################################################"
-	echo "# 安装完成，节点即将重启使配置生效                          #"
 	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
-	echo "# Author: v2no                                              #"
-	echo "# Blog: https://v2no.com/2017/05/27/ss-panel-v3-mod/        #"
+	echo "# Blog: https://91vps.club/2017/05/27/ss-panel-v3-mod/      #"
+	echo "# Author: 91vps.club                                        #"
 	echo "#############################################################"
-	reboot now
+	echo "# 安装完成，该节点需重启使配置生效                          #"
+	echo "#############################################################"
+	echo "# 管理SSR：supervisorctl {start|stop|restart} ssr           #"
+	echo "#############################################################"
+	echo
 }
-echo
+
+reboot_system(){
+	read -p "需重启服务器使配置生效，现在重启么？ [y/n]" is_reboot
+	if [[ ${is_reboot} == "y" || ${is_reboot} == "Y" ]]; then
+		reboot
+	else
+		echo "需重启服务器使配置生效，稍后请务必手动重启服务器."
+		exit
+	fi
+}
+
+install_bbr(){
+	wget --no-check-certificate https://github.com/teddysun/across/raw/master/bbr.sh;chmod +x bbr.sh;./bbr.sh
+}
+
+Modify_Node_Info(){
+	clear
+	read -p "Please input new Domain：" Userdomain
+	read -p "Please input new MuKey：" Usermukey
+	read -p "Please input new Node_ID：" UserNODE_ID
+	#检查userapiconfig.py.bak是否存在
+	if [ ! -f /root/shadowsocks/userapiconfig.py.bak ];then
+		wget https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/userapiconfig.py
+	else
+	#还原
+		rm -rf /root/shadowsocks/userapiconfig.py
+		cp /root/shadowsocks/userapiconfig.py.bak /root/shadowsocks/userapiconfig.py
+	fi
+	#修改
+	echo -e "modify Config.py...\n"
+	IPAddress=`wget http://members.3322.org/dyndns/getip -O - -q ; echo`;
+	Userdomain=${Userdomain:-"http://${IPAddress}"}
+	sed -i "s#https://zhaoj.in#${Userdomain}#" /root/shadowsocks/userapiconfig.py
+	Usermukey=${Usermukey:-"mupass"}
+	sed -i "s#glzjin#${Usermukey}#" /root/shadowsocks/userapiconfig.py
+	UserNODE_ID=${UserNODE_ID:-"3"}
+	sed -i '2d' /root/shadowsocks/userapiconfig.py
+	sed -i "2a\NODE_ID = ${UserNODE_ID}" /root/shadowsocks/userapiconfig.py
+	#重启
+	supervisord restart ssr
+	echo "Done."
+}
+
+clear
 echo "#############################################################"
 echo "# One click Install SS-panel and Shadowsocks-Py-Mu          #"
 echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
-echo "# Author: v2no                                              #"
-echo "# Blog: https://v2no.com/2017/05/27/ss-panel-v3-mod/        #"
+echo "# Blog: https://91vps.club/2017/05/27/ss-panel-v3-mod/      #"
+echo "# Author: 91vps.club                                        #"
+echo "#############################################################"
 echo "# Please choose the server you want                         #"
-echo "# 1  SS-V3_mod_panel One click Install                      #"
-echo "# 2  SS-node One click Install                              #"
+echo "# [1] Install SS Panel V3 Mod                               #"
+echo "# [2] Intsall SS Node And BBR                               #"
+echo "# [3] Modify Node Info                                      #"
+echo "# [4] Intsall SS Node                                       #"
+echo "# [5] Intsall BBR                                           #"
 echo "#############################################################"
 echo
-stty erase '^H' && read -p " 请输入数字 [1-2]:" num
+
+stty erase '^H' && read -p "Please enter the number [1-5]:" num
+clear
 case "$num" in
 	1)
 	install_ss_panel_mod_v3
 	;;
 	2)
 	install_node
+	install_bbr
+	;;
+	3)
+	Modify_Node_Info
+	;;
+	4)
+	install_node
+	reboot_system
+	;;
+	5)
+	install_bbr
 	;;
 	*)
-	echo "请输入正确数字 [1-2]"
+	echo "请输入正确的范围 [1-5]"
 	;;
 esac
