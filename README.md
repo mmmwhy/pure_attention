@@ -34,7 +34,7 @@ Debian：`apt-get install wget`
 ---
 ![](https://file.52ll.win/Github/sspanel/pic/lnmp_info.png)  
 选择lnmp版本，可选择安装1.3或1.4或跳过安装，此处推荐选择安装lnmp1.4，选择选项1后将安装lnmp1.3，过程此处省略。选择选项2后将安装lnmp1.4，然后
-- 选择：2，回车
+- 输入：2，回车
 - 自定义数据库密码，回车
 - 输入：Y，回车
 - 输入：5，回车
@@ -49,46 +49,46 @@ Debian：`apt-get install wget`
 
 选择选项2后
 ---
-需依次设置前端地址、mykey，节点ID：  
-![](https://file.52ll.win/Github/sspanel/pic/install_2.png)  
-此处回车将使用默认值，依次为：本机地址，mupass，3  
+需依次设置前端地址、mykey，节点ID，此处回车将使用默认值，依次为：本机地址，mupass，3
 
+![](https://file.52ll.win/Github/sspanel/pic/install_2.png)  
+  
 节点端安装完成提示  
 
 ![](https://file.52ll.win/Github/sspanel/pic/ss_node_ok.png)
 
-然后及安装BBR  
+然后安装BBR  
 
 ![](https://file.52ll.win/Github/sspanel/pic/install_bbr.png)
 
-安装完成后需重启服务器，输入：y，重启服务器，或：n，稍后重启
-- 若选择稍后重启，请务必不要忘记手动重启
+安装完成后需重启服务器，输入：y，重启服务器，或：n，稍后重启。若选择稍后重启，请务必不要忘记手动重启
 
 ![](https://file.52ll.win/Github/sspanel/pic/install_bbr_info.png)
 
 选择选项3后
 ---
-需依次设置新的前端地址、mykey，新的节点ID：  
-此处回车将使用默认值，依次为：本机地址，mupass，3  
-提示：Done.，
+需依次设置新的前端地址、mykey，新的节点ID，此处回车将使用默认值，依次为：本机地址，mupass，3
+
 ![](https://file.52ll.win/Github/sspanel/pic/edit_node_info.png)
+
+修改完成后会自动重启ssr服务，最后提示：`Done.`，表面修改成功。
 
 选择选项4后
 ---
-需依次设置前端地址、mykey，节点ID：
+需依次设置前端地址、mykey，节点ID，此处回车将使用默认值，依次为：本机地址，mupass，3
+
 ![](https://file.52ll.win/Github/sspanel/pic/install_2.png)
-此处回车将使用默认值，依次为：本机地址，mupass，3
 
 节点端安装完成提示
+
 ![](https://file.52ll.win/Github/sspanel/pic/ss_node_ok.png)
 
+选择选项5后
 ---
-然后及安装BBR
+回车开始安装，或按Ctrl+C取消安装
+
 ![](https://file.52ll.win/Github/sspanel/pic/install_bbr.png)
 
-安装完成后需重启服务器，输入：y，重启服务器，或：n，稍后重启
-- 若选择稍后重启，请务必不要忘记手动重启
+安装完成后需重启服务器，输入：y，重启服务器，或：n，稍后重启。若选择稍后重启，请务必不要忘记手动重启
 
 ![](https://file.52ll.win/Github/sspanel/pic/install_bbr_info.png)
-
-
