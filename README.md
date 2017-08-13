@@ -42,21 +42,21 @@ Debian：`apt-get install wget`
 - 输入：5，回车
 - 输入：1，回车
 - 回车
-
+  
 ![](https://file.52ll.win/Github/sspanel/pic/lnmp_setting.png)
 
-等待安装完成，30-45min左右
+等待安装完成，30-45min左右  
 ![](https://file.52ll.win/Github/sspanel/pic/install_ok.png)
 
 ---
-选择选项2后，需依次设置前端地址、mykey，节点ID：
+选择选项2后，需依次设置前端地址、mykey，节点ID：  
 ![](https://file.52ll.win/Github/sspanel/pic/install_2.png)
-此处回车将使用默认值，依次为：本机地址，mupass，3
+此处回车将使用默认值，依次为：本机地址，mupass，3  
 
-节点端安装完成提示
+节点端安装完成提示  
 ![](https://file.52ll.win/Github/sspanel/pic/ss_node_ok.png)
 
-然后及安装BBR
+然后及安装BBR  
 ![](https://file.52ll.win/Github/sspanel/pic/install_bbr.png)
 
 安装完成后需重启服务器，输入：y，重启服务器，或：n，稍后重启
@@ -65,8 +65,8 @@ Debian：`apt-get install wget`
 ![](https://file.52ll.win/Github/sspanel/pic/install_bbr_info.png)
 
 ---
-选择选项3后，需依次设置新的前端地址、mykey，新的节点ID：
-此处回车将使用默认值，依次为：本机地址，mupass，3
+选择选项3后，需依次设置新的前端地址、mykey，新的节点ID：  
+此处回车将使用默认值，依次为：本机地址，mupass，3  
 提示：Done.，
 ![](https://file.52ll.win/Github/sspanel/pic/edit_node_info.png)
 
