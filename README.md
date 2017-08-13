@@ -71,7 +71,7 @@ Debian：`apt-get install wget`
 
 选择选项2后
 ---
-需依次设置前端地址、mykey，节点ID，此处回车将使用默认值，依次为：本机地址，mupass，3
+需依次设置前端地址、muKey，节点ID，此处回车将使用默认值，依次为：本机地址，mupass，3
 
 ![](https://file.52ll.win/Github/sspanel/pic/install_2.png)  
   
@@ -89,7 +89,7 @@ Debian：`apt-get install wget`
 
 选择选项3后
 ---
-需依次设置新的前端地址、mykey，新的节点ID，此处回车将使用默认值，依次为：本机地址，mupass，3
+需依次设置新的前端地址、muKey，新的节点ID，此处回车将使用默认值，依次为：本机地址，mupass，3
 
 ![](https://file.52ll.win/Github/sspanel/pic/edit_node_info.png)
 
@@ -97,7 +97,7 @@ Debian：`apt-get install wget`
 
 选择选项4后
 ---
-需依次设置前端地址、mykey，节点ID，此处回车将使用默认值，依次为：本机地址，mupass，3
+需依次设置前端地址、muKey，节点ID，此处回车将使用默认值，依次为：本机地址，mupass，3
 
 ![](https://file.52ll.win/Github/sspanel/pic/install_2.png)
 
