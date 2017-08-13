@@ -8,7 +8,7 @@
 - 节点端安装完成后提示ssr服务快捷管理命令
 - 节点端安装完成后重启服务器需确认
 - 增添修改节点端配置文件选项
-- 增添安装 Google BBR 选项
+- 增添安装 Google BBR 选项  
 脚本来自：https://github.com/teddysun/across/
 - 简化语言
 
@@ -22,8 +22,8 @@ wget https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/ss-
 Centos：`yum -y install wget `，或
 Debian：`apt-get install wget`
 
-2.选择安装选项
-![](https://file.52ll.win/Github/sspanel/pic/install.png)
+2.选择安装选项  
+![](https://file.52ll.win/Github/sspanel/pic/install.png)  
 - [1] 安装 ss panel v3 前端
 - [2] 安装 ssr 后端和 bbr
 - [3] 修改 ssr 后端配置
@@ -31,7 +31,8 @@ Debian：`apt-get install wget`
 - [5] 安装 bbr
 
 选择选项1后：
-![](https://file.52ll.win/Github/sspanel/pic/lnmp_info.png)
+---
+![](https://file.52ll.win/Github/sspanel/pic/lnmp_info.png)  
 选择lnmp版本，可选择安装1.3或1.4或跳过安装，此处推荐选择安装lnmp1.4，选择选项1后将安装lnmp1.3，过程此处省略
 
 选择选项2后将安装lnmp1.4，然后
