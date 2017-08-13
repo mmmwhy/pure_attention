@@ -20,11 +20,11 @@ A：前端搭建完成后，访问前端地址，使用默认管理员账户登�
 Q：搭建SS节点时，`domain`和`muKey`应该填什么？  
 A：`domain`填你的前端地址，需包含 `http://` 或 `https://` ，例：`https://domain.com` ，回车将获取本机服务器IP作为前端地址，关于`muKey`，若没有修改过前端的`.config.php`的`$System_Config['muKey']`项，则设置该项时，回车即可
 
-Q：远程ssh执行脚本时，出现方块，无法显示汉字，为什么？  
-A：请使用[Xshell5](https://www.netsarang.com/products/xsh_overview.html "Xshell5")
-
 Q：搭建ss节点端后，使用ss/ssr客户端无法链接，为什么？  
 A：在该节点端使用命令`srs`重启ssr服务，然后尝试连接。若服务器是阿里云的，请设置安全组为全部放行，若为其他vps服务商，请检查控制面板的安全组设置，或Linux防火墙设置，或检查节点端`domain`，`muKey`，`Node_ID`设置，若均无问题，请尝试在其他设备上使用，排查是否是设备问题
+
+Q：远程ssh执行脚本时，出现方块，无法显示汉字，为什么？  
+A：请使用[Xshell5](https://www.netsarang.com/products/xsh_overview.html "Xshell5")
 
 Q：服务器装了BBR，延时还是很高，速度还是很慢，怎么办？  
 A：首先，延时与网速无关，其次，世界加钱可及
