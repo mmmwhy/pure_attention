@@ -212,7 +212,7 @@ install_node(){
 	sed -i "2a\NODE_ID = ${UserNODE_ID}" /root/shadowsocks/userapiconfig.py
 	#启用supervisord
 	echo_supervisord_conf > /etc/supervisord.conf
-  sed -i '$a [program:ssr]\ncommand = python /root/shadowsocks/server.py\nuser = root\nautostart = true\nautorestart = true' /etc/supervisord.conf
+	sed -i '$a [program:ssr]\ncommand = python /root/shadowsocks/server.py\nuser = root\nautostart = true\nautorestart = true' /etc/supervisord.conf
 	supervisord
 	#iptables
 	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
@@ -278,7 +278,7 @@ Modify_Node_Info(){
 	sed -i '2d' /root/shadowsocks/userapiconfig.py
 	sed -i "2a\NODE_ID = ${UserNODE_ID}" /root/shadowsocks/userapiconfig.py
 	#重启
-	supervisord restart ssr
+	supervisorctl restart ssr
 	echo "Done."
 }
 
