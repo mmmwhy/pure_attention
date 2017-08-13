@@ -18,8 +18,7 @@ Q：节点ID在哪里找？
 A：前端搭建完成后，访问前端地址，使用默认管理员账户登陆，管理面板，节点列表，点击右下角的+号，设置节点信息，需要注意的是，节点地址可填域名或IP，节点IP只能填节点IP，设置完成后点添加，返回节点列表，就能看到你刚刚添加的节点的节点ID
 
 Q：搭建SS节点时，`domain`和`muKey`应该填什么？  
-A：`domain`填你的前端地址，需包含 `http://` 或 `https://` ，例：`https://domain.com` ，回车将获取本机服务器IP作为前端地址  
-关于`muKey`，若没有修改过前端的`.config.php`的`$System_Config['muKey']`项，则设置该项时，回车即可
+A：`domain`填你的前端地址，需包含 `http://` 或 `https://` ，例：`https://domain.com` ，回车将获取本机服务器IP作为前端地址，关于`muKey`，若没有修改过前端的`.config.php`的`$System_Config['muKey']`项，则设置该项时，回车即可
 
 Q：远程ssh执行脚本时，出现方块，无法显示汉字，为什么？  
 A：请使用[Xshell5](https://www.netsarang.com/products/xsh_overview.html "Xshell5")
