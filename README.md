@@ -41,7 +41,7 @@ A：你看见浏览器右上角的x了么？
 ---
 1.执行安装脚本
 ```
-wget https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/ss-panel-v3-mod.sh;bash ss-panel-v3-mod.sh
+wget https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/v3.sh;chmod 777 v3.sh;bash v3.sh
 ```
 若提示：`-bash: wget: command not found`，则
 Centos：`yum -y install wget `，或
