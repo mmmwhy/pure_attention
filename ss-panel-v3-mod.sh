@@ -8,8 +8,8 @@ install_ss_panel_mod_v3(){
 	yum install -y unzip zip git
 	clear
 	echo "################################################################################################################
-Lnmp1.3已知问题：通过lnmp vhost add命令添加域名对本机phpmyadmin文件夹访问会频繁500错误，后台加载用户列表慢(>10s)
-lnmp1.4无上述两个问题，lnmp1.4安装完成后，若一直卡在：Install lnmp V1.4 completed! enjoy it，Ctrl+C 一下即可
+Lnmp1.3已知问题：通过 lnmp vhost add 命令添加域名对本机 phpmyadmin 文件夹访问会频繁500错误，后台加载用户列表慢(>10s)
+lnmp1.4无上述两个问题，lnmp1.4安装完成后，若一直停留在：Install lnmp V1.4 completed! enjoy it，Ctrl+C 一下即可
 Lnmp1.4安装选项：2,设置数据库密码,Y,5,1
 推荐选择安装lnmp1.4
 #######################################################################################################
@@ -27,18 +27,29 @@ Lnmp1.4安装选项：2,设置数据库密码,Y,5,1
 	elif [ ${lnmp_version} = '2' ];then
 		wget -c http://soft.vpser.net/lnmp/lnmp1.4.tar.gz && tar zxf lnmp1.4.tar.gz && cd lnmp1.4 && ./install.sh lnmp
 		clear
-		echo "我们需要你设置的root密码进行后续操作，您设置的root密码是："
+		echo "我们需要你设置的数据库密码进行后续操作，您设置的数据库密码是："
 		read mysql_passwd
 		if [ ${mysql_passwd} = '' ];then
 			echo "您输入的内容为空，默认密码为：root"
 			mysql_passwd=root
 		else
 			echo "您输入的密码为：${mysql_passwd}"
-			echo "确认这个密码么？如果有误，请按Ctrl+C停止操作，然后重新执行脚本，在选择lnmp版本时选择跳过，无误回车即可"
+			echo "确认这个密码么？如果有误，请按Ctrl+C停止操作，然后重新执行脚本"
 			read
 		fi
 	elif [ ${lnmp_version} = '3' ];then
-		echo "跳过lnmp安装，3秒后进行下一步..."
+		echo "此选项适用于已安装lnmp的用户！"
+		echo "我们需要你设置的数据库密码进行后续操作，您设置的数据库密码是："
+		read mysql_passwd
+		if [ ${mysql_passwd} = '' ];then
+			echo "您输入的内容为空，默认密码为：root"
+			mysql_passwd=root
+		else
+			echo "您输入的密码为：${mysql_passwd}"
+			echo "确认这个密码么？如果有误，请按Ctrl+C停止操作，然后重新执行脚本"
+			read
+		fi
+		echo "将在3秒后安装 SS Panel V3 前端..."
 		sleep 3
 	elif [ ${lnmp_version} = '' ];then
 		echo "回车默认安装lnmp1.3，3秒后开始安装..."
@@ -295,6 +306,7 @@ echo "# [2] Intsall SS Node And BBR                               #"
 echo "# [3] Modify Node Info                                      #"
 echo "# [4] Intsall SS Node                                       #"
 echo "# [5] Intsall BBR                                           #"
+echo "# [6] Test This Server                                      #"
 echo "#############################################################"
 echo
 
@@ -317,6 +329,10 @@ case "$num" in
 	;;
 	5)
 	install_bbr
+	;;
+	6)
+	clear
+	wget -qO- bench.sh | bash
 	;;
 	*)
 	echo "请输入正确的范围 [1-5]"
