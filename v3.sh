@@ -310,7 +310,7 @@ echo "# [6] Test This Server                                      #"
 echo "#############################################################"
 echo
 
-stty erase '^H' && read -p "Please enter the number [1-5]:" num
+stty erase '^H' && read -p "Please enter the number [1-6]:" num
 clear
 case "$num" in
 	1)
@@ -335,6 +335,6 @@ case "$num" in
 	wget -qO- bench.sh | bash
 	;;
 	*)
-	echo "请输入正确的范围 [1-5]"
+	echo "请输入正确的范围 [1-6]"
 	;;
 esac
