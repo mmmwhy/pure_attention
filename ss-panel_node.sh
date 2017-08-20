@@ -57,7 +57,7 @@ install_ss_py_mu(){
 	echo "# One click Install Shadowsocks-Python-Manyuser             #"
 	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
 	echo "# Author: 91vps                                             #"
-	echo "# https://91vps.club/2017/05/26/ss-panel/                   #"
+	echo "# https://91vps.us/2017/05/26/ss-panel/                     #"
 	echo "#############################################################"
 	echo
 	#Check Root
@@ -216,7 +216,7 @@ one_click_all(){
 	echo "# 安装完成，登录http://${IPAddress}看看吧~                  #"
 	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
 	echo "# Author: 91vps                                             #"
-	echo "# Blog: https://91vps.club/2017/05/26/ss-panel/             #"
+	echo "# Blog: https://91vps.us/2017/05/26/ss-panel/               #"
 	echo "#############################################################"
 }
 
@@ -226,7 +226,7 @@ echo "#############################################################"
 echo "# One click Install SS-panel and Shadowsocks-Py-Mu          #"
 echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
 echo "# Author: 91vps                                             #"
-echo "# https://91vps.club/2017/05/26/ss-panel/                   #"
+echo "# https://91vps.us/2017/05/26/ss-panel/                     #"
 echo "# Please choose the server you want                         #"
 echo "# 1  SS-panel + SS-node One click Install                   #"
 echo "# 2  SS-panel One click Install                             #"

@@ -36,8 +36,8 @@ install_ss_panel_mod_v3(){
 	echo "#############################################################"
 	echo "# 安装完成，登录http://${IPAddress}看看吧~                  #"
 	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
-	echo "# Author: v2no                                              #"
-	echo "# Blog: https://v2no.com/2017/05/27/ss-panel-v3-mod/        #"
+	echo "# Author: 91vps                                             #"
+	echo "# Blog: https://91vps.us/2017/05/27/ss-panel-v3-mod/        #"
 	echo "#############################################################"
 }
 install_centos_ssr(){
@@ -98,8 +98,8 @@ install_node(){
 	echo "#############################################################"
 	echo "# One click Install Shadowsocks-Python-Manyuser             #"
 	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
-	echo "# Author: v2no                                              #"
-	echo "# https://v2no.com/2017/05/27/ss-panel-v3-mod/              #"
+	echo "# Author: 91vps                                              #"
+	echo "# https://91vps.us/2017/05/27/ss-panel-v3-mod/              #"
 	echo "#############################################################"
 	echo
 	#Check Root
@@ -152,19 +152,24 @@ install_node(){
   sed -i '$a [program:ssr]\ncommand = python /root/shadowsocks/server.py\nuser = root\nautostart = true\nautorestart = true' /etc/supervisord.conf
 	supervisord
 	#iptables
-	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
-	iptables -I INPUT -p udp -m udp --dport 104 -j ACCEPT
-	iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
-	iptables -I INPUT -p udp -m udp --dport 1024: -j ACCEPT
-	iptables-save >/etc/sysconfig/iptables
+	#iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
+	#iptables -I INPUT -p udp -m udp --dport 104 -j ACCEPT
+	#iptables -I INPUT -p tcp -m tcp --dport 1024: -j ACCEPT
+	#iptables -I INPUT -p udp -m udp --dport 1024: -j ACCEPT
+	#iptables-save >/etc/sysconfig/iptables
+  echo "-A INPUT -p udp -m udp --dport 1024:65535 -j ACCEPT
+	-A INPUT -p tcp -m tcp --dport 1024:65535 -j ACCEPT
+	-A INPUT -p udp -m udp --dport 104 -j ACCEPT
+	-A INPUT -p tcp -m tcp --dport 104 -j ACCEPT
+	" > /etc/sysconfig/iptables
 	echo 'iptables-restore /etc/sysconfig/iptables' >> /etc/rc.local
 	echo "/usr/bin/supervisord -c /etc/supervisord.conf" >> /etc/rc.local
 	chmod +x /etc/rc.d/rc.local
 	echo "#############################################################"
 	echo "# 安装完成，节点即将重启使配置生效                          #"
 	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
-	echo "# Author: v2no                                              #"
-	echo "# Blog: https://v2no.com/2017/05/27/ss-panel-v3-mod/        #"
+	echo "# Author: 91vps                                              #"
+	echo "# Blog: https://91vps.us/2017/05/27/ss-panel-v3-mod/        #"
 	echo "#############################################################"
 	reboot now
 }
@@ -172,8 +177,8 @@ echo
 echo "#############################################################"
 echo "# One click Install SS-panel and Shadowsocks-Py-Mu          #"
 echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
-echo "# Author: v2no                                              #"
-echo "# Blog: https://v2no.com/2017/05/27/ss-panel-v3-mod/        #"
+echo "# Author: 91vps                                             #"
+echo "# Blog: https://91vps.us/2017/05/27/ss-panel-v3-mod/        #"
 echo "# Please choose the server you want                         #"
 echo "# 1  SS-V3_mod_panel One click Install                      #"
 echo "# 2  SS-node One click Install                              #"
