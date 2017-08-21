@@ -282,7 +282,8 @@ Modify_Node_Info(){
 		cp /root/shadowsocks/userapiconfig.py.bak /root/shadowsocks/userapiconfig.py
 	fi
 	#修改
-	echo -e "modify Config.py...\n"
+	echo
+	echo "请稍等..."
 	IPAddress=`wget http://members.3322.org/dyndns/getip -O - -q ; echo`;
 	Userdomain=${Userdomain:-"http://${IPAddress}"}
 	sed -i "s#https://zhaoj.in#${Userdomain}#" /root/shadowsocks/userapiconfig.py
@@ -292,14 +293,21 @@ Modify_Node_Info(){
 	sed -i '2d' /root/shadowsocks/userapiconfig.py
 	sed -i "2a\NODE_ID = ${UserNODE_ID}" /root/shadowsocks/userapiconfig.py
 	#重启
-	echo "需要重启ssr服务端么？[y/n]"
+	echo "修改完成，需要重启ssr服务端么？[y/n]"
 	read restart_ssr
+	
 	if [ ${restart_ssr} = 'y' ];then
 		supervisorctl restart ssr
 	else
-		echo "稍后您可手动重启ssr服务端"
+		echo "稍后您可手动重启ssr服务端."
 	fi
-	echo "Done."
+}
+
+current_node_configuration(){
+	echo "当前节点配置如下："
+	sed -n '3p' /root/shadowsocks/userapiconfig.py
+	sed -n '17,18p' /root/shadowsocks/userapiconfig.py
+	echo
 }
 
 clear
@@ -330,6 +338,7 @@ case "$num" in
 	install_bbr
 	;;
 	3)
+	current_node_configuration
 	Modify_Node_Info
 	;;
 	4)
