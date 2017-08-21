@@ -7,7 +7,7 @@ install_ss_panel_mod_v3(){
 	wget -c https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/lnmp1.3.zip && unzip lnmp1.3.zip && cd lnmp1.3 && chmod +x install.sh && ./install.sh lnmp
 	cd /home/wwwroot/default/
 	rm -rf index.html
-	git clone https://git.coding.net/mmmwhy/mod.git tmp && mv tmp/.git . && rm -rf tmp && git reset --hard
+	git clone https://github.com/mmmwhy/mod.git tmp && mv tmp/.git . && rm -rf tmp && git reset --hard
 	cp config/.config.php.example config/.config.php
 	chattr -i .user.ini
 	mv .user.ini public
