@@ -106,11 +106,16 @@ Debian：`apt-get install wget`
 ---
 需依次设置新的前端地址、muKey，新的节点ID，此处回车将使用默认值，依次为：本机地址，mupass，3
 
-![](https://file.52ll.win/Github/sspanel/pic_3/edit_node_info.png)
+![](https://file.52ll.win/Github/sspanel/pic_3/install_2.png)
 
 修改完成后会自动重启ssr服务，最后提示：`Done.`，表明修改成功。
 
 选择选项4后
+---
+会输出当前节点的配置信息，然后询问是否需要修改，可选择修改或不修改  
+![](https://file.52ll.win/Github/sspanel/pic_3/edit_node_info.png)
+
+选择选项5后
 ---
 需依次设置前端地址、muKey，节点ID，此处回车将使用默认值，依次为：本机地址，mupass，3
 
@@ -120,7 +125,7 @@ Debian：`apt-get install wget`
 
 ![](https://file.52ll.win/Github/sspanel/pic_3/ss_node_ok.png)
 
-选择选项5后
+选择选项6后
 ---
 回车开始安装，或按Ctrl+C取消安装
 
@@ -129,3 +134,9 @@ Debian：`apt-get install wget`
 安装完成后需重启服务器，输入：y，重启服务器，或：n，稍后重启。若选择稍后重启，请务必不要忘记手动重启
 
 ![](https://file.52ll.win/Github/sspanel/pic_3/install_bbr_info.png)
+
+选择选项7后
+---
+会输出当前服务器的配置信息，然后下载测试服务器的测速文件  
+
+![](https://file.52ll.win/Github/sspanel/pic_3/test_server.png)
