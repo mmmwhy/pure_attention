@@ -343,7 +343,6 @@ case "$num" in
 	install_bbr
 	;;
 	3)
-	current_node_configuration
 	Modify_Node_Info
 	;;
 	4)
