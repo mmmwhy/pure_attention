@@ -269,7 +269,6 @@ install_bbr(){
 }
 
 Modify_Node_Info(){
-	clear
 	read -p "Please input new Domain：" Userdomain
 	read -p "Please input new MuKey：" Usermukey
 	read -p "Please input new Node_ID：" UserNODE_ID
@@ -304,9 +303,12 @@ Modify_Node_Info(){
 }
 
 current_node_configuration(){
+	clear
 	echo "当前节点配置如下："
+	echo "------------------------------------"
 	sed -n '3p' /root/shadowsocks/userapiconfig.py
 	sed -n '17,18p' /root/shadowsocks/userapiconfig.py
+	echo "------------------------------------"
 	echo
 }
 
