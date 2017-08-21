@@ -269,6 +269,12 @@ install_bbr(){
 }
 
 Modify_Node_Info(){
+	#检查/root/shadowsocks/userapiconfig.py是否存在
+	if [ ! -f /root/shadowsocks/userapiconfig.py ];then
+		echo "您还未安装ssr服务端，userapiconfig.py文件不存在，不能执行此选项！"
+		exit
+	fi
+	
 	clear
 	#获取需要修改成的节点配置
 	read -p "Please input new Domain：" Userdomain
@@ -305,21 +311,27 @@ Modify_Node_Info(){
 }
 
 current_node_configuration(){
-	#显示当前节点配置
-	echo "当前节点配置如下："
-	echo "------------------------------------"
-	sed -n '3p' /root/shadowsocks/userapiconfig.py
-	sed -n '17,18p' /root/shadowsocks/userapiconfig.py
-	echo "------------------------------------"
-	echo
-	#询问是否需要修改节点配置
-	echo "您想修改这些信息么？[y/n]"
-	read Modify_the_confirmation
-	if [ ${Modify_the_confirmation} = 'y' ];then
-		Modify_Node_Info
-	else
-		echo "您选择了不修改."
+	if [ ! -f /root/shadowsocks/userapiconfig.py ];then
+		echo "您还未安装ssr服务端，userapiconfig.py文件不存在，不能执行此选项！"
 		exit
+	else
+	#显示当前节点配置
+		echo "当前节点配置如下："
+		echo "------------------------------------"
+		sed -n '3p' /root/shadowsocks/userapiconfig.py
+		sed -n '17,18p' /root/shadowsocks/userapiconfig.py
+		echo "------------------------------------"
+		echo
+		#询问是否需要修改节点配置
+		echo "您想修改这些信息么？[y/n]"
+		read Modify_the_confirmation
+		
+		if [ ${Modify_the_confirmation} = 'y' ];then
+			Modify_Node_Info
+		else
+			echo "您选择了不修改."
+			exit
+		fi
 	fi
 }
 
