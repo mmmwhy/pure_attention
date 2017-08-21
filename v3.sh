@@ -270,13 +270,6 @@ install_bbr(){
 
 Modify_Node_Info(){
 	clear
-	#显示当前节点配置
-	echo "当前节点配置如下："
-	echo "------------------------------------"
-	sed -n '3p' /root/shadowsocks/userapiconfig.py
-	sed -n '17,18p' /root/shadowsocks/userapiconfig.py
-	echo "------------------------------------"
-	echo
 	#获取需要修改成的节点配置
 	read -p "Please input new Domain：" Userdomain
 	read -p "Please input new MuKey：" Usermukey
@@ -311,6 +304,16 @@ Modify_Node_Info(){
 	fi
 }
 
+current_node_configuration(){
+	#显示当前节点配置
+	echo "当前节点配置如下："
+	echo "------------------------------------"
+	sed -n '3p' /root/shadowsocks/userapiconfig.py
+	sed -n '17,18p' /root/shadowsocks/userapiconfig.py
+	echo "------------------------------------"
+	echo
+}
+
 clear
 echo "#############################################################"
 echo "# One click Install SS-panel and Shadowsocks-Py-Mu          #"
@@ -322,9 +325,10 @@ echo "# Please choose the server you want                         #"
 echo "# [1] Install SS Panel V3 Mod                               #"
 echo "# [2] Intsall SS Node And BBR                               #"
 echo "# [3] Modify Node Info                                      #"
-echo "# [4] Intsall SS Node                                       #"
-echo "# [5] Intsall BBR                                           #"
-echo "# [6] Test This Server                                      #"
+echo "# [4] Display Node Info                                     #"
+echo "# [5] Intsall SS Node                                       #"
+echo "# [6] Intsall BBR                                           #"
+echo "# [7] Test This Server                                      #"
 echo "#############################################################"
 echo
 
@@ -339,16 +343,19 @@ case "$num" in
 	install_bbr
 	;;
 	3)
+	current_node_configuration
 	Modify_Node_Info
-	;;
 	4)
+	current_node_configuration
+	;;
+	5)
 	install_node
 	reboot_system
 	;;
-	5)
+	6)
 	install_bbr
 	;;
-	6)
+	7)
 	clear
 	wget -qO- bench.sh | bash
 	;;
