@@ -298,6 +298,7 @@ Modify_Node_Info(){
 		supervisorctl restart ssr
 	else
 		echo "稍后您可手动重启ssr服务端"
+	fi
 	echo "Done."
 }
 
