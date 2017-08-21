@@ -269,6 +269,15 @@ install_bbr(){
 }
 
 Modify_Node_Info(){
+	clear
+	#显示当前节点配置
+	echo "当前节点配置如下："
+	echo "------------------------------------"
+	sed -n '3p' /root/shadowsocks/userapiconfig.py
+	sed -n '17,18p' /root/shadowsocks/userapiconfig.py
+	echo "------------------------------------"
+	echo
+	#获取需要修改成的节点配置
 	read -p "Please input new Domain：" Userdomain
 	read -p "Please input new MuKey：" Usermukey
 	read -p "Please input new Node_ID：" UserNODE_ID
@@ -302,16 +311,6 @@ Modify_Node_Info(){
 	fi
 }
 
-current_node_configuration(){
-	clear
-	echo "当前节点配置如下："
-	echo "------------------------------------"
-	sed -n '3p' /root/shadowsocks/userapiconfig.py
-	sed -n '17,18p' /root/shadowsocks/userapiconfig.py
-	echo "------------------------------------"
-	echo
-}
-
 clear
 echo "#############################################################"
 echo "# One click Install SS-panel and Shadowsocks-Py-Mu          #"
@@ -340,7 +339,6 @@ case "$num" in
 	install_bbr
 	;;
 	3)
-	current_node_configuration
 	Modify_Node_Info
 	;;
 	4)
