@@ -345,6 +345,7 @@ case "$num" in
 	3)
 	current_node_configuration
 	Modify_Node_Info
+	;;
 	4)
 	current_node_configuration
 	;;
