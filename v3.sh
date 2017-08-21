@@ -1,21 +1,20 @@
 #!/bin/bash
 
 #Check Root
-[ $(id -u) != "0" ] && { echo "Error: You must be root to run this script"; exit 1; }
+[ $(id -u) != "0" ] && { echo -e "\033[31m 请切换至root账户执行脚本 \033[0m"; exit 1; }
 
 install_ss_panel_mod_v3(){
-	yum -y remove httpd
 	yum install -y unzip zip git
 	clear
-	echo "################################################################################################################
+	echo -e "################################################################################################################
 Lnmp1.3已知问题：通过 lnmp vhost add 命令添加域名对本机 phpmyadmin 文件夹访问会频繁500错误，后台加载用户列表慢(>10s)
-lnmp1.4无上述两个问题，lnmp1.4安装完成后，若一直停留在：Install lnmp V1.4 completed! enjoy it，Ctrl+C 一下即可
-Lnmp1.4安装选项：2,设置数据库密码,Y,5,1
-推荐选择安装lnmp1.4
+Lnmp1.4无上述两个问题，\033[31m lnmp1.4安装完成后，若一直停留在【Install lnmp V1.4 completed! enjoy it】，Ctrl+C 一下即可 \033[0m
+Lnmp1.4安装选项：2,自定义您的数据库密码,Y,5,1
+推荐选择安装Lnmp1.4
 #######################################################################################################
 请选择选项：
-[1] lnmp1.3
-[2] lnmp1.4
+[1] Lnmp1.3
+[2] Lnmp1.4
 [3] 跳过
 
 请输入选项："
@@ -25,6 +24,10 @@ Lnmp1.4安装选项：2,设置数据库密码,Y,5,1
 		wget -c https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/lnmp1.3.zip && unzip lnmp1.3.zip && cd lnmp1.3 && chmod +x install.sh && ./install.sh lnmp
 		mysql_passwd=root
 	elif [ ${lnmp_version} = '2' ];then
+		echo -e "\033[31m lnmp1.4安装完成后，若一直停留在【Install lnmp V1.4 completed! enjoy it】，Ctrl+C 一下即可 \033[0m"
+		echo -e "\033[31m 安装完成大概需要30分钟，您清楚了么？回车继续... \033[0m"
+		read
+		#install lnmp1.4
 		wget -c http://soft.vpser.net/lnmp/lnmp1.4.tar.gz && tar zxf lnmp1.4.tar.gz && cd lnmp1.4 && ./install.sh lnmp
 		clear
 		echo "我们需要你设置的数据库密码进行后续操作，您设置的数据库密码是："
@@ -69,7 +72,7 @@ Lnmp1.4安装选项：2,设置数据库密码,Y,5,1
 	wget -P /home/wwwroot/default/config https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/.config.php
 	#修改站点名称，站点地址，数据库密码
 	server_ip=`curl -s https://app.52ll.win/ip/api.php`
-	sed -i 's/this_is_sspanel_name/ShadowSocks/g' /home/wwwroot/default/config/.config.php
+	sed -i 's/this_is_sspanel_name/SS Panel V3/g' /home/wwwroot/default/config/.config.php
 	sed -i "s/this_is_sspanel_address/http://${server_ip}/g" /home/wwwroot/default/config/.config.php
 	
 	if [ ${mysql_passwd} != 'root' ];then
@@ -106,8 +109,8 @@ Lnmp1.4安装选项：2,设置数据库密码,Y,5,1
 	clear
 	echo "#############################################################"
 	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
-	echo "# Blog: https://91vps.club/2017/05/27/ss-panel-v3-mod/      #"
-	echo "# Author: 91vps.club                                        #"
+	echo "# Blog: https://91vps.us/2017/05/27/ss-panel-v3-mod/        #"
+	echo "# Author: 91vps.us                                          #"
 	echo "#############################################################"
 	echo "# 安装完成，登录 http://${server_ip} 看看吧~                #"
 	echo "# 默认账户：ss@feiyang.li 默认密码：feiyang                 #"
@@ -241,8 +244,8 @@ supervisorctl restart ssr" > /usr/bin/srs
 	#安装完成提示
 	echo "#############################################################"
 	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
-	echo "# Blog: https://91vps.club/2017/05/27/ss-panel-v3-mod/      #"
-	echo "# Author: 91vps.club                                        #"
+	echo "# Blog: https://91vps.us/2017/05/27/ss-panel-v3-mod/        #"
+	echo "# Author: 91vps.us                                          #"
 	echo "#############################################################"
 	echo "# 安装完成，该节点需重启使配置生效                          #"
 	echo "#############################################################"
@@ -289,7 +292,12 @@ Modify_Node_Info(){
 	sed -i '2d' /root/shadowsocks/userapiconfig.py
 	sed -i "2a\NODE_ID = ${UserNODE_ID}" /root/shadowsocks/userapiconfig.py
 	#重启
-	supervisorctl restart ssr
+	echo "需要重启ssr服务端么？[y/n]"
+	read restart_ssr
+	if [ ${restart_ssr} = 'y' ];then
+		supervisorctl restart ssr
+	else
+		echo "稍后您可手动重启ssr服务端"
 	echo "Done."
 }
 
@@ -297,8 +305,8 @@ clear
 echo "#############################################################"
 echo "# One click Install SS-panel and Shadowsocks-Py-Mu          #"
 echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
-echo "# Blog: https://91vps.club/2017/05/27/ss-panel-v3-mod/      #"
-echo "# Author: 91vps.club                                        #"
+echo "# Blog: https://91vps.us/2017/05/27/ss-panel-v3-mod/        #"
+echo "# Author: 91vps.us                                          #"
 echo "#############################################################"
 echo "# Please choose the server you want                         #"
 echo "# [1] Install SS Panel V3 Mod                               #"
