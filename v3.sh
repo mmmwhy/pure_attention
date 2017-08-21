@@ -312,6 +312,15 @@ current_node_configuration(){
 	sed -n '17,18p' /root/shadowsocks/userapiconfig.py
 	echo "------------------------------------"
 	echo
+	#询问是否需要修改节点配置
+	echo "您想修改这些信息么？[y/n]"
+	read Modify_the_confirmation
+	if [ ${Modify_the_confirmation} = 'y' ];then
+		Modify_Node_Info
+	else
+		echo "您选择了不修改."
+		exit
+	fi
 }
 
 clear
