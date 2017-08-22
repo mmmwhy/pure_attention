@@ -1,69 +1,69 @@
 #!/bin/bash
 
-#Check Root
-[ $(id -u) != "0" ] && { echo -e "\033[31m 请切换至root账户执行脚本 \033[0m"; exit 1; }
+#检查是否是root账户
+Root_account=`id -u`;
+if { ${Root_account} != '0' };then
+	echo "请通过命令 sudo -i 切换至root账户，然后在尝试执行此脚本。"
+fi
 
-install_ss_panel_mod_v3(){
+#安装lnmp和ss_panel_v3
+install_ss_panel_v3(){
 	yum install -y unzip zip git
 	clear
 	echo -e "################################################################################################################
-Lnmp1.3已知问题：通过 lnmp vhost add 命令添加域名对本机 phpmyadmin 文件夹访问会频繁500错误，后台加载用户列表慢(>10s)
-Lnmp1.4无上述两个问题，\033[31m lnmp1.4安装完成后，若一直停留在【Install lnmp V1.4 completed! enjoy it】，Ctrl+C 一下即可 \033[0m
-Lnmp1.4安装选项：2,自定义您的数据库密码,Y,5,1
-推荐选择安装Lnmp1.4
-#######################################################################################################
-请选择选项：
+lnmp1.3已知问题：[1]通过域名访问phpmyadmin文件夹会频繁500错误 [2]用户较多时，加载用户列表较慢(>10s)
+lnmp1.4无上述问题，推荐安装lnmp1.4。lnmp1.4安装选项：2,自定义数据库密码,Y,5,1
+################################################################################################################
 [1] Lnmp1.3
 [2] Lnmp1.4
 [3] 跳过
 
-请输入选项："
+请选择安装选项："
 	read lnmp_version
 	
 	if [ ${lnmp_version} = '1' ];then
-		wget -c https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/lnmp1.3.zip && unzip lnmp1.3.zip && cd lnmp1.3 && chmod +x install.sh && ./install.sh lnmp
+		wget -c "https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/lnmp1.3.zip"
+		unzip lnmp1.3.zip && cd lnmp1.3 && chmod +x install.sh && ./install.sh lnmp
 		mysql_passwd=root
 	elif [ ${lnmp_version} = '2' ];then
-		echo -e "\033[31m lnmp1.4安装完成后，若一直停留在【Install lnmp V1.4 completed! enjoy it】，Ctrl+C 一下即可 \033[0m"
+		echo -e "\033[31m lnmp1.4安装完成后，若一直停留在【Install lnmp V1.4 completed! enjoy it】，在终端内 Ctrl+C 即可 \033[0m"
 		echo -e "\033[31m 安装完成大概需要30分钟，您清楚了么？回车继续... \033[0m"
 		read
 		#install lnmp1.4
 		wget -c http://soft.vpser.net/lnmp/lnmp1.4.tar.gz && tar zxf lnmp1.4.tar.gz && cd lnmp1.4 && ./install.sh lnmp
 		clear
-		echo "我们需要你设置的数据库密码进行后续操作，您设置的数据库密码是："
+		echo "脚本需要你设置的数据库密码进行后续操作，您设置的数据库密码是："
 		read mysql_passwd
 		if [ ${mysql_passwd} = '' ];then
 			echo "您输入的内容为空，默认密码为：root"
 			mysql_passwd=root
 		else
 			echo "您输入的密码为：${mysql_passwd}"
-			echo "确认这个密码么？如果有误，请按Ctrl+C停止操作，然后重新执行脚本"
-			read
 		fi
 	elif [ ${lnmp_version} = '3' ];then
-		echo "此选项适用于已安装lnmp的用户！"
-		echo "我们需要你设置的数据库密码进行后续操作，您设置的数据库密码是："
+		echo "此项仅适用于已安装lnmp的服务器！"
+		echo "脚本需要你设置的数据库密码进行后续操作，您设置的数据库密码是："
 		read mysql_passwd
 		if [ ${mysql_passwd} = '' ];then
 			echo "您输入的内容为空，默认密码为：root"
 			mysql_passwd=root
 		else
 			echo "您输入的密码为：${mysql_passwd}"
-			echo "确认这个密码么？如果有误，请按Ctrl+C停止操作，然后重新执行脚本"
-			read
 		fi
-		echo "将在3秒后安装 SS Panel V3 前端..."
-		sleep 3
-	elif [ ${lnmp_version} = '' ];then
-		echo "回车默认安装lnmp1.3，3秒后开始安装..."
-		sleep 3
-		wget -c https://raw.githubusercontent.com/mmmwhy/ss-panel-and-ss-py-mu/master/lnmp1.3.zip && unzip lnmp1.3.zip && cd lnmp1.3 && chmod +x install.sh && ./install.sh lnmp
-		mysql_passwd=root
 	else
-		echo "不在范围的选项，请重新执行脚本."
+		echo "请选择安装选项，您需要重新执行脚本。"
 		exit
 	fi
 
+	#为站点命名
+	clear
+	echo "您已完成安装lnmp，为您的 ss panel v3 面板命个名吧："
+	read ss_panel_v3_name
+	if [ ${ss_panel_v3_name} = '' ];then
+		echo "您未命名，默认名称为：ss panel v3"
+		ss_panel_v3_name="ss panel v3"
+	fi
+	
 	#配置前端
 	cd /home/wwwroot/default/
 	rm -rf index.html
@@ -72,30 +72,33 @@ Lnmp1.4安装选项：2,自定义您的数据库密码,Y,5,1
 	wget -P /home/wwwroot/default/config https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/.config.php
 	#修改站点名称，站点地址，数据库密码
 	server_ip=`curl -s https://app.52ll.win/ip/api.php`
-	sed -i 's/this_is_sspanel_name/SS Panel V3/g' /home/wwwroot/default/config/.config.php
+	#站点名称
+	sed -i "s/this_is_sspanel_name/${ss_panel_v3_name}/g" /home/wwwroot/default/config/.config.php
+	#站点地址
 	sed -i "s/this_is_sspanel_address/http://${server_ip}/g" /home/wwwroot/default/config/.config.php
-	
-	if [ ${mysql_passwd} != 'root' ];then
-		sed -i "s/this_is_the_sspanel_database_password/${mysql_passwd}/g" /home/wwwroot/default/config/.config.php
-	else
-		sed -i 's/this_is_the_sspanel_database_password/root/g' /home/wwwroot/default/config/.config.php
-	fi
-	
+	#数据库密码
+	sed -i "s/this_is_the_sspanel_database_password/${mysql_passwd}/g" /home/wwwroot/default/config/.config.php
+
 	#继续配置前端
 	chattr -i .user.ini
 	mv .user.ini public
+	#赋权
 	chown -R root:root *
 	chmod -R 777 *
 	chown -R www:www storage
 	chattr +i public/.user.ini
+	#配置nginx
 	wget -N -P  /usr/local/nginx/conf/ http://home.ustc.edu.cn/~mmmwhy/nginx.conf 
 	service nginx restart
+	#配置数据库
 	mysql -uroot -p${mysql_passwd} -e"create database sspanel;" 
 	mysql -uroot -p${mysql_passwd} -e"use sspanel;" 
 	mysql -uroot -p${mysql_passwd} sspanel < /home/wwwroot/default/sql/sspanel.sql
+	#其他
 	cd /home/wwwroot/default
 	php composer.phar install
 	php -n xcat initdownload
+	#设置定时任务
 	yum -y install vixie-cron crontabs
 	rm -rf /var/spool/cron/root
 	echo 'SHELL=/bin/bash' >> /var/spool/cron/root
@@ -107,16 +110,18 @@ Lnmp1.4安装选项：2,自定义您的数据库密码,Y,5,1
 	/sbin/service crond restart
 	#完成提示
 	clear
-	echo "#############################################################"
-	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
-	echo "# Blog: https://91vps.us/2017/05/27/ss-panel-v3-mod/        #"
-	echo "# Author: 91vps.us                                          #"
-	echo "#############################################################"
-	echo "# 安装完成，登录 http://${server_ip} 看看吧~                #"
-	echo "# 默认账户：ss@feiyang.li 默认密码：feiyang                 #"
-	echo "#############################################################"
-	echo "# 更多设置请修改/home/wwwroot/default/config/.config.php    #"
-	echo "#############################################################"
+	echo "####################################################################
+# GitHub原版：https://github.com/mmmwhy/ss-panel-and-ss-py-mu      #
+# GitHub魔改版：https://github.com/qinghuas/ss-panel-and-ss-py-mu  #
+# 原作者博客：https://91vps.us/2017/05/27/ss-panel-v3-mod          #
+# GitHub版权所有：@mmmwhy @qinghuas                                #
+####################################################################
+# 安装完成，登录 http://${server_ip} 看看吧~                     #
+# 默认账户：ss@feiyang.li 默认密码：feiyang                         #
+# 友情提示：登录后请务必修改默认账户与默认密码！                      #
+# 更多设置请修改：/home/wwwroot/default/config/.config.php          #
+####################################################################" >> /root/ss_panel_info.txt
+	cat /root/ss_panel_info.txt
 }
 
 install_centos_ssr(){
@@ -124,13 +129,13 @@ install_centos_ssr(){
 	yum -y install git 
 	yum -y install python-setuptools && easy_install pip 
 	yum -y groupinstall "Development Tools" 
-	#512M的小鸡增加1G的Swap分区
+	#增加1G的Swap分区
 	dd if=/dev/zero of=/var/swap bs=1024 count=1048576
 	mkswap /var/swap
 	chmod 0644 /var/swap
 	swapon /var/swap
 	echo '/var/swap   swap   swap   default 0 0' >> /etc/fstab
-	#libsodium
+	#编译libsodium加密库
 	wget https://file.52ll.win/libsodium-1.0.13.tar.gz
 	tar xf libsodium-1.0.13.tar.gz && cd libsodium-1.0.13
 	./configure && make -j2 && make install
@@ -175,9 +180,7 @@ install_ubuntu_ssr(){
 }
 
 install_node(){
-	#Check Root
-	[ $(id -u) != "0" ] && { echo "Error: You must be root to run this script"; exit 1; }
-	#check OS version
+	#检测系统版本
 	check_sys(){
 		if [[ -f /etc/redhat-release ]]; then
 			release="centos"
@@ -207,16 +210,30 @@ install_node(){
 	#取消文件数量限制
 	sed -i '$a * hard nofile 512000\n* soft nofile 512000' /etc/security/limits.conf
 	#获取节点信息
-	read -p "Please input your domain：" Userdomain
-	read -p "Please input your muKey：" Usermukey
-	read -p "Please input your Node_ID：" UserNODE_ID
+	clear
+	echo "#########################################################################################
+【前端地址填写规范】
+[1]填写IP，需包含http://，例如：http://123.123.123.123
+[2]填写域名，需包含http:// 或 https://，例如：https://ssr.domain.com
+注意：前端地址若为域名且为https站点，请确保https配置正确(浏览器访问不提示错误即可)
+【mukey填写规范】
+若没有修改过前端的/home/wwwroot/default/.config.php文件中的$System_Config['muKey']项
+则设置该项时，回车即可。若您修改了该项，请输入您设置的值
+【节点ID填写规范】
+前端搭建完成后，访问前端地址，使用默认管理员账户登陆，管理面板，节点列表，点击右下角的+号
+设置节点信息，需要注意的是，节点地址可填域名或IP，节点IP只能填节点IP，设置完成后点添加
+返回节点列表，就能看到你刚刚添加的节点的节点ID
+#########################################################################################"
+	read -p "请设置前端地址：" Userdomain
+	read -p "请设置muKey：" Usermukey
+	read -p "请设置节点ID：" UserNODE_ID
 	install_ssr_for_each
-	IPAddress=`wget http://members.3322.org/dyndns/getip -O - -q ; echo`;
+	IPAddress=`curl -s https://app.52ll.win/ip/api.php`;
 	cd /root/shadowsocks
 	#备份userapiconfig.py
 	cp /root/shadowsocks/userapiconfig.py /root/shadowsocks/userapiconfig.py.bak
 	#修改userapiconfig.py
-	echo -e "modify Config.py...\n"
+	echo "修改中..."
 	Userdomain=${Userdomain:-"http://${IPAddress}"}
 	sed -i "s#https://zhaoj.in#${Userdomain}#" /root/shadowsocks/userapiconfig.py
 	Usermukey=${Usermukey:-"mupass"}
@@ -242,16 +259,16 @@ install_node(){
 supervisorctl restart ssr" > /usr/bin/srs
 	chmod 777 /usr/bin/srs
 	#安装完成提示
-	echo "#############################################################"
-	echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
-	echo "# Blog: https://91vps.us/2017/05/27/ss-panel-v3-mod/        #"
-	echo "# Author: 91vps.us                                          #"
-	echo "#############################################################"
-	echo "# 安装完成，该节点需重启使配置生效                          #"
-	echo "#############################################################"
-	echo "# 管理SSR：supervisorctl {start|stop|restart} ssr           #"
-	echo "#############################################################"
-	echo
+	echo "####################################################################
+# GitHub原版：https://github.com/mmmwhy/ss-panel-and-ss-py-mu      #
+# GitHub魔改版：https://github.com/qinghuas/ss-panel-and-ss-py-mu  #
+# 原作者博客：https://91vps.us/2017/05/27/ss-panel-v3-mod          #
+# GitHub版权所有：@mmmwhy @qinghuas                                #
+####################################################################
+# 管理SSR：supervisorctl {start|stop|restart} ssr                  #
+# 快捷重启SSR服务端命令：srs                                        #
+####################################################################" >> /root/ss_node_info.txt
+	cat /root/ss_node_info.txt
 }
 
 reboot_system(){
@@ -277,9 +294,22 @@ Modify_Node_Info(){
 	
 	clear
 	#获取需要修改成的节点配置
-	read -p "Please input new Domain：" Userdomain
-	read -p "Please input new MuKey：" Usermukey
-	read -p "Please input new Node_ID：" UserNODE_ID
+	echo "#########################################################################################
+【前端地址填写规范】
+[1]填写IP，需包含http://，例如：http://123.123.123.123
+[2]填写域名，需包含http:// 或 https://，例如：https://ssr.domain.com
+注意：前端地址若为域名且为https站点，请确保https配置正确(浏览器访问不提示错误即可)
+【mukey填写规范】
+若没有修改过前端的/home/wwwroot/default/.config.php文件中的$System_Config['muKey']项
+则设置该项时，回车即可。若您修改了该项，请输入您设置的值
+【节点ID填写规范】
+前端搭建完成后，访问前端地址，使用默认管理员账户登陆，管理面板，节点列表，点击右下角的+号
+设置节点信息，需要注意的是，节点地址可填域名或IP，节点IP只能填节点IP，设置完成后点添加
+返回节点列表，就能看到你刚刚添加的节点的节点ID
+#########################################################################################"
+	read -p "请设置前端地址：" Userdomain
+	read -p "请设置muKey：" Usermukey
+	read -p "请设置节点ID：" UserNODE_ID
 	#检查userapiconfig.py.bak是否存在
 	if [ ! -f /root/shadowsocks/userapiconfig.py.bak ];then
 		wget https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/userapiconfig.py
@@ -291,7 +321,7 @@ Modify_Node_Info(){
 	#修改
 	echo
 	echo "请稍等..."
-	IPAddress=`wget http://members.3322.org/dyndns/getip -O - -q ; echo`;
+	IPAddress=`curl -s https://app.52ll.win/ip/api.php`;
 	Userdomain=${Userdomain:-"http://${IPAddress}"}
 	sed -i "s#https://zhaoj.in#${Userdomain}#" /root/shadowsocks/userapiconfig.py
 	Usermukey=${Usermukey:-"mupass"}
@@ -335,29 +365,42 @@ current_node_configuration(){
 	fi
 }
 
-clear
-echo "#############################################################"
-echo "# One click Install SS-panel and Shadowsocks-Py-Mu          #"
-echo "# Github: https://github.com/mmmwhy/ss-panel-and-ss-py-mu   #"
-echo "# Blog: https://91vps.us/2017/05/27/ss-panel-v3-mod/        #"
-echo "# Author: 91vps.us                                          #"
-echo "#############################################################"
-echo "# Please choose the server you want                         #"
-echo "# [1] Install SS Panel V3 Mod                               #"
-echo "# [2] Intsall SS Node And BBR                               #"
-echo "# [3] Modify Node Info                                      #"
-echo "# [4] Display Node Info                                     #"
-echo "# [5] Intsall SS Node                                       #"
-echo "# [6] Intsall BBR                                           #"
-echo "# [7] Test This Server                                      #"
-echo "#############################################################"
-echo
+Multi_open_ssr_node_end(){
+	echo "我们并不赞成这种行为，您确定要继续么？[y/n]"
+	read To_confirm_more
+	if [ ${To_confirm_more} = 'y'];then
+		echo "我们假设有前端A，B，请确保前端A，B分配的是不同的端口段，您可在前端A，B的
+/home/wwwroot/default/config/.config.php文件中设置不同的端口段。您这样做了么？回车继续"
+		read
+		clear
+		#多开节点信息
+		read -p "请设置前端地址：" Userdomain
+		read -p "请设置muKey：" Usermukey
+		read -p "请设置节点ID：" UserNODE_ID
+}
 
-stty erase '^H' && read -p "Please enter the number [1-7]:" num
+clear
+echo "####################################################################
+# GitHub原版：https://github.com/mmmwhy/ss-panel-and-ss-py-mu      #
+# GitHub魔改版：https://github.com/qinghuas/ss-panel-and-ss-py-mu  #
+# 原作者博客：https://91vps.us/2017/05/27/ss-panel-v3-mod          #
+# GitHub版权所有：@mmmwhy @qinghuas                                #
+####################################################################
+# [1] 安装lnmp与ss panel v3前端                                    #
+# [2] 安装ssr节点端与Google BBR                                    #
+# [3] 修改ssr节点端配置                                            #
+# [4] 查看ssr节点端配置                                            #
+# [5] 安装ssr节点端                                                #
+# [6] 安装Google BBR                                              #
+# [7] 执行测试脚本                                                 #
+# [8] 多开ssr节点端(未完成)                                        #
+####################################################################"
+
+stty erase '^H' && read -p "Please enter the number [1-8]:" num
 clear
 case "$num" in
 	1)
-	install_ss_panel_mod_v3
+	install_ss_panel_v3
 	;;
 	2)
 	install_node
@@ -380,7 +423,11 @@ case "$num" in
 	clear
 	wget -qO- bench.sh | bash
 	;;
+	8)
+	echo "未完成该项设定."
+	exit
+	;;
 	*)
-	echo "请输入正确的范围 [1-7]"
+	echo "请输入正确的范围 [1-8]"
 	;;
 esac
