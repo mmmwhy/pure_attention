@@ -2,7 +2,7 @@
 
 #检查是否是root账户
 Root_account=`id -u`
-if { ${Root_account} != '0' };then
+if [ ${Root_account} != '0' ];then
 	echo "请通过命令 sudo -i 切换至root账户，然后在尝试执行此脚本。"
 fi
 
