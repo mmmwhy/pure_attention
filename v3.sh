@@ -365,20 +365,6 @@ current_node_configuration(){
 	fi
 }
 
-Multi_open_ssr_node_end(){
-	echo "我们并不赞成这种行为，您确定要继续么？[y/n]"
-	read To_confirm_more
-	if [ ${To_confirm_more} = 'y'];then
-		echo "我们假设有前端A，B，请确保前端A，B分配的是不同的端口段，您可在前端A，B的
-/home/wwwroot/default/config/.config.php文件中设置不同的端口段。您这样做了么？回车继续"
-		read
-		clear
-		#多开节点信息
-		read -p "请设置前端地址：" Userdomain
-		read -p "请设置muKey：" Usermukey
-		read -p "请设置节点ID：" UserNODE_ID
-}
-
 clear
 echo "####################################################################
 # GitHub原版：https://github.com/mmmwhy/ss-panel-and-ss-py-mu      #
