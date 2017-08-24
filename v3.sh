@@ -18,6 +18,7 @@ install_lnmp_and_ss_panel(){
 	if [ ${lnmp_version} = '1' ];then
 		wget -c https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/lnmp1.3.zip && unzip lnmp1.3.zip && cd lnmp1.3 && chmod +x install.sh && ./install.sh lnmp
 	elif [ ${lnmp_version} = '2' ];then
+		echo "lnmp1.4安装选项:2,自定义数据库密码,Y,5,1"
 		echo "安装完成后,会提示[Install lnmp V1.4 completed! enjoy it],这时按一下Ctrl+C即可,回车继续.";read
 		wget -c http://soft.vpser.net/lnmp/lnmp1.4.tar.gz && tar zxf lnmp1.4.tar.gz && cd lnmp1.4 && ./install.sh lnmp
 	elif [ ${lnmp_version} = '3' ];then
