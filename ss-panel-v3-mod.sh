@@ -147,6 +147,8 @@ install_node(){
   sed -i '$a [program:ssr]\ncommand = python /root/shadowsocks/server.py\nuser = root\nautostart = true\nautorestart = true' /etc/supervisord.conf
 	supervisord
 	#iptables
+	systemctl stop firewalld.service
+	systemctl disable firewalld.service
 	iptables -F
 	iptables -X  
 	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
@@ -176,6 +178,8 @@ install_panel_and_node(){
   sed -i '$a [program:ssr]\ncommand = python /root/shadowsocks/server.py\nuser = root\nautostart = true\nautorestart = true' /etc/supervisord.conf
 	supervisord
 	#iptables
+	systemctl stop firewalld.service
+	systemctl disable firewalld.service
 	iptables -F
 	iptables -X  
 	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
