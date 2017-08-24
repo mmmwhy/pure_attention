@@ -62,6 +62,9 @@ install_centos_ssr(){
 	yum -y install python-devel
 	yum -y install libffi-devel
 	yum -y install openssl-devel
+	yum -y install iptables
+	systemctl stop firewalld.service
+	systemctl disable firewalld.service
 	pip install -r requirements.txt
 	cp apiconfig.py userapiconfig.py
 	cp config.json user-config.json
@@ -147,8 +150,6 @@ install_node(){
   sed -i '$a [program:ssr]\ncommand = python /root/shadowsocks/server.py\nuser = root\nautostart = true\nautorestart = true' /etc/supervisord.conf
 	supervisord
 	#iptables
-	systemctl stop firewalld.service
-	systemctl disable firewalld.service
 	iptables -F
 	iptables -X  
 	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
@@ -180,6 +181,7 @@ install_panel_and_node(){
 	#iptables
 	systemctl stop firewalld.service
 	systemctl disable firewalld.service
+	yum install iptables -y
 	iptables -F
 	iptables -X  
 	iptables -I INPUT -p tcp -m tcp --dport 104 -j ACCEPT
