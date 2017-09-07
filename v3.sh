@@ -293,6 +293,8 @@ echo "####################################################################
 # [4] 安装ssr节点                                                  #
 # [5] 安装bbr                                                      #
 # [6] 测试                                                         #
+# [7] 修复                                                         #
+# [8] 云盾                                                         #
 ####################################################################"
 
 stty erase '^H' && read -p "请选择安装项[1-6]:" num
@@ -317,6 +319,21 @@ case "$num" in
 	;;
 	6)
 	wget -qO- bench.sh | bash
+	;;
+	7)
+	echo "修复执行srs命令,或supervisorctl restart ssr命令,却提示unix:///tmp/supervisor.sock no such file的问题？[y/n]"
+	read Perform_a_repair_confirmation
+	if [ ${Perform_a_repair_confirmation} = 'y' ];then
+		/usr/bin/supervisord -c /etc/supervisord.conf
+	else
+		echo "您选择了不修复,脚本中止."
+		exit
+	fi
+	;;
+	8)
+	echo "将卸载国际阿里云镜像中自带的云盾，继续请回车."
+	read
+	sudo curl -sSL https://linuxsoft.cxthhhhh.com/download/CentOS/7/AliYunDun/AliyunDun_CentOS7_New_installation.sh | sudo bash
 	;;
 	*)
 	echo "选项不在范围内,安装终止."
