@@ -216,6 +216,9 @@ install_node(){
 	echo "#!/bin/bash" >> /usr/bin/srs
 	echo "supervisorctl restart ssr" >> /usr/bin/srs
 	chmod 777 /usr/bin/srs
+	#最后配置
+	/usr/bin/supervisord -c /etc/supervisord.conf
+	supervisorctl restart ssr
 	#完成提示
 	echo "ss_node已安装完成
 启动SSR：supervisorctl start ssr
@@ -294,13 +297,10 @@ echo "####################################################################
 # [4] 安装ssr节点                                                  #
 # [5] 安装bbr                                                      #
 ####################################################################
-# [6] 测试                                                         #
-# [7] 修复                                                         #
-# [8] 云盾                                                         #
-# [9] 更新                                                         #
+# [6]测试 [7]修复 [8]云盾 [9]更新 [10]清理 [11]退出                #
 ####################################################################"
 
-stty erase '^H' && read -p "请选择安装项[1-9]:" num
+stty erase '^H' && read -p "请选择安装项[1-11]:" num
 clear
 case "$num" in
 	1)
@@ -358,7 +358,19 @@ case "$num" in
 		chmod 777 v3.sh
 	fi
 	
-	echo "已完成更新."
+	echo "已完成更新,2s后将执行新版本脚本..."
+	sleep 2
+	bash v3.sh
+	;;
+	10)
+	echo "此选项用于清理安装文件,您要继续么?回车开始吧...";read
+	echo "清理前文件：";ls
+	rm -rf add_node_info.txt install_info.txt libsodium-1.0.13.tar.gz anaconda-ks.cfg libsodium-1.0.13 original-ks.cfg
+	echo "清理完成,清理后文件：";ls
+	;;
+	11)
+	echo "已退出."
+	exit 0
 	;;
 	*)
 	echo "选项不在范围内,安装终止."
