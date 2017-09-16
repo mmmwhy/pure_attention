@@ -331,6 +331,9 @@ case "$num" in
 	echo "已完成常规修复,若节点仍未恢复正常,请重新启动服务器,然后执行修复."
 	;;
 	8)
+	echo "该选项适用于阿里云云服务器,用于卸载自带安全(监控)软件：云盾"
+	echo "回车后将执行卸载选项,您也可以通过 Ctrl+C 键中止."
+	read
 	sudo curl -sSL https://linuxsoft.cxthhhhh.com/download/CentOS/7/AliYunDun/AliyunDun_CentOS7_New_installation.sh | sudo bash
 	;;
 	9)
@@ -356,6 +359,7 @@ case "$num" in
 	fi
 	
 	echo "已完成更新."
+	;;
 	*)
 	echo "选项不在范围内,安装终止."
 	exit
