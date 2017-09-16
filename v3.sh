@@ -120,7 +120,7 @@ install_centos_ssr(){
 	yum -y install python-devel
 	yum -y install libffi-devel
 	yum -y install openssl-devel
-	pip install -r requirements.txt
+	pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
 	cp apiconfig.py userapiconfig.py
 	cp config.json user-config.json
 }
@@ -136,11 +136,11 @@ install_ubuntu_ssr(){
 	echo /usr/local/lib > /etc/ld.so.conf.d/usr_local_lib.conf
 	ldconfig
 	apt-get install python-pip git -y
-	pip install cymysql
+	pip install cymysql -i https://mirrors.aliyun.com/pypi/simple/
 	cd /root
 	git clone -b manyuser https://github.com/glzjin/shadowsocks.git "/root/shadowsocks"
 	cd shadowsocks
-	pip install -r requirements.txt
+	pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
 	chmod +x *.sh
 	# 配置程序
 	cp apiconfig.py userapiconfig.py
@@ -286,18 +286,21 @@ echo "####################################################################
 # GitHub修改版：https://github.com/qinghuas/ss-panel-and-ss-py-mu  #
 # 原作者博客：https://91vps.us/2017/05/27/ss-panel-v3-mod          #
 # GitHub版权：@mmmwhy @qinghuas                                    #
+# 版本：V.2.0 2017-09-17                                           #
 ####################################################################
 # [1] 安装lnmp与ss panel                                           #
 # [2] 安装ssr节点与bbr                                             #
 # [3] 修改ssr节点配置                                              #
 # [4] 安装ssr节点                                                  #
 # [5] 安装bbr                                                      #
+####################################################################
 # [6] 测试                                                         #
 # [7] 修复                                                         #
 # [8] 云盾                                                         #
+# [9] 更新                                                         #
 ####################################################################"
 
-stty erase '^H' && read -p "请选择安装项[1-6]:" num
+stty erase '^H' && read -p "请选择安装项[1-9]:" num
 clear
 case "$num" in
 	1)
@@ -321,20 +324,38 @@ case "$num" in
 	wget -qO- bench.sh | bash
 	;;
 	7)
-	echo "修复执行srs命令,或supervisorctl restart ssr命令,却提示unix:///tmp/supervisor.sock no such file的问题？[y/n]"
-	read Perform_a_repair_confirmation
-	if [ ${Perform_a_repair_confirmation} = 'y' ];then
-		/usr/bin/supervisord -c /etc/supervisord.conf
-	else
-		echo "您选择了不修复,脚本中止."
-		exit
-	fi
+	echo "正在尝试修复..."
+	/usr/bin/supervisord -c /etc/supervisord.conf
+	echo "正在重新启动ssr服务端..."
+	supervisorctl restart ssr
+	echo "已完成常规修复,若节点仍未恢复正常,请重新启动服务器,然后执行修复."
 	;;
 	8)
-	echo "将卸载国际阿里云镜像中自带的云盾，继续请回车."
-	read
 	sudo curl -sSL https://linuxsoft.cxthhhhh.com/download/CentOS/7/AliYunDun/AliyunDun_CentOS7_New_installation.sh | sudo bash
 	;;
+	9)
+	echo "请选择更新源：[1]GitHub [2]作者文件服务器"
+	read Update_source
+	
+	if [ ${Update_source} = '1' ];then
+		#清理旧文件
+		rm -rf /root/v3.sh
+		rm -rf /root/v3.sh.*
+		#更新新文件
+		wget https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/v3.sh
+		chmod 777 v3.sh
+	fi
+
+	if [ ${Update_source} = '2' ];then
+		#清理旧文件
+		rm -rf /root/v3.sh
+		rm -rf /root/v3.sh.*
+		#更新新文件
+		wget https://file.52ll.win/v3.sh
+		chmod 777 v3.sh
+	fi
+	
+	echo "已完成更新."
 	*)
 	echo "选项不在范围内,安装终止."
 	exit
