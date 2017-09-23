@@ -5,7 +5,7 @@
 $System_Config['key'] = 'randomkey';
 $System_Config['debug'] =  'false';                          //正式环境请确保为false
 $System_Config['appName'] = 'this_is_sspanel_name';          //站点名称
-$System_Config['baseUrl'] = 'this_is_sspanel_address';       //站点地址
+$System_Config['baseUrl'] = 'http://this_is_sspanel_address';       //站点地址
 $System_Config['timeZone'] = 'PRC';                          //PRC 天朝时间  UTC 格林时间
 $System_Config['pwdMethod'] = 'sha256';                      //密码加密   可选 md5,sha256
 $System_Config['salt'] = '';                                 //密码加密用，从旧版升级请留空
