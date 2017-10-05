@@ -9,7 +9,7 @@ Centos：`yum -y install wget`
 Debian/Ubuntu：`apt-get install wget`  
 
 2.选项安装选项  
-![](https://file.52ll.win/option_4.png)  
+![](https://file.52ll.win/option_5.png)  
 
 其他帮助
 ---
