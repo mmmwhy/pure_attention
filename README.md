@@ -6,7 +6,7 @@ wget https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/v3.
 ```
 若提示：`-bash: wget: command not found`，则
 Centos：`yum -y install wget`
-Debian/Ubuntu：`apt-get install wget`  
+Debian/Ubuntu：`apt-get -y install wget`  
 
 2.选项安装选项  
 ![](https://file.52ll.win/option_5.png)  
