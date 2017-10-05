@@ -493,7 +493,7 @@ safe_dog(){
 		tar xzvf safedog_linux64.tar.gz
 		mv safedog_an_linux64_2.8.19005 safedog
 		cd safedog;chmod +x *.py
-		yum -y install mlocate lsof psmisc
+		yum -y install mlocate lsof psmisc net-tools
 		./install.py
 		echo "安装完成,请您重新执行脚本."
 	else
