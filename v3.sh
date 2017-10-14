@@ -332,9 +332,9 @@ update_the_shell(){
 	#删除旧文件并从更新源获取新文件
 	if [ ${Update_source} = '1' ];then
 		rm -rf /root/v3.sh v3.sh.*
-		wget https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/v3.sh
+		wget "https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/v3.sh"
 	elif [ ${Update_source} = '2' ];then
-		rm -rf /root/v3.sh v3.sh.*;wget https://file.52ll.win/v3.sh
+		rm -rf /root/v3.sh v3.sh.*;wget "https://file.52ll.win/v3.sh"
 	else
 		echo "选项不在范围内,更新中止.";exit 0
 	fi
@@ -519,6 +519,27 @@ uninstall_ali_cloud_shield(){
 	fi
 }
 
+install_fail2ban(){
+	echo "脚本来自:http://www.vpsps.com/225.html";echo "使用简介:https://linux.cn/article-5067-1.html";echo "感谢上述贡献者."
+	echo "选择选项: [1]安装fail2ban [2]卸载fail2ban [3]查看封禁列表 [4]为指定IP解锁";read fail2ban_option
+	if [ ${fail2ban_option} = '1' ];then
+		wget "http://sspanel-1252089354.coshk.myqcloud.com/fail2ban.sh";bash fail2ban.sh
+	elif [ ${fail2ban_option} = '2' ];then
+		wget "https://raw.githubusercontent.com/FunctionClub/Fail2ban/master/uninstall.sh";bash uninstall.sh
+	elif [ ${fail2ban_option} = '3' ];then
+		echo ${separate_lines};fail2ban-client ping;echo -e "\033[31m#正常返回值:Server replied: pong\033[0m"
+		#iptables --list -n;echo -e "\033[31m#当前iptables禁止规则\033[0m"
+		fail2ban-client status;echo -e "\033[31m#当前封禁列表\033[0m"
+		fail2ban-client status ssh-iptables;echo -e "\033[31m当前被封禁的IP列表\033[0m"
+	elif [ ${fail2ban_option} = '4' ];then
+		echo "请输入需要解锁的IP地址:";read need_to_unlock_the_ip_address
+		fail2ban-client set ssh-iptables unbanip ${need_to_unlock_the_ip_address}
+		echo "已为${need_to_unlock_the_ip_address}解除封禁."
+	else
+		echo "选项不在范围.";exit 0
+	fi
+}
+
 install_shell(){
 	if [ ! -f /usr/bin/v3 ];then
 		cp /root/v3.sh /usr/bin/v3;chmod 777 /usr/bin/v3
@@ -536,7 +557,7 @@ echo "####################################################################
 # GitHub修改版：https://github.com/qinghuas/ss-panel-and-ss-py-mu  #
 # 原作者博客：http://91vps.win/2017/08/24/ss-panel-v3-mod          #
 # GitHub版权：@mmmwhy @qinghuas                                    #
-# 版本：V.2.2 2017-10-14                                           #
+# 版本：V.2.3.1 2017-10-14                                         #
 ####################################################################
 # [1] 安装lnmp与ss panel                                           #
 # [2] 安装ssr节点与bbr                                             #
@@ -546,8 +567,9 @@ echo "####################################################################
 ####################################################################
 # [a]修复服务端故障 [b]检测BBR安装状态 [c]卸载阿里云盾 [d]安装锐速 #
 # [e]执行测速脚本 [f]查看回程路由 [g]安装安全狗 [h]SpeedTest       #
-# [i]配置防火墙 [j]列出开放端口 [k]更换默认源                      #
-# [l]刷新脚本 [m]更新脚本 [n]退出脚本                              #
+# [i]配置防火墙 [j]列出开放端口 [k]更换默认源 [l]fail2ban          #
+####################################################################
+# [x]刷新脚本 [y]更新脚本 [z]退出脚本                              #
 ####################################################################"
 
 stty erase '^H' && read -p "请选择安装项[1-5]/[a-n]:" num
@@ -588,10 +610,15 @@ case "$num" in
 	k)
 	replacement_of_installation_source;;
 	l)
+	install_fail2ban;;
+	x)
 	bash v3.sh;;
-	m)
+	y)
 	update_the_shell;;
-	n)
+	y2)
+	rm -rf /root/v3.sh v3.sh.* /usr/bin/v3;wget "https://file.52ll.win/v3.sh"
+	cp /root/v3.sh /usr/bin/v3;chmod 777 /usr/bin/v3;v3;;
+	z)
 	echo "已退出.";exit 0;;
 	*)
 	echo "选项不在范围内,安装终止."
@@ -600,11 +627,11 @@ case "$num" in
 esac
 
 #继续还是中止
-echo ${separate_lines};echo "继续(y)还是中止(n)? [y/n]";read continue_or_stop
+echo ${separate_lines};echo -n "继续(y)还是中止(n)? [y/n]:";read continue_or_stop
 if [ ${continue_or_stop} = 'y' ];then
 	bash v3.sh
 else
 	echo "已中止.";exit 0
 fi
 
-#END 2017-10-14 21:07
+#END 2017-10-14 22:25
