@@ -5,6 +5,7 @@
 
 #全局变量
 server_ip=`curl -s https://app.52ll.win/ip/api.php`
+separate_lines="####################################################################"
 
 install_lnmp_and_ss_panel(){
 	yum -y remove httpd
@@ -327,27 +328,19 @@ repair_ssr_operation(){
 }
 
 update_the_shell(){
-	echo "请选择更新源：[1]GitHub [2]作者文件服务器"
-	read Update_source
-	
+	echo "请选择更新源：[1]GitHub [2]作者文件服务器";read Update_source
+	#删除旧文件并从更新源获取新文件
 	if [ ${Update_source} = '1' ];then
-		#清理旧文件
 		rm -rf /root/v3.sh v3.sh.*
-		#更新新文件
 		wget https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/v3.sh
-		chmod 777 v3.sh
+	elif [ ${Update_source} = '2' ];then
+		rm -rf /root/v3.sh v3.sh.*;wget https://file.52ll.win/v3.sh
+	else
+		echo "选项不在范围内,更新中止.";exit 0
 	fi
-
-	if [ ${Update_source} = '2' ];then
-		#清理旧文件
-		rm -rf /root/v3.sh v3.sh.*
-		#更新新文件
-		wget https://file.52ll.win/v3.sh
-		chmod 777 v3.sh
-	fi
-	
-	#执行新脚本
-	bash v3.sh
+	#将脚本作为命令放置在/usr/bin目录内,最后执行
+	rm -rf /usr/bin/v3;cp /root/v3.sh /usr/bin/v3;chmod 777 /usr/bin/v3
+	v3
 }
 
 replacement_of_installation_source(){
@@ -425,6 +418,24 @@ speedtest(){
 	./speedtest.py
 }
 
+nali_test(){
+	echo "请输入目标IP：";read purpose_ip
+	nali-traceroute -q 1 ${purpose_ip}
+}
+
+besttrace_test(){
+	echo "请输入目标IP：";read purpose_ip
+	cd /root/besttrace
+	./besttrace -q 1 ${purpose_ip}
+}
+
+mtr_test(){
+	echo "请输入目标IP：";read purpose_ip
+	echo "请输入测试次数："
+	read MTR_Number_of_tests
+	mtr -c ${MTR_Number_of_tests} --report ${purpose_ip}
+}
+
 detect_backhaul_routing(){
 	echo "选项：[1]Nali [2]BestTrace [3]MTR"
 	read detect_backhaul_routing_version
@@ -436,11 +447,9 @@ detect_backhaul_routing(){
 			git clone https://github.com/dzxx36gyy/nali-ipip.git
 			cd nali-ipip
 			./configure && make && make install
-			echo "安装完成,请您重新执行脚本."
+			clear;nali_test
 		else
-			echo "请输入目标IP："
-			read purpose_ip
-			nali-traceroute -q 1 ${purpose_ip}
+			nali_test
 		fi
 	elif [ ${detect_backhaul_routing_version} = '2' ];then
 		#判断/root/besttrace/besttrace文件是否存在
@@ -448,27 +457,20 @@ detect_backhaul_routing(){
 			echo "检查到您未安装,脚本将先进行安装..."
 			yum update -y
 			yum install traceroute -y
-			wget -N --no-check-certificate https://softs.fun/Other/besttrace.tar.gz
+			wget -N --no-check-certificate "http://sspanel-1252089354.coshk.myqcloud.com/besttrace.tar.gz"
 			tar -xzf besttrace.tar.gz && cd besttrace && chmod +x *
-			echo "安装完成,请您重新执行脚本."
+			clear;besttrace_test
 		else
-			echo "请输入目标IP："
-			read purpose_ip
-			cd /root/besttrace
-			./besttrace -q 1 ${purpose_ip}
+			besttrace_test
 		fi
 	elif [ ${detect_backhaul_routing_version} = '3' ];then
 		#判断/usr/sbin/mtr文件是否存在
 		if [ ! -f /usr/sbin/mtr ];then
 			echo "检查到您未安装,脚本将先进行安装..."
 			yum update -y;yum install mtr -y
-			echo "安装完成,请您重新执行脚本."
+			clear;mtr_test
 		else
-			echo "请输入目标IP："
-			read purpose_ip
-			echo "请输入测试次数："
-			read MTR_Number_of_tests
-			mtr -c ${MTR_Number_of_tests} --report ${purpose_ip}
+			mtr_test
 		fi
 	else
 		echo "选项不在范围.";exit 0
@@ -517,13 +519,24 @@ uninstall_ali_cloud_shield(){
 	fi
 }
 
-clear
+install_shell(){
+	if [ ! -f /usr/bin/v3 ];then
+		cp /root/v3.sh /usr/bin/v3;chmod 777 /usr/bin/v3
+	else
+		clear;echo "Tips:您可通过命令[v3]快速启动本脚本!"
+	fi
+}
+
+#安装本脚本
+install_shell
+
+#输出安装选项
 echo "####################################################################
 # GitHub原版：https://github.com/mmmwhy/ss-panel-and-ss-py-mu      #
 # GitHub修改版：https://github.com/qinghuas/ss-panel-and-ss-py-mu  #
 # 原作者博客：http://91vps.win/2017/08/24/ss-panel-v3-mod          #
 # GitHub版权：@mmmwhy @qinghuas                                    #
-# 版本：V.2.1 2017-10-04                                           #
+# 版本：V.2.2 2017-10-14                                           #
 ####################################################################
 # [1] 安装lnmp与ss panel                                           #
 # [2] 安装ssr节点与bbr                                             #
@@ -585,3 +598,13 @@ case "$num" in
 	exit
 	;;
 esac
+
+#继续还是中止
+echo ${separate_lines};echo "继续(y)还是中止(n)? [y/n]";read continue_or_stop
+if [ ${continue_or_stop} = 'y' ];then
+	bash v3.sh
+else
+	echo "已中止.";exit 0
+fi
+
+#END 2017-10-14 21:07
