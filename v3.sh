@@ -527,10 +527,11 @@ install_fail2ban(){
 	elif [ ${fail2ban_option} = '2' ];then
 		wget "https://raw.githubusercontent.com/FunctionClub/Fail2ban/master/uninstall.sh";bash uninstall.sh
 	elif [ ${fail2ban_option} = '3' ];then
-		echo ${separate_lines};fail2ban-client ping;echo -e "\033[31m#正常返回值:Server replied: pong\033[0m"
+		echo ${separate_lines};fail2ban-client ping;echo -e "\033[31m[↑]正常返回值:Server replied: pong\033[0m"
 		#iptables --list -n;echo -e "\033[31m#当前iptables禁止规则\033[0m"
-		fail2ban-client status;echo -e "\033[31m#当前封禁列表\033[0m"
-		fail2ban-client status ssh-iptables;echo -e "\033[31m当前被封禁的IP列表\033[0m"
+		fail2ban-client status;echo -e "\033[31m[↑]当前封禁列表\033[0m"
+		fail2ban-client status ssh-iptables;echo -e "\033[31m[↑]当前被封禁的IP列表\033[0m"
+		sed -n '12,14p' /etc/fail2ban/jail.local;echo -e "\033[31m[↑]当前fail2ban配置\033[0m"
 	elif [ ${fail2ban_option} = '4' ];then
 		echo "请输入需要解锁的IP地址:";read need_to_unlock_the_ip_address
 		fail2ban-client set ssh-iptables unbanip ${need_to_unlock_the_ip_address}
