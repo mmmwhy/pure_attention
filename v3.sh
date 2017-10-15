@@ -251,7 +251,7 @@ install_node(){
 	echo "supervisorctl restart ssr" >> /usr/bin/srs
 	chmod 777 /usr/bin/srs
 	#最后配置
-	/usr/bin/supervisord -c /etc/supervisord.conf
+	#/usr/bin/supervisord -c /etc/supervisord.conf
 	supervisorctl restart ssr
 	#完成提示
 	clear;echo "########################################
@@ -393,6 +393,8 @@ configure_firewall(){
 		systemctl disable firewalld.service
 		echo "查看默认防火墙状态,关闭后显示notrunning,开启后显示running"
 		firewall-cmd --state
+	else
+		echo "选项不在范围,操作中止.";exit 0
 	fi
 }
 
@@ -549,8 +551,16 @@ install_shell(){
 	fi
 }
 
-#安装本脚本
+get_server_ip_info(){
+	if [ ! -f /root/.server_ip_info.txt ];then
+		curl -s myip.ipip.net > /root/.server_ip_info.txt
+	fi
+	read server_ip_info < /root/.server_ip_info.txt
+}
+
+#安装本脚本,获取服务器IP信息
 install_shell
+get_server_ip_info
 
 #输出安装选项
 echo "####################################################################
@@ -558,7 +568,7 @@ echo "####################################################################
 # GitHub修改版：https://github.com/qinghuas/ss-panel-and-ss-py-mu  #
 # 原作者博客：http://91vps.win/2017/08/24/ss-panel-v3-mod          #
 # GitHub版权：@mmmwhy @qinghuas                                    #
-# 版本：V.2.3.1 2017-10-14                                         #
+# 版本：V.2.3.3 2017-10-15                                         #
 ####################################################################
 # [1] 安装lnmp与ss panel                                           #
 # [2] 安装ssr节点与bbr                                             #
@@ -571,6 +581,7 @@ echo "####################################################################
 # [i]配置防火墙 [j]列出开放端口 [k]更换默认源 [l]fail2ban          #
 ####################################################################
 # [x]刷新脚本 [y]更新脚本 [z]退出脚本                              #
+# 此服务器IP信息：${server_ip_info}
 ####################################################################"
 
 stty erase '^H' && read -p "请选择安装项[1-5]/[a-n]:" num
@@ -607,7 +618,7 @@ case "$num" in
 	i)
 	configure_firewall;;
 	j)
-	netstat -lnp;;
+	yum install-y net-tools;netstat -lnp;;
 	k)
 	replacement_of_installation_source;;
 	l)
@@ -631,8 +642,6 @@ esac
 echo ${separate_lines};echo -n "继续(y)还是中止(n)? [y/n]:";read continue_or_stop
 if [ ${continue_or_stop} = 'y' ];then
 	bash v3.sh
-else
-	echo "已中止.";exit 0
 fi
 
-#END 2017-10-14 22:25
+#END 2017-10-15 11:47
