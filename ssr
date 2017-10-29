@@ -1,0 +1,54 @@
+#!/bin/bash
+
+modify_node_info(){
+	#检测
+	if [ ! -f /root/shadowsocks/userapiconfig.py ];then
+		echo "ssr服务端未安装,不能执行该选项.";exit 0
+	else
+		#输出当前节点配置
+		clear;echo "当前节点配置如下:"
+		echo "------------------------------------"
+		sed -n '3p' /root/shadowsocks/userapiconfig.py
+		sed -n '17,18p' /root/shadowsocks/userapiconfig.py
+		echo "------------------------------------"
+		#获取新节点配置信息
+		echo -n "新的前端地址是:";read Userdomain
+		echo -n "新的节点ID是:";read UserNODE_ID
+		echo -n "新的MuKey是:";read Usermukey
+		#检查
+		if [ ! -f /root/shadowsocks/userapiconfig.py.bak ];then
+			wget -O /root/shadowsocks/userapiconfig.py.bak "http://sspanel-1252089354.coshk.myqcloud.com/userapiconfig.py"
+		fi
+		#还原
+		rm -rf /root/shadowsocks/userapiconfig.py
+		cp /root/shadowsocks/userapiconfig.py.bak /root/shadowsocks/userapiconfig.py
+		#修改
+		Userdomain=${Userdomain:-"http://${server_ip}"}
+		sed -i "s#https://zhaoj.in#${Userdomain}#" /root/shadowsocks/userapiconfig.py
+		Usermukey=${Usermukey:-"mupass"}
+		sed -i "s#glzjin#${Usermukey}#" /root/shadowsocks/userapiconfig.py
+		UserNODE_ID=${UserNODE_ID:-"3"}
+		sed -i '2d' /root/shadowsocks/userapiconfig.py
+		sed -i "2a\NODE_ID = ${UserNODE_ID}" /root/shadowsocks/userapiconfig.py
+	fi
+}
+
+echo -n "[1]启动ssr [2]停止ssr [3]查看ssr进程 [4]修改节点配置 [5]调错
+请输入选项:";read ssr_option
+
+clear;case "$ssr_option" in
+	1)
+	bash /root/shadowsocks/run.sh;echo "Done.";;
+	2)
+	bash /root/shadowsocks/stop.sh;echo "Done.";;
+	3)
+	ps aux | grep server.py;echo "Done.";;
+	4)
+	modify_node_info;echo "Done.";;
+	5)
+	python /root/shadowsocks/server.py;echo "Done.";;
+	*)
+	echo "选项不在范围内！";exit 0;;
+esac
+
+#END @qinghuas 2017-10-29 11:51
