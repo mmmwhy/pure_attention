@@ -1,0 +1,84 @@
+#!/bin/bash
+
+modify_node_info(){
+	#检测
+	if [ ! -f /root/shadowsocks/userapiconfig.py ];then
+		echo "ssr服务端未安装,不能执行该选项.";exit 0
+	else
+		#输出当前节点配置
+		clear;echo "当前节点配置如下:"
+		echo "------------------------------------"
+		sed -n '3p' /root/shadowsocks/userapiconfig.py
+		sed -n '17,18p' /root/shadowsocks/userapiconfig.py
+		echo "------------------------------------"
+		#获取新节点配置信息
+		echo -n "新的前端地址是:";read Userdomain
+		echo -n "新的节点ID是:";read UserNODE_ID
+		echo -n "新的MuKey是:";read Usermukey
+		#检查
+		if [ ! -f /root/shadowsocks/userapiconfig.py.bak ];then
+			wget -O /root/shadowsocks/userapiconfig.py.bak "http://sspanel-1252089354.coshk.myqcloud.com/userapiconfig.py"
+		fi
+		#还原
+		rm -rf /root/shadowsocks/userapiconfig.py
+		cp /root/shadowsocks/userapiconfig.py.bak /root/shadowsocks/userapiconfig.py
+		#修改
+		Userdomain=${Userdomain:-"http://${server_ip}"}
+		sed -i "s#https://zhaoj.in#${Userdomain}#" /root/shadowsocks/userapiconfig.py
+		Usermukey=${Usermukey:-"mupass"}
+		sed -i "s#glzjin#${Usermukey}#" /root/shadowsocks/userapiconfig.py
+		UserNODE_ID=${UserNODE_ID:-"3"}
+		sed -i '2d' /root/shadowsocks/userapiconfig.py
+		sed -i "2a\NODE_ID = ${UserNODE_ID}" /root/shadowsocks/userapiconfig.py
+	fi
+}
+
+view_process_information(){
+	echo "-------------------------------------------------------------------------------"
+	ps aux | grep server.py;echo "若输出内容无[python server.py m],则意味着ssr服务未启动."
+	echo "-------------------------------------------------------------------------------"
+}
+
+clear;view_process_information
+echo -n "[1]启动ssr [2]停止ssr [3]重启ssr [4]查看ssr进程 [5]修改节点配置 [6]调错
+附加功能:[a]安装BBR [b]检查BBR安装状态 [c]更新该命令
+
+请输入选项:";read ssr_option
+
+echo;echo "--- Please wait ---";echo;case "$ssr_option" in
+	1)
+	bash /root/shadowsocks/run.sh;echo "完成.以下是进程信息:"
+	view_process_information;;
+	2)
+	bash /root/shadowsocks/stop.sh;echo "完成.以下是进程信息:"
+	view_process_information;;
+	3)
+	bash /root/shadowsocks/stop.sh;bash /root/shadowsocks/run.sh;echo "完成.以下是进程信息:"
+	view_process_information;;
+	4)
+	echo "完成.以下是进程信息:";view_process_information;;
+	5)
+	modify_node_info;echo "完成.已为您重启ssr服务."
+	bash /root/shadowsocks/stop.sh;bash /root/shadowsocks/run.sh;;
+	6)
+	bash /root/shadowsocks/stop.sh;python /root/shadowsocks/server.py;;
+	a)
+	wget --no-check-certificate "https://raw.githubusercontent.com/teddysun/across/master/bbr.sh"
+	chmod 777 bbr.sh;bash bbr.sh;;
+	b)
+	echo "查看内核版本,含有4.12/4.1.3即可";uname -r
+	echo "------------------------------------------------------------"
+	echo "返回：net.ipv4.tcp_available_congestion_control = bbr cubic reno 即可";sysctl net.ipv4.tcp_available_congestion_control
+	echo "------------------------------------------------------------"
+	echo "返回：net.ipv4.tcp_congestion_control = bbr 即可";sysctl net.ipv4.tcp_congestion_control
+	echo "------------------------------------------------------------"
+	echo "返回：net.core.default_qdisc = fq 即可";sysctl net.core.default_qdisc
+	echo "------------------------------------------------------------"
+	echo "返回值有 tcp_bbr 模块即说明bbr已启动";lsmod | grep bbr;;
+	c)
+	wget -O /usr/bin/ssr "https://file.52ll.win/ssr";chmod 777 /usr/bin/ssr;ssr;;
+	*)
+	echo "选项不在范围内！";exit 0;;
+esac
+
+#END @qinghuas 2017-10-29 11:51
