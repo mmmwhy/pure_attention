@@ -1,4 +1,10 @@
-使用帮助
+Debian使用帮助
+---
+```
+wget -qO- https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/debian.sh | bash
+```
+
+Centos使用帮助
 ---
 1.执行安装脚本
 ```
