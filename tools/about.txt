@@ -1,0 +1,22 @@
+##################################################################################
+# https://lnmp.org                                                               #
+# https://bench.sh                                                               #
+# https://www.safedog.cn                                                         #
+# https://github.com/sivel                                                       #
+# https://github.com/91yun                                                       #
+# https://github.com/glzjin                                                      #
+# https://github.com/mmmwhy                                                      #
+# https://github.com/teddysun                                                    #
+# https://github.com/qinghuas                                                    #
+# https://github.com/MeowLove                                                    #
+# https://github.com/breakwa11                                                   #
+# https://github.com/dzxx36gyy                                                   #
+# https://github.com/esdeathlove                                                 #
+# https://github.com/FunctionClub                                                #
+##################################################################################
+# Some of the scripts are written / provided by the developers above, thanks.    #
+# 部分脚本由上述开发者编写/提供，在此表示感谢。                                  #
+# If you have any Suggestions, you can contact me by email.                      #
+# 如果有任何建议，你可以通过电子邮件联系我。                                     #
+# E-MAIL:qinghuas@qq.com                                                         #
+##################################################################################

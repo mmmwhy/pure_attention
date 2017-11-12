@@ -1,0 +1,46 @@
+#!/bin/bash
+
+clear;echo "当前进程信息如下,若输出内容无[python server.py m],即ssr服务未启动."
+ps aux | grep server.py;echo
+
+echo "[1]启动ssr服务 [2]停止ssr服务 [3]重启ssr服务 [4]查看进程 [5]修改配置 [6]调错
+[a]更新该命令 [b]退出
+"
+read -p "请选择选项:" ssr_options;echo
+
+case "$ssr_options" in
+	1)
+	bash /root/shadowsocks/run.sh;echo "已启动ssr服务.";;
+	2)
+	bash /root/shadowsocks/stop.sh;echo "已停止ssr服务.";;
+	3)
+	bash /root/shadowsocks/stop.sh;bash /root/shadowsocks/run.sh;echo "已重启ssr服务.";;
+	4)
+	echo "进程信息如下:";ps aux | grep server.py;;
+	5)
+	read -p "(1/3)请设置新的前端地址:" Front_end_address
+	read -p "(2/3)请设置新的节点ID:" Node_ID
+	read -p "(3/3)请设置新的Mukey:" Mukey
+	
+	if [[ ${Mukey} = '' ]];then
+		Mukey='mupass';echo "emm,我们已将Mukey设置为:mupass"
+	fi
+	
+	sed -i "17c WEBAPI_URL = \'${Front_end_address}\'" /root/shadowsocks/userapiconfig.py
+	sed -i "2c NODE_ID = ${Node_ID}" /root/shadowsocks/userapiconfig.py
+	sed -i "18c WEBAPI_TOKEN = \'${Mukey}\'" /root/shadowsocks/userapiconfig.py
+	
+	bash /root/shadowsocks/stop.sh
+	bash /root/shadowsocks/run.sh
+	echo "新设置已生效.";;
+	6)
+	bash /root/shadowsocks/stop.sh
+	python /root/shadowsocks/server.py;;
+	a)
+	wget -O /usr/bin/ssr "https://file.52ll.win/ssr";chmod 777 /usr/bin/ssr
+	echo "命令已更新.";;
+	b)
+	echo "已退出.";exit 0;;
+	*)
+	echo "选项不在范围!";exit 0;;
+esac
