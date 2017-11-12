@@ -14,12 +14,9 @@ Shut_down_iptables(){
 }
 
 Shut_down_firewall(){
-	yum -y install firewalld;firewall_state=`firewall-cmd --state`
-	if [ ${firewall_state} = 'running' ];then
-		systemctl stop firewalld.service
-		systemctl mask firewalld
-		systemctl disable firewalld.service
-	fi
+	yum -y install firewalld
+	systemctl stop firewalld.service
+	systemctl disable firewalld.service
 }
 
 Unfile_number_limit(){
