@@ -1,17 +1,15 @@
 Centos 使用帮助
 ---
 ```
-yum -y install git wget
-git clone https://github.com/qinghuas/ss-panel-and-ss-py-mu.git tmp
-mv tmp/.git . && rm -rf tmp && git reset --hard
+yum -y install git wget zip unzip
+wget "https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/ssr_file.zip";unzip ssr_file.zip
 ```
 
 Debian 使用帮助
 ---
 ```
-apt-get -y install git wget
-git clone https://github.com/qinghuas/ss-panel-and-ss-py-mu.git tmp
-mv tmp/.git . && rm -rf tmp && git reset --hard
+apt-get -y install git wget zip unzip
+wget "https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/ssr_file.zip";unzip ssr_file.zip
 ```
 
 选择选项
