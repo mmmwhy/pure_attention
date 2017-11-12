@@ -204,7 +204,7 @@ Update_Shell_Script(){
 }
 
 Server_IP(){
-	Server_IP_Info=`curl "ip.cn"`
+	Server_IP_Info=`curl -s "ip.cn"`
 }
 
 Server_IP
