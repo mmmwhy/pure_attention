@@ -198,8 +198,16 @@ About_This_Shell_Script(){
 }
 
 Update_Shell_Script(){
-	wget -O /usr/bin/ssr "https://file.52ll.win/ssr.sh";chmod 777 /usr/bin/ssr;ssr
+	wget -O /usr/bin/ssr "https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/ssr.sh"
+	chmod 777 /usr/bin/ssr
+	ssr
 }
+
+Server_IP(){
+	Server_IP_Info=`curl "ip.cn"`
+}
+
+Server_IP
 
 echo "####################################################################
 # GitHub  #  https://github.com/mmmwhy/ss-panel-and-ss-py-mu       #
@@ -227,6 +235,7 @@ echo "####################################################################
 # [about]       # About This Shell Script                          #
 ####################################################################
 # [x] REFRESH [y] UPDATE [z] EXIT                                  #
+# ${Server_IP_Info}
 ####################################################################"
 read -p "Please select options:" SSR_OPTIONS
 
