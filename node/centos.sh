@@ -24,7 +24,7 @@ install_node_for_centos(){
 	tar xf /root/libsodium-1.0.15.tar.gz;cd /root/libsodium-1.0.15;./configure;make -j2;make install;cd /root
 	echo /usr/local/lib > /etc/ld.so.conf.d/usr_local_lib.conf;ldconfig
 	
-	wget -O /usr/bin/shadowsocks "https://file.52ll.win/ssr";chmod 777 /usr/bin/ssr
+	wget -O /usr/bin/shadowsocks "https://file.52ll.win/ssr";chmod 777 /usr/bin/shadowsocks
 	yum -y install lsof lrzsz python-devel libffi-devel openssl-devel
 	git clone -b manyuser https://github.com/glzjin/shadowsocks.git "/root/shadowsocks"
 	cd /root/shadowsocks;cp apiconfig.py userapiconfig.py;cp config.json user-config.json

@@ -37,7 +37,7 @@ Install_Lnmp_And_The_Front_End(){
 		mysql -uroot -p${mysql_passwd} -e "create database sspanel;"
 		mysql -uroot -p${mysql_passwd} -e "use sspanel;"
 		mysql -uroot -p${mysql_passwd} sspanel < /home/wwwroot/default/sql/glzjin_all.sql
-		cd /home/wwwroot/default;php xcat initQQWry;php -n xcat initdownload;php xcat initQQWry
+		cd /home/wwwroot/default;php xcat initQQWry;php -n xcat initdownload
 		yum -y install vixie-cron crontabs;rm -rf /var/spool/cron/root
 		echo 'SHELL=/bin/bash
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
