@@ -18,7 +18,7 @@ install_node_for_debian(){
 	echo /usr/local/lib > /etc/ld.so.conf.d/usr_local_lib.conf;ldconfig
 	
 	pip install cymysql requests -i https://pypi.org/simple/
-	wget -O /usr/bin/ss "https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/node/ss";chmod 777 /usr/bin/ss
+	wget -O /usr/bin/shadowsocks "https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/node/ss";chmod 777 /usr/bin/shadowsocks
 	git clone -b manyuser https://github.com/glzjin/shadowsocks.git "/root/shadowsocks"
 	cd shadowsocks;chmod +x *.sh;pip install -r requirements.txt -i https://pypi.org/simple/
 	cp apiconfig.py userapiconfig.py;cp config.json user-config.json
