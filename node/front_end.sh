@@ -51,7 +51,7 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin
 		sed -i "s/this_is_sspanel_name/${Front_end_name}/g" /home/wwwroot/default/config/.config.php
 		read -p "(2/3)设置站点IP或域名:" Front_end_address
 		if [[ ${Front_end_address} = '' ]];then
-			Front_end_address=`curl -s ip.cn | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}"`
+			Front_end_address=`curl -s "https://myip.ipip.net" | grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}"`
 			echo "emm,我们已将站点地址设置为:http://${Front_end_address}"
 		fi
 		sed -i "s/this_is_sspanel_address/${Front_end_address}/g" /home/wwwroot/default/config/.config.php
