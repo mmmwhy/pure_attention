@@ -21,6 +21,6 @@ Use：
 
 Server Management
 ---
-Use：`ss`  
+Use：`shadowsocks`  
   
 ![image](https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/ss_node_option.png)
