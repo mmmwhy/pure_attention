@@ -16,9 +16,11 @@ wget "https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/ss
 ---
 使用命令：
 `ssr`  
+  
 ![image](https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/option.png)
 
 服务端管理
 ---
 使用命令：`ss`  
+  
 ![image](https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/ss_node_option.png)
