@@ -205,7 +205,8 @@ Installation_Of_Pure_System(){
 }
 
 Server_IP(){
-	Server_IP_Info=`curl -s "https://myip.ipip.net/"`
+	curl -s 'https://myip.ipip.net' > /root/.ip.txt
+	Server_IP_Info=`sed -n '1p' /root/.ip.txt`
 }
 
 Install_Check(){
