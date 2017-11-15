@@ -285,7 +285,7 @@ clear;case "${SSR_OPTIONS}" in
 	about)
 	About_This_Shell_Script;;
 	uninstall)
-	rm -rf /root/ssr.sh /usr/bin/ssr
+	rm -rf /root/ssr.sh /root/README.md /usr/bin/ssr
 	rm -rf /root/tools /root/node /root/picture
 	echo "Bye.";;
 	*)
