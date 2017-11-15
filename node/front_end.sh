@@ -69,7 +69,8 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin
 			install_lnmp_1_3
 			mysql_passwd='root';;
 			2)
-			install_lnmp_1_4;;
+			install_lnmp_1_4
+			get_mysql_passwd;;
 			3)
 			get_mysql_passwd;;
 			*)
