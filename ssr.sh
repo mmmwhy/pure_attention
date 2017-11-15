@@ -39,14 +39,14 @@ Install_BBR(){
 }
 
 Check_BBR_installation_status(){
-	uname -r;echo
-	echo -e "\033[31m[↑]查看内核版本,含有4.12或更高即可.\033[0m"
-	sysctl net.ipv4.tcp_available_congestion_control;echo
-	echo -e "\033[31m[↑]返回：net.ipv4.tcp_available_congestion_control = bbr cubic reno 即可.\033[0m"
-	sysctl net.ipv4.tcp_congestion_control;echo
-	echo -e "\033[31m[↑]返回：net.ipv4.tcp_congestion_control = bbr 即可.\033[0m"
-	sysctl net.core.default_qdisc;echo
-	echo -e "\033[31m[↑]返回：net.core.default_qdisc = fq 即可.\033[0m"
+	uname -r
+	echo -e "\033[31m[↑]查看内核版本,含有4.12或更高即可.\033[0m";echo
+	sysctl net.ipv4.tcp_available_congestion_control
+	echo -e "\033[31m[↑]返回：net.ipv4.tcp_available_congestion_control = bbr cubic reno 即可.\033[0m";echo
+	sysctl net.ipv4.tcp_congestion_control
+	echo -e "\033[31m[↑]返回：net.ipv4.tcp_congestion_control = bbr 即可.\033[0m";echo
+	sysctl net.core.default_qdisc
+	echo -e "\033[31m[↑]返回：net.core.default_qdisc = fq 即可.\033[0m";echo
 	lsmod | grep bbr
 	echo -e "\033[31m[↑]返回值有 tcp_bbr 模块即说明bbr已启动.\033[0m"
 }
