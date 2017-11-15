@@ -207,11 +207,8 @@ Server_IP(){
 Install_Check(){
 	if [ ! -f /root/node/ss ];then
 		wget -O /root/ssr_file.zip "https://github.com/qinghuas/ss-panel-and-ss-py-mu/archive/master.zip"
-		unzip ssr_file.zip -d /root
-		mv /root/ss-panel-and-ss-py-mu-master/* /root
-		rm -rf /root/ss-panel-and-ss-py-mu-master
-		cp /root/ssr.sh /usr/bin/ssr
-		chmod 777 /usr/bin/ssr
+		unzip ssr_file.zip -d /root;mv /root/ss-panel-and-ss-py-mu-master/* /root
+		rm -rf ssr_file.zip /root/ss-panel-and-ss-py-mu-master;cp /root/ssr.sh /usr/bin/ssr;chmod 777 /usr/bin/ssr
 	fi
 }
 
@@ -221,7 +218,7 @@ Server_IP
 echo "####################################################################
 # GitHub  #  https://github.com/mmmwhy/ss-panel-and-ss-py-mu       #
 # GitHub  #  https://github.com/qinghuas/ss-panel-and-ss-py-mu     #
-# Edition #  V.3.1.1 2017-11-15                                      #
+# Edition #  V.3.1.1 2017-11-15                                    #
 # From    #  @mmmwhy @qinghuas                                     #
 ####################################################################
 # [ID]  [TYPE]  # [DESCRIBE]                                       #
