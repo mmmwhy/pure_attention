@@ -238,7 +238,7 @@ echo "####################################################################
 # [g]卸载阿里云云盾 [h]安装/卸载 锐速 [i]Nginx 管理脚本            #
 # [j]安装纯净系统                                                  #
 ####################################################################
-# [about]关于此脚本 [x]刷新脚本 [y]更新脚本 [z]退出脚本            #
+# [x]刷新 [y]更新 [z]退出 [about]关于 [uninstall]卸载              #
 # ${Server_IP_Info}
 ####################################################################"
 
@@ -284,6 +284,10 @@ clear;case "${SSR_OPTIONS}" in
 	exit 0;;
 	about)
 	About_This_Shell_Script;;
+	uninstall)
+	rm -rf /root/ssr.sh /usr/bin/ssr
+	rm -rf /root/tools /root/node /root/picture
+	echo "Bye.";;
 	*)
 	echo "选项不在范围!";exit 0;;
 esac
