@@ -1,26 +1,26 @@
-Centos 使用帮助
+Centos
 ---
 ```
 yum -y install git wget curl zip unzip screen
 wget "https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/ssr.sh";bash ssr.sh
 ```
 
-Debian 使用帮助
+Debian
 ---
 ```
 apt-get -y install git wget curl zip unzip screen
 wget "https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/ssr.sh";bash ssr.sh
 ```
 
-选择选项
+Select Options
 ---
-使用命令：
+Use：
 `ssr`  
   
 ![image](https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/option.png)
 
-服务端管理
+Server Management
 ---
-使用命令：`ss`  
+Use：`ss`  
   
 ![image](https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/ss_node_option.png)
