@@ -39,16 +39,16 @@ Install_BBR(){
 }
 
 Check_BBR_installation_status(){
-	echo "[↓]查看内核版本,含有4.12或更高即可."
 	uname -r;echo
-	echo "[↓]返回：net.ipv4.tcp_available_congestion_control = bbr cubic reno 即可."
+	echo -e "\033[31m[↑]查看内核版本,含有4.12或更高即可.\033[0m"
 	sysctl net.ipv4.tcp_available_congestion_control;echo
-	echo "[↓]返回：net.ipv4.tcp_congestion_control = bbr 即可."
+	echo -e "\033[31m[↑]返回：net.ipv4.tcp_available_congestion_control = bbr cubic reno 即可.\033[0m"
 	sysctl net.ipv4.tcp_congestion_control;echo
-	echo "[↓]返回：net.core.default_qdisc = fq 即可."
+	echo -e "\033[31m[↑]返回：net.ipv4.tcp_congestion_control = bbr 即可.\033[0m"
 	sysctl net.core.default_qdisc;echo
-	echo "[↓]返回值有 tcp_bbr 模块即说明bbr已启动."
+	echo -e "\033[31m[↑]返回：net.core.default_qdisc = fq 即可.\033[0m"
 	lsmod | grep bbr
+	echo -e "\033[31m[↑]返回值有 tcp_bbr 模块即说明bbr已启动.\033[0m"
 }
 
 Install_fail2ban(){
@@ -204,12 +204,24 @@ Server_IP(){
 	Server_IP_Info=`curl -s "ip.cn"`
 }
 
+Install_Check(){
+	if [ ! -f /root/node/ss ];then
+		wget -O /root/ssr_file.zip "https://github.com/qinghuas/ss-panel-and-ss-py-mu/archive/master.zip"
+		unzip ssr_file.zip -d /root
+		mv /root/ss-panel-and-ss-py-mu-master/* /root
+		rm -rf /root/ss-panel-and-ss-py-mu-master
+		cp /root/ssr.sh /usr/bin/ssr
+		chmod 777 /usr/bin/ssr
+	fi
+}
+
+Install_Check
 Server_IP
 
 echo "####################################################################
 # GitHub  #  https://github.com/mmmwhy/ss-panel-and-ss-py-mu       #
 # GitHub  #  https://github.com/qinghuas/ss-panel-and-ss-py-mu     #
-# Edition #  V.3.0 2017-11-12                                      #
+# Edition #  V.3.1.1 2017-11-15                                      #
 # From    #  @mmmwhy @qinghuas                                     #
 ####################################################################
 # [ID]  [TYPE]  # [DESCRIBE]                                       #
@@ -227,7 +239,7 @@ echo "####################################################################
 # [e] [INSTALL] # Install Fail2ban / Check Fail2ban Status         #
 # [f] [INSTALL] # Install Safe Dog                                 #
 # [g] [UNINSTALL] # Uninstall Ali Cloud Shield                     #
-# [h] [INSTALL] # Install / UNINSTALL Serverspeeder                #
+# [h] [INSTALL] # Install / Uninstall ServerSpeeder                #
 # [i] [TOOLS]   # Nginx Administration Script                      #
 # [about]       # About This Shell Script                          #
 ####################################################################
