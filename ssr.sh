@@ -94,11 +94,11 @@ Uninstall_ali_cloud_shield(){
 	
 	case "${Uninstall_ali_cloud_shield_options}" in
 		1)
-		bash /root/alibabacloud/New_installation.sh;;
+		bash /root/tools/alibabacloud/New_installation.sh;;
 		2)
-		bash /root/alibabacloud/Snapshot_image.sh;;
+		bash /root/tools/alibabacloud/Snapshot_image.sh;;
 		3)
-		bash /root/alibabacloud/install.sh;;
+		bash /root/tools/alibabacloud/install.sh;;
 		*)
 		echo "选项不在范围!";exit 0;;
 	esac
