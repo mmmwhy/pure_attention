@@ -26,12 +26,12 @@ Options_and_execution_options(){
 -----------------------
 默认密码：Vicer
 -----------------------
-[1]Debian 7 x32
-[2]Debian 7 x64
-[3]Debian 8 x32
-[4]Debian 8 x64
-[5]Debian 9 x32
-[6]Debian 9 x64
+[1]  Debian 7 x32
+[2]  Debian 7 x64
+[3]  Debian 8 x32
+[4]  Debian 8 x64
+[5]  Debian 9 x32
+[6]  Debian 9 x64
 -----------------------
 [7]  Ubuntu 14.04 x32
 [8]  Ubuntu 14.04 x64
