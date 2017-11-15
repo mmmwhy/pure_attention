@@ -200,8 +200,12 @@ Update_Shell_Script(){
 	ssr
 }
 
+Installation_Of_Pure_System(){
+	bash /root/tools/reinstall.sh
+}
+
 Server_IP(){
-	Server_IP_Info=`curl -s "ip.cn"`
+	Server_IP_Info=`curl -s "https://myip.ipip.net/"`
 }
 
 Install_Check(){
@@ -218,31 +222,26 @@ Server_IP
 echo "####################################################################
 # GitHub  #  https://github.com/mmmwhy/ss-panel-and-ss-py-mu       #
 # GitHub  #  https://github.com/qinghuas/ss-panel-and-ss-py-mu     #
-# Edition #  V.3.1.1 2017-11-15                                    #
+# Edition #  V.3.1.2 2017-11-15                                    #
 # From    #  @mmmwhy @qinghuas                                     #
 ####################################################################
 # [ID]  [TYPE]  # [DESCRIBE]                                       #
 ####################################################################
-# [1] [INSTALL] # [LNMP] AND [SS PANEL V3]                         #
-# [2] [INSTALL] # [SS NODE] AND [BBR]                              #
-# [3] [CHANGE]  # [SS NODE INOF]                                   #
-# [4] [INSTALL] # [SS NODE]                                        #
-# [5] [INSTALL] # [BBR]                                            #
+# [1] [Install] # [LNMP] AND [SS PANEL V3]                         #
+# [2] [Install] # [SS NODE] AND [BBR]                              #
+# [3] [Change]  # [SS NODE INOF]                                   #
+# [4] [Install] # [SS NODE]                                        #
+# [5] [Install] # [BBR]                                            #
 ####################################################################
-# [a] [HELP]    # Check BBR Installation Status                    #
-# [b] [TOOLS]   # Install / Run Routing Tracing                    #
-# [c] [TOOLS]   # Run Speedtest And Bench.sh                       #
-# [d] [CHANGE]  # Change System Source                             #
-# [e] [INSTALL] # Install Fail2ban / Check Fail2ban Status         #
-# [f] [INSTALL] # Install Safe Dog                                 #
-# [g] [UNINSTALL] # Uninstall Ali Cloud Shield                     #
-# [h] [INSTALL] # Install / Uninstall ServerSpeeder                #
-# [i] [TOOLS]   # Nginx Administration Script                      #
-# [about]       # About This Shell Script                          #
+# [a]检查BBR状态 [b]安装/执行路由追踪 [c]执行 Speedtest / bench.sh #
+# [d]更换镜像源 [e]安装/检查 Fail2ban [f]安装/执行 安全狗          #   
+# [g]卸载阿里云云盾 [h]安装/卸载 锐速 [i]Nginx 管理脚本            #
+# [j]安装纯净系统                                                  #
 ####################################################################
-# [x] REFRESH [y] UPDATE [z] EXIT                                  #
+# [about]关于此脚本 [x]刷新脚本 [y]更新脚本 [z]退出脚本            #
 # ${Server_IP_Info}
 ####################################################################"
+
 read -p "Please select options:" SSR_OPTIONS
 
 clear;case "${SSR_OPTIONS}" in
@@ -275,6 +274,8 @@ clear;case "${SSR_OPTIONS}" in
 	Install_Serverspeeder;;
 	i)
 	Nginx_Administration_Script;;
+	j)
+	Installation_Of_Pure_System;;
 	x)
 	/usr/bin/ssr;;
 	y)

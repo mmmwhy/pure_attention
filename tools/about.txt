@@ -1,6 +1,9 @@
 ##################################################################################
 # https://lnmp.org                                                               #
 # https://bench.sh                                                               #
+# http://xiaofd.win                                                              #
+# https://liyuans.com                                                            #
+# https://moeclub.org                                                            #
 # https://www.safedog.cn                                                         #
 # https://github.com/sivel                                                       #
 # https://github.com/91yun                                                       #

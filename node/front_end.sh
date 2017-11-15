@@ -55,6 +55,7 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin
 			echo "emm,我们已将站点地址设置为:http://${Front_end_address}"
 		fi
 		sed -i "s/this_is_sspanel_address/${Front_end_address}/g" /home/wwwroot/default/config/.config.php
+
 		echo "(3/3)创建管理员账户:";echo
 		php /home/wwwroot/default/xcat createAdmin;echo
 		echo;echo "大功告成了!,访问 http://${Front_end_address} 看看吧~"
@@ -70,6 +71,8 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin
 			mysql_passwd='root';;
 			2)
 			install_lnmp_1_4
+			#允许system函数
+			sed -i "314c disable_functions = passthru,exec,chroot,scandir,chgrp,chown,shell_exec,proc_open,proc_get_status,popen,ini_alter,ini_restore,dl,openlog,syslog,readlink,symlink,popepassthru,stream_socket_server" /usr/local/php/etc/php.ini
 			get_mysql_passwd;;
 			3)
 			get_mysql_passwd;;
