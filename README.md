@@ -17,10 +17,10 @@ Select Options
 Use：
 `ssr`  
   
-![image](https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/option.png)
+![image](https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/picture/ssr.png)
 
 Server Management
 ---
 Use：`shadowsocks`  
   
-![image](https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/ss_node_option.png)
+![image](https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/picture/shadowsocks.png)
