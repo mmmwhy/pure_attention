@@ -122,20 +122,28 @@ Run_Speedtest_And_Bench_sh(){
 	}
 	
 	bench_sh(){
-		echo;read -p "执行bench.sh[y],还是退出[n]:" Execution_or_exit
-		case "${Execution_or_exit}" in
-			y)
-			wget -qO- bench.sh | bash;;
-			n)
-			exit 0;;
-			*)
-			echo "选项不在范围!";exit 0;;
-		esac
-		
+		wget -qO- bench.sh | bash
 	}
 	
-	speedtest
-	bench_sh
+	read -p "执行Speedtest[y/n]:" Speedtest_Options
+	case "${Speedtest_Options}" in
+		y)
+		speedtest;;
+		n)
+		echo "已取消执行Speedtest.";echo;;
+		*)
+		echo "选项不在范围.";;
+	esac
+	
+	read -p "执行bench.sh[y/n]:" Bench_Sh_Options
+	case "${Bench_Sh_Options}" in
+		y)
+		bench_sh;;
+		n)
+		echo "已取消执行bench.sh.";echo;;
+		*)
+		echo "选项不在范围.";;
+	esac
 }
 
 Install_ss_node(){
@@ -187,7 +195,12 @@ Edit_ss_node_info(){
 }
 
 Nginx_Administration_Script(){
-	wget "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/master/nginx.sh";bash nginx.sh
+	if [ ! -f /usr/bin/nas ];then
+		wget "https://raw.githubusercontent.com/qinghuas/Nginx-administration-script/master/nas.sh"
+		cp /root/nas.sh /usr/bin/nas;chmod 777 /usr/bin/nas;nas
+	else
+		nas
+	fi
 }
 
 About_This_Shell_Script(){
@@ -210,10 +223,46 @@ Server_IP(){
 }
 
 Install_Check(){
-	if [ ! -f /root/node/ss ];then
+	if [ ! -f /usr/bin/ssr ];then
 		wget -O /root/ssr_file.zip "https://github.com/qinghuas/ss-panel-and-ss-py-mu/archive/master.zip"
-		unzip ssr_file.zip -d /root;mv /root/ss-panel-and-ss-py-mu-master/* /root
-		rm -rf ssr_file.zip /root/ss-panel-and-ss-py-mu-master;cp /root/ssr.sh /usr/bin/ssr;chmod 777 /usr/bin/ssr
+		unzip /root/ssr_file.zip -d /root;mv /root/ss-panel-and-ss-py-mu-master/* /root
+		cp /root/ssr.sh /usr/bin/ssr;chmod 777 /usr/bin/ssr
+		rm -rf ssr_file.zip /root/ss-panel-and-ss-py-mu-master /root/picture /root/README.md /root/ssr.sh
+	fi
+}
+
+Install_Aria2(){
+	if [ ! -f /root/aria2.sh ];then
+		wget -N --no-check-certificate "https://softs.fun/Bash/aria2.sh"
+		chmod +x aria2.sh
+	fi
+	
+	bash aria2.sh
+}
+
+Install_Server_Status(){
+	if [ ! -f /root/status.sh ];then
+		wget "https://softs.fun/Bash/status.sh"
+		chmod 777 status.sh
+	fi
+	
+	read -p "为服务端/客户端?[s/c]:" server_or_client
+	case "${server_or_client}" in
+		s)
+		bash status.sh s;;
+		c)
+		bash status.sh c;;
+		*)
+		echo "选项不在范围.";;
+	esac
+}
+
+Install_Socks5(){
+	if [ ! -f /root/ss5.sh ];then
+		wget "https://raw.githubusercontent.com/qinghuas/socks5-install/master/ss5.sh"
+		chmod 777 ss5.sh
+	else
+		bash ss5.sh
 	fi
 }
 
@@ -237,7 +286,7 @@ echo "####################################################################
 # [a]检查BBR状态 [b]安装/执行路由追踪 [c]执行 Speedtest / bench.sh #
 # [d]更换镜像源 [e]安装/检查 Fail2ban [f]安装/执行 安全狗          #   
 # [g]卸载阿里云云盾 [h]安装/卸载 锐速 [i]Nginx 管理脚本            #
-# [j]安装纯净系统                                                  #
+# [j]安装纯净系统 [k]安装Aria2 [l]安装Server Status [m]安装Socks5  #
 ####################################################################
 # [x]刷新 [y]更新 [z]退出 [about]关于 [uninstall]卸载              #
 # ${Server_IP_Info}
@@ -277,6 +326,12 @@ clear;case "${SSR_OPTIONS}" in
 	Nginx_Administration_Script;;
 	j)
 	Installation_Of_Pure_System;;
+	k)
+	Install_Aria2;;
+	l)
+	Install_Server_Status;;
+	m)
+	Install_Socks5;;
 	x)
 	/usr/bin/ssr;;
 	y)
