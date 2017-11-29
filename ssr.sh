@@ -113,7 +113,7 @@ Run_Speedtest_And_Bench_sh(){
 	case "${SpeedTest}" in
 	y)
 		chmod 777 /root/tools/speedtest.py
-		./root/tools/speedtest.py;;
+		cd /root/tools;./speedtest.py;cd /root;;
 	*)
 		echo "跳过.";echo;;
 	esac
@@ -122,7 +122,7 @@ Run_Speedtest_And_Bench_sh(){
 	case "${UnixBench}" in
 	y)
 		chmod 777 /root/tools/unixbench.sh
-		./root/tools/unixbench.sh;;
+		cd /root/tools;./unixbench.sh;cd /root;;
 	*)
 		echo "跳过.";echo;;
 	esac
