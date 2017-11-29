@@ -83,10 +83,6 @@ Install_Serverspeeder(){
 	esac
 }
 
-delete_file(){
-	rm -rf /root/*.cfg /root/*.log /root/*.gz
-}
-
 Uninstall_ali_cloud_shield(){
 	echo "请根据阿里云系统镜像安装环境,选项相应选项!"
 	echo "选项: [1]系统自控制台重装 [2]系统自快照/镜像恢复 [3]更换内核并安装LotServer"
@@ -113,42 +109,36 @@ Routing_track(){
 }
 
 Run_Speedtest_And_Bench_sh(){
-	speedtest(){
-		if [ ! -f /root/speedtest.py ];then
-			wget "https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py"
-			chmod 777 speedtest.py
-		fi
-		./speedtest.py
-	}
-	
-	bench_sh(){
-		wget -qO- bench.sh | bash
-	}
-	
-	read -p "执行Speedtest[y/n]:" Speedtest_Options
-	case "${Speedtest_Options}" in
-		y)
-		speedtest;;
-		n)
-		echo "已取消执行Speedtest.";echo;;
-		*)
-		echo "选项不在范围.";;
+	read -p "执行SpeedTest?[y/n]:" SpeedTest
+	case "${SpeedTest}" in
+	y)
+		chmod 777 /root/tools/speedtest.py
+		./root/tools/speedtest.py;;
+	*)
+		echo "跳过.";echo;;
 	esac
-	
-	read -p "执行bench.sh[y/n]:" Bench_Sh_Options
-	case "${Bench_Sh_Options}" in
-		y)
-		bench_sh;;
-		n)
-		echo "已取消执行bench.sh.";echo;;
-		*)
-		echo "选项不在范围.";;
+
+	read -p "执行UnixBench?[y/n]:" UnixBench
+	case "${UnixBench}" in
+	y)
+		chmod 777 /root/tools/unixbench.sh
+		./root/tools/unixbench.sh;;
+	*)
+		echo "跳过.";echo;;
+	esac
+
+	read -p "执行Bench SH?[y/n]:" Bench_SH
+	case "${Bench_SH}" in
+	y)
+		wget -qO- bench.sh | bash;;
+	*)
+		echo "跳过.";echo;;
 	esac
 }
 
 Install_ss_node(){
-	Setup_time=`date +"%Y-%m-%d %H:%M:%S"`;Install_the_start_time_stamp=`date +%s`
-	system_os=`bash /root/tools/check_os.sh`
+	#Setup_time=`date +"%Y-%m-%d %H:%M:%S"`;Install_the_start_time_stamp=`date +%s`
+	#system_os=`bash /root/tools/check_os.sh`
 	
 	case "${system_os}" in
 		centos)
@@ -164,11 +154,10 @@ Install_ss_node(){
 	Shut_down_iptables
 	Shut_down_firewall
 	Install_fail2ban
-	delete_file
 	
-	Installation_end_time=`date +"%Y-%m-%d %H:%M:%S"`;Install_end_time_stamp=`date +%s`
-	The_installation_time=`expr ${Install_end_time_stamp} - ${Install_the_start_time_stamp}`
-	clear;echo "安装开始时间:[${Setup_time}],安装结束时间:[${Installation_end_time}],耗时[${The_installation_time}]s."
+	#Installation_end_time=`date +"%Y-%m-%d %H:%M:%S"`;Install_end_time_stamp=`date +%s`
+	#The_installation_time=`expr ${Install_end_time_stamp} - ${Install_the_start_time_stamp}`
+	#clear;echo "安装开始时间:[${Setup_time}],安装结束时间:[${Installation_end_time}],耗时[${The_installation_time}]s."
 	echo "安装已完成.但ssr服务尚未启动,请通过[shadowsocks]命令管理服务."
 }
 
@@ -207,12 +196,6 @@ About_This_Shell_Script(){
 	cat /root/tools/about.txt
 }
 
-Update_Shell_Script(){
-	wget -O /usr/bin/ssr "https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/ssr.sh"
-	chmod 777 /usr/bin/ssr
-	ssr
-}
-
 Installation_Of_Pure_System(){
 	bash /root/tools/reinstall.sh
 }
@@ -229,6 +212,12 @@ Install_Check(){
 		cp /root/ssr.sh /usr/bin/ssr;chmod 777 /usr/bin/ssr
 		rm -rf ssr_file.zip /root/ss-panel-and-ss-py-mu-master /root/picture /root/README.md /root/ssr.sh
 	fi
+}
+
+Update_Shell_Script(){
+	rm -rf /root/ssr.sh /root/README.md /usr/bin/ssr /root/tools /root/node /root/picture
+	Install_Check
+	ssr
 }
 
 Install_Aria2(){
@@ -272,7 +261,7 @@ Server_IP
 echo "####################################################################
 # GitHub  #  https://github.com/mmmwhy/ss-panel-and-ss-py-mu       #
 # GitHub  #  https://github.com/qinghuas/ss-panel-and-ss-py-mu     #
-# Edition #  V.3.1.2 2017-11-15                                    #
+# Edition #  V.3.1.4 2017-11-29                                    #
 # From    #  @mmmwhy @qinghuas                                     #
 ####################################################################
 # [ID]  [TYPE]  # [DESCRIBE]                                       #
@@ -283,7 +272,7 @@ echo "####################################################################
 # [4] [Install] # [SS NODE]                                        #
 # [5] [Install] # [BBR]                                            #
 ####################################################################
-# [a]检查BBR状态 [b]安装/执行路由追踪 [c]执行 Speedtest / bench.sh #
+# [a]检查BBR状态 [b]安装/执行路由追踪 [c]Speedtest/UnixBench/bench #
 # [d]更换镜像源 [e]安装/检查 Fail2ban [f]安装/执行 安全狗          #   
 # [g]卸载阿里云云盾 [h]安装/卸载 锐速 [i]Nginx 管理脚本            #
 # [j]安装纯净系统 [k]安装Aria2 [l]安装Server Status [m]安装Socks5  #
@@ -291,7 +280,6 @@ echo "####################################################################
 # [x]刷新 [y]更新 [z]退出 [about]关于 [uninstall]卸载              #
 # ${Server_IP_Info}
 ####################################################################"
-
 read -p "Please select options:" SSR_OPTIONS
 
 clear;case "${SSR_OPTIONS}" in
@@ -341,9 +329,8 @@ clear;case "${SSR_OPTIONS}" in
 	about)
 	About_This_Shell_Script;;
 	uninstall)
-	rm -rf /root/ssr.sh /root/README.md /usr/bin/ssr
-	rm -rf /root/tools /root/node /root/picture
-	echo "Bye.";;
+	rm -rf /root/ssr.sh /root/README.md /usr/bin/ssr /root/tools /root/node /root/picture
+	echo "Bye."
 	*)
 	echo "选项不在范围!";exit 0;;
 esac

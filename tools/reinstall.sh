@@ -71,7 +71,7 @@ Options_and_execution_options(){
 	12)
 		bash DebianNET.sh -d zesty -v 32 -a;;
 	13)
-		echo "该系统默认账户信息：[root] [xiaofd.win],已知晓的,回车继续.";read
+		echo -n "该系统默认账户信息：[root] [xiaofd.win],已知晓的,回车继续.";read
 		wget xiaofd.github.io/centos.sh && bash centos.sh;;
 	*)
 		echo "选项不在范围！";exit 0;;
