@@ -68,6 +68,19 @@ Install_MTR(){
 	yum -y install mtr;clear;mtr_test
 }
 
+Install_All(){
+	#nali-ipip
+	yum -y install git gcc make wget curl traceroute
+	git clone https://github.com/dzxx36gyy/nali-ipip.git
+	cd nali-ipip;./configure;make;make install;cd /root
+	#besttrace
+	yum -y install git gcc make wget curl traceroute
+	wget "http://ssr-1252089354.coshk.myqcloud.com/besttrace.tar.gz"
+	tar -xzf besttrace.tar.gz;cd besttrace;chmod +x *;cd /root
+	#mtr
+	yum -y install mtr
+}
+
 Installation_and_execution(){
 	echo "安装状态: [Nali:${Nali_Install_check}] [BestTrace:${BestTrace_Install_check}] [MTR:${MTR_Install_check}]"
 	echo;echo "选项:[1]Nali [2]BestTrace [3]MTR [4]全部安装"
@@ -93,9 +106,7 @@ Installation_and_execution(){
 		mtr_test
 	fi;;
 	4)
-	Install_Nali
-	Install_BestTrace
-	Install_MTR;;
+	Install_All;;
 	*)
 	echo "选项不在范围!";exit 0;;
 esac
