@@ -330,7 +330,7 @@ clear;case "${SSR_OPTIONS}" in
 	About_This_Shell_Script;;
 	uninstall)
 	rm -rf /root/ssr.sh /root/README.md /usr/bin/ssr /root/tools /root/node /root/picture
-	echo "Bye."
+	echo "Bye.";;
 	*)
 	echo "选项不在范围!";exit 0;;
 esac
