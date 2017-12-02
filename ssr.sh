@@ -138,7 +138,7 @@ Run_Speedtest_And_Bench_sh(){
 
 Install_ss_node(){
 	#Setup_time=`date +"%Y-%m-%d %H:%M:%S"`;Install_the_start_time_stamp=`date +%s`
-	#system_os=`bash /root/tools/check_os.sh`
+	system_os=`bash /root/tools/check_os.sh`
 	
 	case "${system_os}" in
 		centos)
