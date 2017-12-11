@@ -250,7 +250,9 @@ INSTALL(){
 		rm -rf ssr_file.zip /root/ss-panel-and-ss-py-mu-master /root/picture /root/README.md /root/ssr.sh
 		clear;echo "INSTALL DONE,Hellow.";sleep 1
 	fi
-	#更新shadowsocks命令
+}
+
+UPDATE_SHADOWSOCKS_COMMAND(){
 	if [ -f /usr/bin/shadowsocks ];then
 		wget -O /usr/bin/shadowsocks "https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/node/ss"
 		chmod 777 /usr/bin/shadowsocks
@@ -265,6 +267,7 @@ UNINSTALL(){
 REINSTALL(){
 	UNINSTALL
 	INSTALL
+	UPDATE_SHADOWSOCKS_COMMAND
 	clear;echo "REINSTALL DONE,Meet Again."
 }
 
