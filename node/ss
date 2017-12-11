@@ -46,7 +46,6 @@ if [[ ! -z ${Service_Management_Options} ]];then
 	
 else
 	clear;echo "shadowsocks {start|stop|restart|check|edit|debug|update}"
-	echo;echo "进程信息如下:";ps aux | grep server.py
 fi
 
-#END 17-12-03 11:27
+#END 2017-12-11 13:42
