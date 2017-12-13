@@ -9,12 +9,6 @@ Shut_down_iptables(){
 	echo 'iptables-restore /etc/sysconfig/iptables' >> /etc/rc.local
 }
 
-Shut_down_firewall(){
-	apt-get -y install firewalld
-	systemctl stop firewalld.service
-	systemctl disable firewalld.service
-}
-
 Setting_node_information(){
 	clear;echo "设定服务端信息:"
 	read -p "(1/3)前端地址:" Front_end_address
@@ -50,4 +44,3 @@ install_node_for_debian(){
 Setting_node_information
 install_node_for_debian
 Shut_down_iptables
-Shut_down_firewall
