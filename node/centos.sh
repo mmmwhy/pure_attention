@@ -1,5 +1,20 @@
 #!/bin/bash
 
+Shut_down_iptables(){
+	yum -y install iptables iptables-services
+	iptables -F;iptables -X
+	iptables -I INPUT -p tcp -m tcp --dport 22:65535 -j ACCEPT
+	iptables -I INPUT -p udp -m udp --dport 22:65535 -j ACCEPT
+	iptables-save > /etc/sysconfig/iptables
+	echo 'iptables-restore /etc/sysconfig/iptables' >> /etc/rc.local
+}
+
+Shut_down_firewall(){
+	yum -y install firewalld
+	systemctl stop firewalld.service
+	systemctl disable firewalld.service
+}
+
 Setting_node_information(){
 	clear;echo "设定服务端信息:"
 	read -p "(1/3)前端地址:" Front_end_address
@@ -40,3 +55,5 @@ install_node_for_centos(){
 
 Setting_node_information
 install_node_for_centos
+Shut_down_iptables
+Shut_down_firewall
