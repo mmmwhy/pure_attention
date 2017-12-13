@@ -4,21 +4,6 @@ Install_the_front(){
 	bash /root/node/front_end.sh
 }
 
-Shut_down_iptables(){
-	yum -y install iptables iptables-services
-	iptables -F;iptables -X
-	iptables -I INPUT -p tcp -m tcp --dport 22:65535 -j ACCEPT
-	iptables -I INPUT -p udp -m udp --dport 22:65535 -j ACCEPT
-	iptables-save > /etc/sysconfig/iptables
-	echo 'iptables-restore /etc/sysconfig/iptables' >> /etc/rc.local
-}
-
-Shut_down_firewall(){
-	yum -y install firewalld
-	systemctl stop firewalld.service
-	systemctl disable firewalld.service
-}
-
 Unfile_number_limit(){
 	echo "root soft nofile 65535
 root hard nofile 65535" >> /etc/security/limits.conf
@@ -151,8 +136,6 @@ Install_ss_node(){
 	
 	Unfile_number_limit
 	Add_swap_partition
-	Shut_down_iptables
-	Shut_down_firewall
 	Install_fail2ban
 	
 	#Installation_end_time=`date +"%Y-%m-%d %H:%M:%S"`;Install_end_time_stamp=`date +%s`
@@ -277,7 +260,7 @@ GET_SERVER_IP
 echo "####################################################################
 # GitHub  #  https://github.com/mmmwhy/ss-panel-and-ss-py-mu       #
 # GitHub  #  https://github.com/qinghuas/ss-panel-and-ss-py-mu     #
-# Edition #  V.3.1.5 2017-12-11                                    #
+# Edition #  V.3.1.6 2017-12-13                                    #
 # From    #  @mmmwhy @qinghuas                                     #
 ####################################################################
 # [ID]  [TYPE]  # [DESCRIBE]                                       #
