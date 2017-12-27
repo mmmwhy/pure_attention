@@ -38,6 +38,7 @@ install_node_for_centos(){
 	python get-pip.py;rm -rf python get-pip.py;mkdir python;cd python
 	wget "http://ssr-1252089354.coshk.myqcloud.com/python.zip";unzip python.zip
 	pip install *.whl;pip install *.tar.gz;cd /root;rm -rf python
+	pip install cymysql requests -i https://pypi.org/simple/
 	
 	cd /root;wget "http://ssr-1252089354.coshk.myqcloud.com/libsodium-1.0.15.tar.gz"
 	tar xf /root/libsodium-1.0.15.tar.gz;cd /root/libsodium-1.0.15;./configure;make -j2;make install;cd /root

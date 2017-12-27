@@ -5,13 +5,13 @@ Check_the_system(){
 	
 	case "${system_os}" in
 		centos)
-		yum -y update
+		#yum -y update
 		yum -y install sed gawk grep;;
 		debian)
-		apt-get -y update
+		#apt-get -y update
 		apt-get -y install sed gawk grep;;
 		ubuntu)
-		apt-get -y update
+		#apt-get -y update
 		apt-get -y install sed gawk grep;;
 		*)
 		echo "系统不受支持!请更换Centos/Debian/Ubuntu镜像后重试!";exit 0;;
