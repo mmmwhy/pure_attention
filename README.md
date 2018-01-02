@@ -21,6 +21,6 @@ Server Management
 ---
 Use：`shadowsocks {start|stop|restart|check|edit|debug|update}`  
   
-`shadowsocks {启动|停止|重启|状态|编辑|调错|更新`  
+`shadowsocks {启动|停止|重启|状态|编辑|调错|更新}`  
   
 ![image](https://raw.githubusercontent.com/qinghuas/ss-panel-and-ss-py-mu/master/picture/shadowsocks_2.png)
