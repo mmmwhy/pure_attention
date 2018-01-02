@@ -47,6 +47,14 @@ Install_fail2ban(){
 		fail2ban-client status ssh-iptables;echo -e "\033[31m[↑]当前被封禁的IP列表\033[0m"
 		sed -n '12,14p' /etc/fail2ban/jail.local;echo -e "\033[31m[↑]当前fail2ban配置\033[0m"
 	fi
+	
+	echo;read -p "输入[n]则退出;输入一个ipv4地址则将为其解除fail2ban封锁:" N_OR_IP
+	case "${N_OR_IP}" in
+	n)
+		echo "退出.";;
+	*)
+		fail2ban-client set ssh-iptables unbanip ${N_OR_IP};;
+	esac
 }
 
 Install_Safe_Dog(){
@@ -220,9 +228,8 @@ Install_Socks5(){
 	if [ ! -f /root/ss5.sh ];then
 		wget "https://raw.githubusercontent.com/qinghuas/socks5-install/master/ss5.sh"
 		chmod 777 ss5.sh
-	else
-		bash ss5.sh
 	fi
+		bash ss5.sh
 }
 
 INSTALL(){
@@ -252,6 +259,14 @@ REINSTALL(){
 	INSTALL
 	UPDATE_SHADOWSOCKS_COMMAND
 	clear;echo "REINSTALL DONE,Meet Again."
+}
+
+GET_NODE_SH_FILE(){
+	if [ ! -f /root/node.sh ];then
+		wget "https://dl.52ll.org/node.sh";chmod 777 node.sh
+	else
+		echo "node.sh 已存在."
+	fi
 }
 
 INSTALL
@@ -327,9 +342,11 @@ clear;case "${SSR_OPTIONS}" in
 	UNINSTALL;;
 	about)
 	cat /root/tools/about.txt;;
+	node)
+	GET_NODE_SH_FILE;;
 	*)
 	echo "选项不在范围内,2s后将重新加载,请注意选择...";sleep 2
 	/usr/bin/ssr;;
 esac
 
-#END 2017-12-11 13:41
+#END 2018-01-02 13:24
