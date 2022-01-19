@@ -5,10 +5,13 @@
 # @date: 2022/01/19
 #
 """"""
+import torch
+from torch import nn
 
 class LayerNorm(nn.Module):
     def __init__(self, hidden_size, eps=1e-12):
-        """layernorm 层，也可使用pytorch自带的layernorm，为了后续的可扩展性，这里自行实现
+        """ layernorm 层，也可使用 pytorch 自带的 layernorm。
+        可参考 https://iii.run/archives/fae41911210f.html 实现
         """
         super(LayerNorm, self).__init__()
         self.weight = nn.Parameter(torch.ones(hidden_size))
