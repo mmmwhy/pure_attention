@@ -6,29 +6,11 @@
 #
 """"""
 import os
-import json
+from pure_attention.backbone_bert.package import BertConfig, BertOutput
 import torch
 from torch import nn
-from common.bert.bert_layer import BertLayer
-from common.bert.bert_layer import BertEmbeddings
-from common.layers import LayerNorm as BertLayerNorm
-
-
-class BertConfig:
-    def __init__(self, vocab_size_or_config_json_file):
-        """
-        定制化的 config，__getattr__ 处进行判断
-        """
-        with open(vocab_size_or_config_json_file, "r", encoding='utf-8') as reader:
-            json_config = json.loads(reader.read())
-        for key, value in json_config.items():
-            self.__dict__[key] = value
-            print(f"{key}:{value}({type(value)})")
-
-    def __getattr__(self, key):
-        if key in self.__dict__:
-            return self.__dict__[key]
-        return None
+from pure_attention.backbone_bert.bert_layer import BertLayer, BertEmbeddings
+from pure_attention.common.layers import LayerNorm as BertLayerNorm
 
 
 class BertEncoder(nn.Module):
@@ -75,8 +57,7 @@ class BertPooler(nn.Module):
         self.activation = nn.Tanh()
 
     def forward(self, hidden_states):
-        # We "pool" the model by simply taking the hidden state corresponding
-        # to the first token.
+        # 只取出第一个 token 也就是 cls 位置上的 embedding 进行 dense 变形
         first_token_tensor = hidden_states[:, 0]
         pooled_output = self.dense(first_token_tensor)
         pooled_output = self.activation(pooled_output)
@@ -95,6 +76,7 @@ class BertModel(nn.Module):
 
         self.init_weights()
         self.from_pretrained(os.path.join(os.path.join(config_path, "pytorch_model.bin")))
+        self.eval()
 
     def init_weights(self):
         self.apply(self._init_weights)
@@ -156,6 +138,7 @@ class BertModel(nn.Module):
         # So we can broadcast to [batch_size, num_heads, from_seq_length, to_seq_length]
         # this attention mask is more simple than the triangular masking of causal attention
         # used in OpenAI GPT, we just need to prepare the broadcast dimension here.
+
         extended_attention_mask = attention_mask.unsqueeze(1).unsqueeze(2)
 
         # Since attention_mask is 1.0 for positions we want to attend and 0.0 for
@@ -190,13 +173,7 @@ class BertModel(nn.Module):
         sequence_output = encoder_outputs[0]
         pooled_output = self.pooler(sequence_output)
 
-        # add hidden_states and attentions if they are here
-        outputs = (sequence_output, pooled_output,) + encoder_outputs[1:]
+        outputs = BertOutput(last_hidden_state=sequence_output, pooler_output=pooled_output,
+                             attentions=encoder_outputs[1:])
 
-        # sequence_output, pooled_output, (hidden_states), (attentions)
         return outputs
-
-
-if __name__ == "__main__":
-    bert = BertModel("/data1/lifeiyang/data/pretrain_modal/bert-base-chinese")
-    print("pass")

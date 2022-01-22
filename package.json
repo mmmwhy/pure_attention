@@ -1,0 +1,12 @@
+{
+  "name": "pure_attention",
+  "version": "0.0.5",
+  "description": "Generate a changelog from git metadata",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mmmwhy/pure_attention"
+  },
+  "scripts": {
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
+  }
+}
