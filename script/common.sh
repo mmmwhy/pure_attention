@@ -28,3 +28,5 @@ function cecho {
   [[ -z "${text}" ]] && local text="${color}$2${code}0m"
   echo -e "${text}"
 }
+
+autopep8 --in-place --recursive --max-line-length=120 .
