@@ -17,13 +17,18 @@ cv 和 nlp 中的很多方法和技巧也在相互影响，比如大规模的预
 2、java 环境下使用 onnx 的在线推理部署，使用 onnx 的原因是我在公司用的是 TensorFlow 做推理，我不想和公司的代码一致。
 
 # todo
-- 第一阶段的目标：实现 NLP 和 CV 的典型任务，并评估下游效果。
-- [ ]  Transformer 的 pytorch 实现；
-- [ ]  多版本的 Bert 的实现；
-- [ ]  NLP 下游任务 序列标注、分类 的实现，并在公开数据集上进行评估。这里主要是想证明实现的 Bert 效果是符合预期的；
+第一阶段：实现 NLP 和 CV 的典型任务，并评估下游效果。
+- [x]  Pytorch 实现 Transformer 的 encode 阶段，并实现 bert。 
+  > 参考 [transformers](https://github.com/huggingface/transformers) 的设计，但只保留与关键 encode 相关的代码，简化代码量。
+  并保持与原始 huggingface encode 的结果一致, 使用方法和一致性校验可以参考 [backbone_bert](pure_attention/backbone_bert/README.md)
+- [ ]  Pytorch 实现 Transformer 的 decode 阶段，并实现 seq2seq 任务。
+  > todo
+- [ ]  NLP 下游任务 序列标注、分类 的实现，并在公开数据集上进行评估，这里主要是想证明实现的 backbone 效果是符合预期的；
+  > todo
 - [ ]  实现 Vit，并在下游任务上验证实现 Vit 的效果是否符合预期；
+  > todo
 
-- 第二阶段的目标：增加 NLP 和 CV 的其余常见任务，扩增项目的能力范围。
+ 第二阶段：增加 NLP 和 CV 的其余常见任务，扩增项目的能力范围。
 - [ ] UNILM；
 - [ ] MAE；
 - [ ] GPT系列；

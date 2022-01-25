@@ -29,4 +29,3 @@ function cecho {
   echo -e "${text}"
 }
 
-autopep8 --in-place --recursive --max-line-length=120 .

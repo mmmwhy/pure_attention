@@ -10,8 +10,8 @@ import math
 import torch
 from torch import nn
 
-from common.activate import activations
-from common.layers import LayerNorm as BertLayerNorm
+from pure_attention.common.activate import activations
+from pure_attention.common.layers import LayerNorm as BertLayerNorm
 
 
 class BertEmbeddings(nn.Module):
