@@ -18,9 +18,13 @@ cv 和 nlp 中的很多方法和技巧也在相互影响，比如大规模的预
 
 # todo
 第一阶段：实现 NLP 和 CV 的典型任务，并评估下游效果。
-- [x]  Pytorch 实现 Transformer 的 encode 阶段，并实现 bert。 
+- [x]  Pytorch 实现 Transformer 的 encode 阶段，并实现 bert ;
+
   > 参考 [transformers](https://github.com/huggingface/transformers) 的设计，但只保留与关键 encode 相关的代码，简化代码量。
-  并保持与原始 huggingface encode 的结果一致, 使用方法和一致性校验可以参考 [backbone_bert](pure_attention/backbone_bert/README.md)
+  保持与原始 huggingface encode 的结果一致, 使用方法和一致性校验可以参考 [backbone_bert](pure_attention/backbone_bert/README.md) 。
+
+  - [x] 提供 [transformers](https://github.com/huggingface/transformers) 中 [bert-base-chinese](https://huggingface.co/bert-base-chinese) 、[chinese-roberta-wwm-ext](https://huggingface.co/hfl/chinese-roberta-wwm-ext) 、[chinese-roberta-wwm-ext-large](https://huggingface.co/hfl/chinese-roberta-wwm-ext-large) 、[ernie 1.0](https://huggingface.co/nghuyong/ernie-1.0) 的国内下载镜像,  下载方式具体可参考 [transformers国内下载镜像](pure_attention/backbone_bert/README.md#transformers国内下载镜像) 。
+
 - [ ]  Pytorch 实现 Transformer 的 decode 阶段，并实现 seq2seq 任务。
   > todo
 - [ ]  NLP 下游任务 序列标注、分类 的实现，并在公开数据集上进行评估，这里主要是想证明实现的 backbone 效果是符合预期的；

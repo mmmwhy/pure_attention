@@ -9,8 +9,10 @@ import collections
 import os
 import unicodedata
 from io import open
-import torch
+
 import numpy as np
+import torch
+
 from pure_attention.common.logger import init_logger
 
 logger = init_logger(__name__)
