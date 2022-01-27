@@ -6,10 +6,12 @@
 #
 """"""
 import os
-from pure_attention.backbone_bert.package import BertConfig, BertOutput
+
 import torch
 from torch import nn
+
 from pure_attention.backbone_bert.bert_layer import BertLayer, BertEmbeddings
+from pure_attention.backbone_bert.package import BertConfig, BertOutput
 from pure_attention.common.layers import LayerNorm as BertLayerNorm
 
 

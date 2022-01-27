@@ -27,7 +27,7 @@ function format() {
 
 # 更新版本号
 function update_version() {
-  python -m script.fetch_newest_version
+  python script/vision_controller.py
 }
 
 
@@ -42,12 +42,13 @@ function changelog() {
 
 # 完成发包
 function release_package_to_pypi() {
-  python setup.py sdist
+  cp ~/.pypirc_pypi ~/.pypirc
 
+  python setup.py sdist
   twine upload dist/*
 
-  python setup.py sdist upload -r pypi
   rm -rf dist pure_attention.egg-info
+  cp ~/.pypirc_internal ~/.pypirc
 }
 
 function usage() {

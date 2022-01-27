@@ -7,9 +7,31 @@
 [Read_Bert_Code](https://github.com/DA-southampton/Read_Bert_Code)
 的代码基础上，对结构进行了一些调整，提高了代码的易读性，并和 [transformers](https://github.com/huggingface/transformers) 的结果完全一致。
 
-# 使用
+# transformers国内下载镜像
 
-``` python
+关于 lfs，可以参考 [git lfs](https://git-lfs.github.com/) 。
+
+
+
+|  模型名称   | git clone  |  自行下载  |
+|  ----  | ----  | ----  |
+| [bert-base-chinese](https://huggingface.co/bert-base-chinese)  | `git clone git@e.coding.net:mmmwhy/file/bert-base-chinese.git` | https://mmmwhy.coding.net/public/file/bert-base-chinese/git/files |
+| [chinese-roberta-wwm-ext](https://huggingface.co/hfl/chinese-roberta-wwm-ext)  | `git clone git@e.coding.net:mmmwhy/file/chinese-roberta-wwm-ext.git` | https://mmmwhy.coding.net/public/file/chinese-roberta-wwm-ext/git/filess |
+| [chinese-roberta-wwm-ext-large](https://huggingface.co/hfl/chinese-roberta-wwm-ext-large)  | `git lfs clone git@e.coding.net:mmmwhy/file/chinese-roberta-wwm-ext-large.git` | https://mmmwhy.coding.net/public/file/chinese-roberta-wwm-ext-large/git/files |
+| [ernie 1.0](https://huggingface.co/nghuyong/ernie-1.0)  | `git clone git@e.coding.net:mmmwhy/file/ernie-1.0.git` | https://mmmwhy.coding.net/public/file/ernie-1.0/git/files |
+
+速度还是比较可观的，
+
+![](../../images/download_speed.png)
+
+
+# 使用
+1、安装本仓库 `pip install --upgrade pure_attention`  
+
+2、下载预训练模型
+
+3、开始使用
+```python
 from pure_attention.common.nlp.tokenization import Tokenizer
 from pure_attention.backbone_bert.bert_model import BertModel
 
@@ -42,7 +64,12 @@ bert_pooler_output = bert(tokens_ids, token_type_ids=segments_ids).pooler_output
   ![](../../images/chinese-roberta-wwm-ext-large.png)
   
 
-``` python
+- [ernie](https://huggingface.co/nghuyong/ernie-1.0)
+  
+  ![](../../images/ernie.png)
+  
+
+```python
 import torch
 from transformers import BertModel
 from transformers import BertTokenizer
