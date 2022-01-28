@@ -113,6 +113,10 @@ class BertModel(nn.Module):
                 new_key = new_key.replace('beta', 'bias')
             if 'bert.' in key:
                 new_key = new_key.replace('bert.', '')
+            # 兼容部分不优雅的变量命名
+            if 'LayerNorm' in key:
+                new_key = new_key.replace('LayerNorm', 'layer_norm')
+
 
             if new_key:
                 old_keys.append(key)
