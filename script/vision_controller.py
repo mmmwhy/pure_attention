@@ -1,7 +1,7 @@
 # !/usr/bin/python
 # -*- coding: utf-8 -*-
 #
-# @author: fly.sun <mmmwhy@mail.ustc.edu.cn>
+# @author: mmmwhy <mmmwhy@mail.ustc.edu.cn>
 # @date: 2022/01/25
 #
 """
@@ -41,7 +41,7 @@ def alter(old_str, new_str):
             if old_str in line:
                 line = line.replace(old_str, new_str)
             file_data += line
-    
+
     with open(package_file_path, "w", encoding="utf-8") as f:
         f.write(file_data)
 
@@ -50,21 +50,21 @@ def alter(old_str, new_str):
 def update_version():
     local_version = fetch_package_version()
     remote_version = fetch_remote_versions()
-    
+
     print("local_version:", local_version)
     print("remote_version:", remote_version)
-    
+
     local_version_part = local_version.split(".")
     remote_version_part = remote_version.split(".")
-    
+
     # 如果本地的版本号大于远程的，则直接上
     for i, j in zip(local_version_part, remote_version_part):
         if i > j:
             return ".".join(local_version_part)
-    
+
     # 说明本地版本号要么比远程的旧，要么没有一样
     remote_version_part[-1] = str(int(remote_version_part[-1]) + 1)
-    
+
     # 进行替换
     alter(".".join(local_version_part), ".".join(remote_version_part))
     return ".".join(remote_version_part)
