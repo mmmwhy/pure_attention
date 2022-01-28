@@ -36,3 +36,14 @@ class BertOutput:
         self.last_hidden_state = last_hidden_state
         self.pooler_output = pooler_output
         self.attentions = attentions
+
+class TokenizerOutput:
+    input_ids: torch.LongTensor = None
+    token_type_ids: torch.LongTensor = None
+    attention_mask: torch.LongTensor = None
+
+    def __init__(self, token_ids, segment_ids, attention_mask):
+        # 以下写法是等价的
+        self.input_ids = token_ids
+        self.token_type_ids = segment_ids
+        self.attention_mask = attention_mask

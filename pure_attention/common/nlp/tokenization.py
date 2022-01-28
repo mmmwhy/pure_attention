@@ -13,6 +13,7 @@ from io import open
 import numpy as np
 import torch
 
+from pure_attention.backbone_bert.package import TokenizerOutput
 from pure_attention.common.logger import init_logger
 
 logger = init_logger(__name__)
@@ -189,21 +190,26 @@ class Tokenizer(object):
             second_segment_ids = [1] * len(second_token_ids)
             first_token_ids.extend(second_token_ids)
             first_segment_ids.extend(second_segment_ids)
-
+            
+        attention_mask = [1] * len(first_token_ids)
+        
         # 做一个 padding 操作
         if is_padding:
             while len(first_token_ids) < max_len:
                 first_token_ids.append(self.vocab[self.pad_token])
                 first_segment_ids.append(self.vocab[self.pad_token])
+                attention_mask.append(0)
 
         if max_len and len(first_token_ids) > max_len:
             first_token_ids = first_token_ids[:max_len]
             first_segment_ids = first_segment_ids[:max_len]
+            attention_mask = attention_mask[:max_len]
 
         first_token_ids = torch.tensor([first_token_ids])
         first_segment_ids = torch.tensor([first_segment_ids])
+        attention_mask = torch.tensor([attention_mask])
 
-        return first_token_ids, first_segment_ids
+        return TokenizerOutput(first_token_ids, first_segment_ids, attention_mask)
 
 
 class BasicTokenizer(object):

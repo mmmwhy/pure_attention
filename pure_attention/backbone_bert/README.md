@@ -40,9 +40,19 @@ test_query = "结果一致性验证"
 
 tokenizer = Tokenizer(bert_model_path + "/vocab.txt")
 bert = BertModel(bert_model_path)
-tokens_ids, segments_ids = tokenizer.encode(test_query, max_len=64)
 
-bert_pooler_output = bert(tokens_ids, token_type_ids=segments_ids).pooler_output
+tokenizer_output= tokenizer.encode(test_query, max_len=64)
+
+our_bert_pooler_output = bert(
+  input_ids=tokenizer_output.input_ids, 
+  token_type_ids=tokenizer_output.token_type_ids, 
+  attention_mask=tokenizer_output.attention_mask).pooler_output
+
+bert_last_hidden_state = bert(
+  input_ids=tokenizer_output.input_ids, 
+  token_type_ids=tokenizer_output.token_type_ids, 
+  attention_mask=tokenizer_output.attention_mask).last_hidden_state
+
 
 ```
 
@@ -74,8 +84,7 @@ import torch
 from transformers import BertModel
 from transformers import BertTokenizer
 
-from pure_attention.common.nlp.tokenization import Tokenizer as LocalTokenizer
-from pure_attention.backbone_bert.bert_model import BertModel as OurBertModel
+
 
 bert_model_path = "/data/pretrain_modal/chinese-roberta-wwm-ext-large"
 test_query = "结果一致性验证"
@@ -83,16 +92,27 @@ test_query = "结果一致性验证"
 text_tokenizer = BertTokenizer.from_pretrained(bert_model_path, do_lower_case=True)
 bert_model = BertModel.from_pretrained(bert_model_path)
 
-tensor_caption = text_tokenizer.encode(test_query, return_tensors="pt", padding='max_length', truncation=True,
+tensor_caption = text_tokenizer(test_query, return_tensors="pt", padding='max_length', truncation=True,
                                        max_length=64)
 
-origin_bert_pooler_output = bert_model(tensor_caption).pooler_output
 
+origin_bert_pooler_output = bert_model(
+  input_ids=tensor_caption.input_ids,
+  attention_mask=tensor_caption.attention_mask,
+  token_type_ids=tensor_caption.token_type_ids).pooler_output
+
+# 我们简化重构后的代码
+from pure_attention.common.nlp.tokenization import Tokenizer as LocalTokenizer
+from pure_attention.backbone_bert.bert_model import BertModel as OurBertModel
 tokenizer = LocalTokenizer(bert_model_path + "/vocab.txt")
 bert = OurBertModel(bert_model_path)
-tokens_ids, segments_ids = tokenizer.encode(test_query, max_len=64)
+tokenizer_output = tokenizer.encode(test_query, max_len=64)
 
-our_bert_pooler_output = bert(tokens_ids, token_type_ids=segments_ids).pooler_output
+our_bert_pooler_output = bert(
+  input_ids=tokenizer_output.input_ids, 
+  token_type_ids=tokenizer_output.token_type_ids, 
+  attention_mask=tokenizer_output.attention_mask).pooler_output
+
 
 print("check result:", torch.cosine_similarity(origin_bert_pooler_output, our_bert_pooler_output))
 ```
