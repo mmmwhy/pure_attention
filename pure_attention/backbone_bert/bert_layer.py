@@ -200,7 +200,7 @@ class BertAddNorm(nn.Module):
         1、在 Multi-Head attention 后，所有的头注意力结果是直接 concat 在一起的(view 调整 size 也可以认为 concat 在一起)
             直接 concat 在一起的结果用起来也有点奇怪，所以需要有个 fc ，来帮助把这些分散注意力结果合并在一起；
         2、在 Feed Forward 操作后，纬度被提升到 intermediate_size，BertAddNorm 还实现了把纬度从 intermediate_size 降回 hidden_size 的功能；
-        3、真正的 Add & Norm 部分，也就是  LayerNorm(hidden_states + input_tensor) 这一行；
+        3、真正的 Add & Norm 部分，也就是 layer_norm(hidden_states + input_tensor) 这一行；
         """
         super(BertAddNorm, self).__init__()
         self.dense = nn.Linear(intermediate_size, hidden_size)
@@ -254,7 +254,6 @@ class BertAttention(nn.Module):
         # 这里是左下的那个 Add & Norm
         self.output = BertAddNorm(config.hidden_size, config.hidden_size,
                                   config.hidden_dropout_prob, config.layer_norm_eps)
-        self.pruned_heads = set()
 
     def forward(self, input_tensor, attention_mask=None, head_mask=None):
         self_outputs = self.self(input_tensor, input_tensor, input_tensor, attention_mask, head_mask)
