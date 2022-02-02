@@ -16,7 +16,7 @@
 |  模型名称   | git clone  |  自行下载  |
 |  ----  | ----  | ----  |
 | [bert-base-chinese](https://huggingface.co/bert-base-chinese)  | `git clone git@e.coding.net:mmmwhy/file/bert-base-chinese.git` | https://mmmwhy.coding.net/public/file/bert-base-chinese/git/files |
-| [chinese-roberta-wwm-ext](https://huggingface.co/hfl/chinese-roberta-wwm-ext)  | `git clone git@e.coding.net:mmmwhy/file/chinese-roberta-wwm-ext.git` | https://mmmwhy.coding.net/public/file/chinese-roberta-wwm-ext/git/filess |
+| [chinese-roberta-wwm-ext](https://huggingface.co/hfl/chinese-roberta-wwm-ext)  | `git clone git@e.coding.net:mmmwhy/file/chinese-roberta-wwm-ext.git` | https://mmmwhy.coding.net/public/file/chinese-roberta-wwm-ext/git/files |
 | [chinese-roberta-wwm-ext-large](https://huggingface.co/hfl/chinese-roberta-wwm-ext-large)  | `git lfs clone git@e.coding.net:mmmwhy/file/chinese-roberta-wwm-ext-large.git` | https://mmmwhy.coding.net/public/file/chinese-roberta-wwm-ext-large/git/files |
 | [ernie 1.0](https://huggingface.co/nghuyong/ernie-1.0)  | `git clone git@e.coding.net:mmmwhy/file/ernie-1.0.git` | https://mmmwhy.coding.net/public/file/ernie-1.0/git/files |
 
@@ -58,7 +58,7 @@ bert_last_hidden_state = bert(
 
 
 # 结果一致性
-分别在下边三个常用中文 bert 上进行测试，结果与 transformers 完全一致。
+分别在下边四个常用中文 bert 上进行测试，结果与 transformers 完全一致。
 - [bert-base-chinese](https://huggingface.co/bert-base-chinese)
   
   ![](../../images/bert-base-chinese.png)
@@ -78,7 +78,7 @@ bert_last_hidden_state = bert(
   
   ![](../../images/ernie.png)
   
-
+校验代码，截图时的代码可能比较老，以新代码为准。
 ```python
 import torch
 from transformers import BertModel
