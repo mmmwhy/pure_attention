@@ -1,4 +1,13 @@
-## 0.0.19 (2022-01-28)
+## [0.0.21](https://github.com/mmmwhy/pure_attention/compare/v0.0.20...v0.0.21) (2022-02-02)
+
+
+
+## [0.0.20](https://github.com/mmmwhy/pure_attention/compare/eb61b313458ac18bf4b15271fee2cf7e39f8afde...v0.0.20) (2022-02-02)
+
+
+### Bug Fixes
+
+* **bert:** change LayerNorm to layer_norm ([a99831e](https://github.com/mmmwhy/pure_attention/commit/a99831ee3b4ad06cadbb0262720c0836717d7508))
 
 
 ### Features
