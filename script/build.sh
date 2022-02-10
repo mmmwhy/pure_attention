@@ -72,15 +72,15 @@ function args() {
   case $1 in
     format|f)
       cecho y ">>>>>>> formatting ..."
-      changelog
       format
       update_version
+      changelog
       ;;
     release|r|all)
       cecho y ">>>>>>> release code to pypi  ..."
-      changelog
       format
       update_version
+      changelog
       release_package_to_pypi
       ;;
     *)

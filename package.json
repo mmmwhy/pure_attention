@@ -1,6 +1,6 @@
 {
   "name": "pure_attention",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "description": "Generate a changelog from git metadata",
   "repository": {
     "type": "git",

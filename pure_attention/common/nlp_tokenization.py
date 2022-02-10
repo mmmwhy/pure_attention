@@ -4,7 +4,10 @@
 # @author: mmmwhy <mmmwhy@mail.ustc.edu.cn>
 # @date: 2022/01/24
 #
-""""""
+"""
+Bert 所使用的 tokenization 代码，大部分 nlp 任务都可以搭配 vocab.txt 使用本文件。
+"""
+
 import collections
 import os
 import unicodedata
@@ -14,7 +17,7 @@ import numpy as np
 import torch
 
 from pure_attention.backbone_bert.package import TokenizerOutput
-from pure_attention.common.logger import init_logger
+from pure_attention.utils.logger import init_logger
 
 logger = init_logger(__name__)
 
@@ -190,9 +193,9 @@ class Tokenizer(object):
             second_segment_ids = [1] * len(second_token_ids)
             first_token_ids.extend(second_token_ids)
             first_segment_ids.extend(second_segment_ids)
-            
+
         attention_mask = [1] * len(first_token_ids)
-        
+
         # 做一个 padding 操作
         if is_padding:
             while len(first_token_ids) < max_len:

@@ -10,46 +10,9 @@ import os
 import torch
 from torch import nn
 
-from pure_attention.backbone_bert.bert_layer import BertLayer, BertEmbeddings
 from pure_attention.backbone_bert.package import BertConfig, BertOutput
-from pure_attention.common.layers import LayerNorm as BertLayerNorm
-
-
-class BertEncoder(nn.Module):
-    def __init__(self, config):
-        super(BertEncoder, self).__init__()
-        self.output_attentions = config.output_attentions
-        self.output_hidden_states = config.output_hidden_states
-
-        self.layer = nn.ModuleList([BertLayer(config) for _ in range(config.num_hidden_layers)])
-
-    def forward(self, hidden_states, attention_mask=None, head_mask=None):
-        all_hidden_states = ()
-        all_attentions = ()
-        for i, layer_module in enumerate(self.layer):
-            if self.output_hidden_states:
-                all_hidden_states = all_hidden_states + (hidden_states,)
-
-            layer_outputs = layer_module(hidden_states, attention_mask, head_mask[i])
-            # [0] 是 embedding, [1] 是 attention_score
-            hidden_states = layer_outputs[0]
-
-            if self.output_attentions:
-                all_attentions = all_attentions + (layer_outputs[1],)
-
-        # Add last layer
-        if self.output_hidden_states:
-            all_hidden_states = all_hidden_states + (hidden_states,)
-
-        outputs = (hidden_states,)
-        if self.output_hidden_states:
-            # 把中间层的结果取出来，一些研究认为中间层的 embedding 也有价值
-            outputs = outputs + (all_hidden_states,)
-        if self.output_attentions:
-            outputs = outputs + (all_attentions,)
-
-        # last-layer hidden state, (all hidden states), (all attentions)
-        return outputs
+from pure_attention.base_transformer.encoder import Encoder
+from pure_attention.base_transformer.layers import InputEmbeddings
 
 
 class BertPooler(nn.Module):
@@ -67,17 +30,18 @@ class BertPooler(nn.Module):
 
 
 class BertModel(nn.Module):
-    def __init__(self, config_path):
+    def __init__(self, model_path):
         super(BertModel, self).__init__()
 
-        self.config = BertConfig(os.path.join(config_path, "config.json"))
+        # 配置文件是一定要有的
+        self.config = BertConfig(os.path.join(model_path, "config.json"))
 
-        self.embeddings = BertEmbeddings(self.config)
-        self.encoder = BertEncoder(self.config)
+        self.embeddings = InputEmbeddings(self.config)
+        self.encoder = Encoder(self.config)
         self.pooler = BertPooler(self.config)
 
         self.init_weights()
-        self.from_pretrained(os.path.join(os.path.join(config_path, "pytorch_model.bin")))
+        self.from_pretrained(os.path.join(os.path.join(model_path, "pytorch_model.bin")))
         self.eval()
 
     def init_weights(self):
@@ -89,7 +53,7 @@ class BertModel(nn.Module):
             # Slightly different from the TF version which uses truncated_normal for initialization
             # cf https://github.com/pytorch/pytorch/pull/5617
             module.weight.data.normal_(mean=0.0, std=self.config.initializer_range)
-        elif isinstance(module, BertLayerNorm):
+        elif isinstance(module, nn.LayerNorm):
             module.bias.data.zero_()
             module.weight.data.fill_(1.0)
         if isinstance(module, nn.Linear) and module.bias is not None:
@@ -98,7 +62,7 @@ class BertModel(nn.Module):
     def from_pretrained(self, pretrained_model_path):
         if not os.path.exists(pretrained_model_path):
             print(f"missing pretrained_model_path: {pretrained_model_path}")
-            pass
+            return
 
         state_dict = torch.load(pretrained_model_path, map_location='cpu')
 
@@ -117,7 +81,6 @@ class BertModel(nn.Module):
             if 'LayerNorm' in key:
                 new_key = new_key.replace('LayerNorm', 'layer_norm')
 
-
             if new_key:
                 old_keys.append(key)
                 new_keys.append(new_key)
@@ -133,18 +96,18 @@ class BertModel(nn.Module):
         # 确保完全一致
         self.load_state_dict(state_dict, strict=True)
 
-    def forward(self, input_ids, attention_mask=None, token_type_ids=None, position_ids=None, head_mask=None):
+    def forward(self, input_ids, attention_mask=None, token_type_ids=None, position_ids=None):
+
         if attention_mask is None:
             attention_mask = torch.ones_like(input_ids)
         if token_type_ids is None:
             token_type_ids = torch.zeros_like(input_ids)
 
-        # We create a 3D attention mask from a 2D tensor mask.
+        # We create a 4D attention mask from a 2D tensor mask.
         # Sizes are [batch_size, 1, 1, to_seq_length]
         # So we can broadcast to [batch_size, num_heads, from_seq_length, to_seq_length]
-        # this attention mask is more simple than the triangular masking of causal attention
-        # used in OpenAI GPT, we just need to prepare the broadcast dimension here.
 
+        # 使用 dataloader 的时候纬度可能出问题 todo @mmmwhy
         extended_attention_mask = attention_mask.unsqueeze(1).unsqueeze(2)
 
         # Since attention_mask is 1.0 for positions we want to attend and 0.0 for
@@ -155,31 +118,10 @@ class BertModel(nn.Module):
         extended_attention_mask = extended_attention_mask.to(dtype=next(self.parameters()).dtype)  # fp16 compatibility
         extended_attention_mask = (1.0 - extended_attention_mask) * -10000.0
 
-        # Prepare head mask if needed
-        # 1.0 in head_mask indicate we keep the head
-        # attention_probs has shape bsz x n_heads x N x N
-        # input head_mask has shape [num_heads] or [num_hidden_layers x num_heads]
-        # and head_mask is converted to shape [num_hidden_layers x batch x num_heads x seq_length x seq_length]
-        if head_mask is not None:
-            if head_mask.dim() == 1:
-                head_mask = head_mask.unsqueeze(0).unsqueeze(0).unsqueeze(-1).unsqueeze(-1)
-                head_mask = head_mask.expand(self.config.num_hidden_layers, -1, -1, -1, -1)
-            elif head_mask.dim() == 2:
-                head_mask = head_mask.unsqueeze(1).unsqueeze(-1).unsqueeze(
-                    -1)  # We can specify head_mask for each layer
-            head_mask = head_mask.to(
-                dtype=next(self.parameters()).dtype)  # switch to fload if need + fp16 compatibility
-        else:
-            head_mask = [None] * self.config.num_hidden_layers
-
         embedding_output = self.embeddings(input_ids, position_ids=position_ids, token_type_ids=token_type_ids)
-        encoder_outputs = self.encoder(embedding_output,
-                                       extended_attention_mask,
-                                       head_mask=head_mask)
-        sequence_output = encoder_outputs[0]
+        sequence_output = self.encoder(embedding_output, extended_attention_mask)
         pooled_output = self.pooler(sequence_output)
 
-        outputs = BertOutput(last_hidden_state=sequence_output, pooler_output=pooled_output,
-                             attentions=encoder_outputs[1:])
+        outputs = BertOutput(last_hidden_state=sequence_output, pooler_output=pooled_output)
 
         return outputs
