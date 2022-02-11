@@ -26,7 +26,7 @@
 
 
 # 使用
-1、安装本仓库 `pip install --upgrade pure_attention`  
+1、安装本仓库 `pip install pure_attention==0.0.24`  
 
 2、下载预训练模型
 

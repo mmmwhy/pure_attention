@@ -50,18 +50,22 @@ class Runner:
                 scaler.step(self.optimizer)
                 scaler.update()
 
-                self.logger.info(
-                    f"Epoch: {epoch} / {self.train_epochs_num}, "
-                    f"Step: {step} / {len(self.dataloader)}, "
-                    f"Loss: {np.mean(loss.item())}, "
-                    f"Lr: {self.optimizer.param_groups[0]['lr']}"
-                )
+                self.logger.info((
+                    "Epoch: {epoch:03d} / {all_epoch:03d},"
+                    "Step: {step:04d} / {all_step:04d},"
+                    "Loss: {loss:.04f},"
+                    "Lr: {lr:.08f}"
+                    .format(epoch=epoch, all_epoch=self.train_epochs_num, step=step,
+                            all_step=len(self.dataloader),
+                            loss=np.mean(loss.item()),
+                            lr=self.optimizer.param_groups[0]['lr'])))
 
     def run(self):
         self.train()
 
 
-# python -m model_chineseNMT.runner
+# nohup python -m examples.model_chineseNMT.runner 1>train.log 2>&1 &
+# tail -f train.log
 if __name__ == "__main__":
     config = BertConfig("/data/pretrain_modal/bert-base-chinese/config.json")
     runner = Runner(config)

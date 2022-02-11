@@ -5,7 +5,7 @@
 # @date: 2022/01/24
 #
 """
-Bert 所使用的 tokenization 代码，大部分 nlp 任务都可以搭配 vocab.txt 使用本文件。
+Bert 所使用的 tokenization 代码，搭配 vocab.txt 可以满足大部分 nlp 任务。
 """
 
 import collections
