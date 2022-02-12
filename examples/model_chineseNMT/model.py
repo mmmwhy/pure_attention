@@ -7,9 +7,10 @@
 """"""
 
 from torch import nn
-from pure_attention.base_transformer.layers import InputEmbeddings
-from pure_attention.base_transformer.encoder import Encoder
+
 from pure_attention.base_transformer.decoder import Decoder
+from pure_attention.base_transformer.encoder import Encoder
+from pure_attention.base_transformer.layers import InputEmbeddings
 
 
 class Seq2SeqModel(nn.Module):

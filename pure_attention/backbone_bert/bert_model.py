@@ -9,11 +9,11 @@ import os
 
 import torch
 from torch import nn
-from pure_attention.utils.logger import init_logger
 
 from pure_attention.backbone_bert.package import BertConfig, BertOutput
 from pure_attention.base_transformer.encoder import Encoder
 from pure_attention.base_transformer.layers import InputEmbeddings
+from pure_attention.utils.logger import init_logger
 
 
 class BertPooler(nn.Module):

@@ -16,7 +16,9 @@ def get_cosine_schedule_with_warmup(
     optimizer: Optimizer, num_warmup_steps: int, num_training_steps: int, num_cycles: float = 0.5, last_epoch: int = -1
 ):
     """
-    搬运自： https://github.com/huggingface/transformers/blob/2e9af294940083915ccb2740a7c8d5b154194f15/src/transformers/optimization.py#L103-L134
+    搬运自：https://github.com/huggingface/transformers/blob/2e9af294940083915ccb2740a7c8d5b154194f15/src/transformers/optimization.py#L103-L134
+    优化曲线可以参考：https://cdn.lifeiyang.cn/img/202202121615356.png
+
     Create a schedule with a learning rate that decreases following the values of the cosine function between the
     initial lr set in the optimizer to 0, after a warmup period during which it increases linearly between 0 and the
     initial lr set in the optimizer.

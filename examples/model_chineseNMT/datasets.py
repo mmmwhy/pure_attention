@@ -6,11 +6,12 @@
 #
 """"""
 import json
+
 import torch
 from torch.utils.data import Dataset
 
-from pure_attention.utils.logger import init_logger
 from pure_attention.common.nlp_tokenization import Tokenizer
+from pure_attention.utils.logger import init_logger
 
 
 class DatasetOut:
@@ -24,11 +25,11 @@ class DatasetOut:
 
 
 class ChineseNMTDataset(Dataset):
-    def __init__(self, config=None, mode: str = None):
+    def __init__(self, mode: str = None):
         super(ChineseNMTDataset).__init__()
         self.logger = init_logger(__name__)
         self.tokenizer = Tokenizer("/data/pretrain_modal/bert-base-chinese/vocab.txt")
-        self.sentence_pair = json.load(open("/data/WMT_2018_Chinese_English/json/train.json", 'r'))
+        self.sentence_pair = json.load(open(f"/data/WMT_2018_Chinese_English/json/{mode}.json", 'r'))
 
     def __len__(self) -> int:
         return len(self.sentence_pair)
