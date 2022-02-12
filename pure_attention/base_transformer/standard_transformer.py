@@ -8,9 +8,10 @@
 完整的 transformer 结构
 """
 from torch import nn
-from pure_attention.base_transformer.layers import InputEmbeddings
-from pure_attention.base_transformer.encoder import Encoder
+
 from pure_attention.base_transformer.decoder import Decoder
+from pure_attention.base_transformer.encoder import Encoder
+from pure_attention.base_transformer.layers import InputEmbeddings
 
 
 class Transformer(nn.Module):
