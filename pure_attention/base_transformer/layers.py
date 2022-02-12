@@ -18,7 +18,7 @@ import math
 import torch
 from torch import nn
 
-from pure_attention.base_transformer.activate import activations
+from pure_attention.common.activate import activations
 
 
 class InputEmbeddings(nn.Module):

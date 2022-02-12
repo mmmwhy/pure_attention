@@ -9,6 +9,7 @@ import os
 
 import torch
 from torch import nn
+from pure_attention.utils.logger import init_logger
 
 from pure_attention.backbone_bert.package import BertConfig, BertOutput
 from pure_attention.base_transformer.encoder import Encoder
@@ -33,8 +34,8 @@ class BertModel(nn.Module):
     def __init__(self, model_path):
         super(BertModel, self).__init__()
 
-        # 配置文件是一定要有的
-        self.config = BertConfig(os.path.join(model_path, "config.json"))
+        self.config = BertConfig(os.path.join(model_path, "config.json"))  # 配置文件一定要有
+        self.logger = init_logger(self.__class__.__name__)
 
         self.embeddings = InputEmbeddings(self.config)
         self.encoder = Encoder(self.config)
@@ -66,38 +67,30 @@ class BertModel(nn.Module):
 
         state_dict = torch.load(pretrained_model_path, map_location='cpu')
 
-        # 名称可能存在不一致，进行替换
-        old_keys = []
-        new_keys = []
-        for key in state_dict.keys():
-            new_key = key
-            if 'gamma' in key:
+        # 替换部分变量名
+        for old_key in state_dict.copy().keys():
+            new_key = old_key
+            if 'gamma' in old_key:
                 new_key = new_key.replace('gamma', 'weight')
-            if 'beta' in key:
+            if 'beta' in old_key:
                 new_key = new_key.replace('beta', 'bias')
-            if 'bert.' in key:
+            if 'bert.' in old_key:
                 new_key = new_key.replace('bert.', '')
             # 兼容部分不优雅的变量命名
-            if 'LayerNorm' in key:
+            if 'LayerNorm' in old_key:
                 new_key = new_key.replace('LayerNorm', 'layer_norm')
 
-            if new_key:
-                old_keys.append(key)
-                new_keys.append(new_key)
-
-        for old_key, new_key in zip(old_keys, new_keys):
-
-            if new_key in self.state_dict().keys():
+            if new_key != old_key:
                 state_dict[new_key] = state_dict.pop(old_key)
-            else:
-                # 避免预训练模型里有多余的结构，影响 strict load_state_dict
-                state_dict.pop(old_key)
 
-        # 确保完全一致
-        self.load_state_dict(state_dict, strict=True)
+        missing_keys, unexpected_keys = self.load_state_dict(state_dict, strict=False)
+        # 可能存在少许不影响结果的参数
+        if len(missing_keys):
+            self.logger.warning("\n\t".join(["missing_keys:"] + missing_keys))
+        if len(unexpected_keys):
+            self.logger.warning("\n\t".join(["unexpected_keys:"] + unexpected_keys))
 
     def forward(self, input_ids, attention_mask=None, token_type_ids=None, position_ids=None):
-
         if attention_mask is None:
             attention_mask = torch.ones_like(input_ids)
         if token_type_ids is None:

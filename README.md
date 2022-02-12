@@ -12,9 +12,9 @@ cv 和 nlp 中的很多方法和技巧也在相互影响，比如大规模的预
 # 目标
 提供一套完整的的基础算法服务
 
-1、python 训练任务，包含 NLP 和 CV 任务 。
+1、python 训练任务，包含 NLP 和 CV 任务。
 
-2、java 环境下使用 onnx 的在线推理部署，使用 onnx 的原因是我在公司用的是 TensorFlow 做推理，我不想和公司的代码一致。
+2、java 环境下使用 onnx 的在线推理部署。
 
 # todo
 第一阶段：实现 NLP 和 CV 的典型任务，并评估下游效果。
@@ -25,7 +25,7 @@ cv 和 nlp 中的很多方法和技巧也在相互影响，比如大规模的预
 
   - [x] 提供 [transformers](https://github.com/huggingface/transformers) 中 [bert-base-chinese](https://huggingface.co/bert-base-chinese) 、[chinese-roberta-wwm-ext](https://huggingface.co/hfl/chinese-roberta-wwm-ext) 、[chinese-roberta-wwm-ext-large](https://huggingface.co/hfl/chinese-roberta-wwm-ext-large) 、[ernie 1.0](https://huggingface.co/nghuyong/ernie-1.0) 的国内下载镜像,  下载方式具体可参考 [transformers国内下载镜像](pure_attention/backbone_bert/README.md#transformers国内下载镜像) 。
 
-- [ ]  Pytorch 实现 Transformer 的 decode 阶段，并实现 seq2seq 任务。
+- [x]  Pytorch 实现 Transformer 的 decode 阶段，并实现 seq2seq 任务。
   > todo
 - [ ]  NLP 下游任务 序列标注、分类 的实现，并在公开数据集上进行评估，这里主要是想证明实现的 backbone 效果是符合预期的；
   > todo
