@@ -7,6 +7,7 @@
 """"""
 import os
 import sys
+
 # 寻找根目录
 sys.path.append(os.path.abspath(__file__).split("examples")[0])  # noqa E402
 
@@ -89,18 +90,18 @@ class Runner:
 
             self.scheduler.step()
 
-            self.logger.info((
-                "Epoch: {epoch:03d} / {all_epoch:03d},"
-                "Step: {step:04d} / {all_step:04d},"
-                "Loss: {loss:.04f},"
-                "Lr: {lr:.08f}".format(epoch=now_epoch, all_epoch=all_epoch,
-                                       step=step, all_step=len(dataloader),
-                                       loss=np.mean(loss.item()),
-                                       lr=self.optimizer.param_groups[0]['lr'])))
+            if local_rank in [-1, 0]:
+                self.logger.info((
+                    "Epoch: {epoch:03d} / {all_epoch:03d},"
+                    "Step: {step:04d} / {all_step:04d},"
+                    "Loss: {loss:.04f},"
+                    "Lr: {lr:.08f}".format(epoch=now_epoch, all_epoch=all_epoch,
+                                           step=step, all_step=len(dataloader),
+                                           loss=np.mean(loss.item()),
+                                           lr=self.optimizer.param_groups[0]['lr'])))
 
     def train(self):
         for now_epoch in range(self.start_epoch, self.train_epochs_num):
-
             # 训练模型
             self.ddp_model.train()
             self.run_epoch(self.train_dataloader, now_epoch, self.train_epochs_num)
