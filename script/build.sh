@@ -37,6 +37,7 @@ function changelog() {
     cecho r "see: {} for detail"
     exit 1
   fi
+  # npm install -g conventional-changelog-cli
   npm run changelog
 }
 
