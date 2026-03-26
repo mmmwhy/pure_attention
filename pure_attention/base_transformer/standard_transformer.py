@@ -36,5 +36,4 @@ class Transformer(nn.Module):
         dec_output = self.decode(self.encode(src, src_mask), src_mask, tgt, tgt_mask)
 
         # decode 后的结果，先进入一个全连接层变为词典大小的向量，然后进行 log_softmax 操作 (在 softmax 结果上再做多一次 log 运算)
-        # log_softmax 与 softmax 的区别在哪里？ https://www.zhihu.com/question/358069078
         return nn.LogSoftmax(dim=-1)(self.proj(dec_output))

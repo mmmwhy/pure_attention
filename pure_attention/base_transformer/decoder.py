@@ -43,7 +43,6 @@ class DecoderLayer(nn.Module):
 class Decoder(nn.Module):
     def __init__(self, config):
         super(Decoder, self).__init__()
-        # PyTorch 中的 ModuleList https://zhuanlan.zhihu.com/p/64990232
         self.layer = nn.ModuleList([DecoderLayer(config) for _ in range(config.num_hidden_layers)])
 
     def forward(self, dec_input, enc_output, slf_attn_mask, dec_enc_attn_mask):

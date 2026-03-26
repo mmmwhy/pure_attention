@@ -41,7 +41,6 @@ class EncoderLayer(nn.Module):
 class Encoder(nn.Module):
     def __init__(self, config):
         super(Encoder, self).__init__()
-        # PyTorch 中的 ModuleList https://zhuanlan.zhihu.com/p/64990232
         self.layer = nn.ModuleList([EncoderLayer(config) for _ in range(config.num_hidden_layers)])
 
     def forward(self, hidden_states, attention_mask=None):
